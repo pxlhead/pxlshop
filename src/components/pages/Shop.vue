@@ -1,32 +1,34 @@
 <template lang="pug">
-  div
-    .content
-      h2 Welcome to our creative store
-      section.products
-        fieldset.filter
-        .gallery
-          .gallery-column
-            .gallery-row
-              .gallery-item
-                img.item-img
-                h2.item-title
-                p.item-price
-        aside.sidebar
-        nav.pagination
-    main-footer
+  .content
+    h1
+      | Welcome to our creative store - we sell uncommon design
+      | illustrations that smack you right in the heart.
+    hr
+    section.products
+      .gallery
+        .filter
+          select.filter-category
+            option(v-for='category in categories'
+            v-bind:value='category.value') Category: {{ category.text }}
+          select.filter-size
+            option(v-for='size in sizes'
+            v-bind:value='size.value') Size: {{ size.text }}
+        .gallery-column
+          .gallery-row(v-for='n in 4')
+            .gallery-item(v-for='(price, name, index) in products'
+            v-if='index == 2 * n - 1 || index == 2 * n - 2')
+              img.item-img(src='https://unsplash.it/500/500/?random')
+              h2.item-title {{ name }}
+              p.item-price {{ price }}
+      aside.sidebar
+    nav.pagination
 </template>
 
 <script>
-import MainFooter from '../MainFooter';
-
 export default {
   name: 'shop',
-  components: {
-    MainFooter,
-  },
   data() {
     return {
-      productsInRow: 2,
       products: {
         'Book of Design': '135',
         'Palm pattern': '35',
@@ -37,13 +39,78 @@ export default {
         'Leaf pattern': '55',
         'Sevens Design poster': '55',
       },
+      categories: [
+        { text: 'All', value: 'c0' },
+        { text: 'Patterns', value: 'c1' },
+        { text: 'Illustrations', value: 'c2' },
+        { text: 'Photos', value: 'c3' },
+      ],
+      sizes: [
+        { text: 'All', value: 'c0' },
+        { text: 'Small', value: 's1' },
+        { text: 'Medium', value: 's2' },
+        { text: 'Large', value: 's3' },
+        { text: 'Extra Large', value: 's4' },
+      ],
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-h2 {
+h1, h2 {
   color: #252525;
+}
+h1 {
+  font-size: 3.8vw;
+}
+hr {
+  border: 0;
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+}
+.filter {
+  padding: 2rem 0;
+  width: 100%;
+  border: 0;
+  display: flex;
+}
+.filter-category, .filter-size {
+  flex-basis: 35%;
+  margin-right: 10%;
+  padding: 1rem 0;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.1rem;
+  text-transform: none;
+  font-size: 1.6rem;
+  color: #666;
+}
+.content {
+  padding: 8rem 15rem;
+}
+.products, .gallery-row, .gallery-column {
+  display: flex;
+}
+.gallery {
+  flex: 3;
+}
+.sidebar {
+  flex: 2;
+}
+.gallery-column {
+  flex-direction: column;
+}
+.gallery-row {
+  justify-content: space-between;
+}
+.gallery-item {
+  flex-basis: 46%;
+}
+.item-img {
+  width: 100%;
+  height: auto;
 }
 </style>

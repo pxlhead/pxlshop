@@ -46,7 +46,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #252525;
-  padding: 4rem;
+  padding: 8rem 15rem;
 }
 .content {
   flex: 6;
@@ -57,8 +57,11 @@ export default {
   flex: 1;
   margin: 0 2rem;
 }
+.logo {
+  margin-left: 0;
+}
 .logo img {
-  width: 10rem;
+  width: 15rem;
   height: auto;
 }
 .list {
@@ -72,6 +75,5 @@ export default {
 }
 .copyright {
   flex: 1;
-  margin-left: 2rem;
 }
 </style>
