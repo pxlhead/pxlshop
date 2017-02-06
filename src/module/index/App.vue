@@ -1,8 +1,14 @@
 <template lang="pug">
+  main-footer
 </template>
 
 <script>
-</script>
+import MainFooter from '../../components/MainFooter';
 
-<style lang="scss">
-</style>
+export default {
+  name: 'app',
+  components: {
+    MainFooter,
+  },
+};
+</script>
