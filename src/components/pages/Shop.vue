@@ -7,20 +7,33 @@
     section.products
       .gallery
         .filter
-          select.filter-category
-            option(v-for='category in categories'
-            v-bind:value='category.value') Category: {{ category.text }}
-          select.filter-size
-            option(v-for='size in sizes'
-            v-bind:value='size.value') Size: {{ size.text }}
+          .select-wrap
+            select
+              option(v-for='category in categories'
+              v-bind:value='category.value') Category: {{ category.text }}
+          .select-wrap
+            select
+              option(v-for='size in sizes'
+              v-bind:value='size.value') Size: {{ size.text }}
         .gallery-column
           .gallery-row(v-for='n in 4')
             .gallery-item(v-for='(price, name, index) in products'
             v-if='index == 2 * n - 1 || index == 2 * n - 2')
               img.item-img(src='https://unsplash.it/500/500/?random')
               h2.item-title {{ name }}
-              p.item-price {{ price }}
+              span.item-price {{ price }}
       aside.sidebar
+        .widget-products
+          h3.widget-title Top Rated
+          ul.products-list
+            li
+              a product-title
+              span.product-stars
+              span.product-price
+        .widget-tags
+        .widget-cart
+        .widget-viewed
+        .widget-payment
     nav.pagination
 </template>
 
@@ -58,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h1, h2 {
+h1, h2, h3 {
   color: #252525;
 }
 h1 {
@@ -73,16 +86,32 @@ hr {
   width: 100%;
   border: 0;
   display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
 }
-.filter-category, .filter-size {
-  flex-basis: 35%;
+.select-wrap {
+  flex-basis: 40%;
   margin-right: 10%;
   padding: 1rem 0;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 1.6rem;
+}
+.select-wrap::before {
+  content: '>';
+  display: block;
+  position: absolute;
+  top: 30%;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  transform: rotate(90deg);
+}
+select {
+  width: 100%;
   appearance: none;
   background-color: inherit;
   border: 0;
-  border-radius: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   letter-spacing: 0.1rem;
   text-transform: none;
   font-size: 1.6rem;
