@@ -17,19 +17,23 @@
               v-bind:value='size.value') Size: {{ size.text }}
         .gallery-column
           .gallery-row(v-for='n in 4')
-            .gallery-item(v-for='(price, name, index) in products'
+            .gallery-product(v-for='(product, index) in products'
             v-if='index == 2 * n - 1 || index == 2 * n - 2')
-              img.item-img(src='https://unsplash.it/500/500/?random')
-              h2.item-title {{ name }}
-              span.item-price {{ price }}
+              img.product-img(v-bind:src='product.img')
+              h2.product-title {{ product.name }}
+              span.product-price {{ product.price }}
       aside.sidebar
-        .widget-products
+        .widget-top
           h3.widget-title Top Rated
-          ul.products-list
-            li
-              a product-title
-              span.product-stars
-              span.product-price
+          ul.top-list
+            li.top-product(v-for='product in products'
+            v-if='product.stars == 5 || product.stars == 4')
+              .top-product-info
+                a {{ product.name }}
+                span.product-stars {{ product.stars }}
+                span.product-price {{ product.price }}
+              .top-product-img
+                img.product-img(v-bind:src='product.img')
         .widget-tags
         .widget-cart
         .widget-viewed
@@ -42,16 +46,49 @@ export default {
   name: 'shop',
   data() {
     return {
-      products: {
-        'Book of Design': '135',
-        'Palm pattern': '35',
-        'Balzac pattern': '129',
-        'Deer Hunter': '55',
-        'Fieldnotes Quote Book': '35',
-        'Typography Poster': '55',
-        'Leaf pattern': '55',
-        'Sevens Design poster': '55',
-      },
+      products: [
+        {
+          name: 'Book of Design',
+          price: '135',
+          stars: '4',
+          img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Palm pattern',
+          price: '35',
+          stars: '5',
+          img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Balzac pattern',
+          price: '129',
+          stars: '3',
+          img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Deer Hunter',
+          price: '55',
+          stars: '5',
+          img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Fieldnotes Quote Book',
+          price: '35',
+          stars: '3',
+          img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Fieldnotes Quote Book',
+          price: '67',
+          stars: '2',
+          img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Typography Poster',
+          price: '132',
+          stars: '4',
+          img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Sevens Design poster',
+          price: '89',
+          stars: '2',
+          img: 'https://unsplash.it/500/500/?random',
+        },
+      ],
       categories: [
         { text: 'All', value: 'c0' },
         { text: 'Patterns', value: 'c1' },
@@ -71,8 +108,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+$color-dark: #252525;
+$color-grey: #666;
+
+$border: 1px solid rgba(0, 0, 0, 0.2);
+
 h1, h2, h3 {
-  color: #252525;
+  color: $color-dark;
 }
 h1 {
   font-size: 3.8vw;
@@ -94,7 +137,7 @@ hr {
   margin-right: 10%;
   padding: 1rem 0;
   position: relative;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: $border;
   font-size: 1.6rem;
 }
 .select-wrap::before {
@@ -115,19 +158,44 @@ select {
   letter-spacing: 0.1rem;
   text-transform: none;
   font-size: 1.6rem;
-  color: #666;
+  color: $color-grey;
 }
 .content {
   padding: 8rem 15rem;
 }
-.products, .gallery-row, .gallery-column {
+.products,
+.gallery-row,
+.gallery-column,
+.sidebar,
+.top-list,
+.top-product {
   display: flex;
 }
 .gallery {
-  flex: 3;
+  flex: 2;
 }
 .sidebar {
-  flex: 2;
+  flex-direction: column;
+  margin-left: 3vw;
+  flex: 1;
+}
+.widget-title {
+  letter-spacing: 0.1rem;
+}
+.top-list {
+  padding: 0;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.top-product {
+  margin-bottom: 5rem;
+  border-bottom: $border;
+}
+.top-product-info {
+  flex: 3;
+}
+.top-product-img {
+  flex: 1;
 }
 .gallery-column {
   flex-direction: column;
@@ -135,10 +203,10 @@ select {
 .gallery-row {
   justify-content: space-between;
 }
-.gallery-item {
+.gallery-product {
   flex-basis: 46%;
 }
-.item-img {
+.product-img {
   width: 100%;
   height: auto;
 }

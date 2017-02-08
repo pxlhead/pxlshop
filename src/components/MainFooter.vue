@@ -2,7 +2,8 @@
   footer.footer
     .content
       .logo
-        img(src='../assets/logo.png')
+        a.logo-img
+          img(src='../assets/logo.png')
       .nav
         h4 Menu
         ul.list(v-for='page in pages')
@@ -42,10 +43,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+$color-dark: #252525;
+$color-light: #fff;
+
 .footer {
   display: flex;
   flex-direction: column;
-  background-color: #252525;
+  background-color: $color-dark;
   padding: 8rem 15rem;
 }
 .content {
@@ -71,7 +76,7 @@ export default {
   margin-top: .5rem;
   font-size: 70%;
   text-transform: uppercase;
-  color: #fff;
+  color: $color-light;
 }
 .copyright {
   flex: 1;

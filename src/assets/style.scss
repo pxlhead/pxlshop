@@ -1,29 +1,35 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
+$color-dark: #252525;
+$color-grey: #666;
+$color-green: #87C681;
+$color-pink: #D9879C;
+$color-light: #fff;
+
 html {
   font-size: 10px;
 }
 body {
-  width: 100vw;
+  width: 100%;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 1.4rem;
-  color: #666;
+  color: $color-grey;
 }
 h1, h2, h3, h4 {
-  color: #fff;
+  color: $color-light;
 }
 h4 {
   font-weight: 400;
   margin-top: 0;
 }
 a {
-  color: #666;
+  color: $color-grey;
   text-decoration: none;
   cursor: pointer;
 }
 a:hover {
-  color: #8BC784;
+  color: $color-green;
 }
 li {
   list-style-type: none;
