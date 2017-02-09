@@ -104,6 +104,9 @@ a {
   display: block;
   height: 100%;
   position: relative;
+  &:hover {
+    background-color: $color-grey;
+  }
   img {
     position: absolute;
     top: calc(50% - 1.5rem);
@@ -123,6 +126,9 @@ a {
   top: calc(50% - 1rem);
   left: calc(50% - 1rem);
   opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
 }
 .cart-count {
   position: absolute;
@@ -252,15 +258,18 @@ a.cart-view {
   left: calc(50% - 2rem);
   transform: rotate(0deg);
   transition: .5s ease-in-out;
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
 }
 .toggle-icon span {
   display: block;
   position: absolute;
   height: 0.4rem;
   width: 100%;
-  background-color: $color-grey;
+  background-color: $color-dark;
   border-radius: 4px;
-  opacity: 1;
   transform: rotate(0deg);
   left: 0;
   transition: .4s ease-in-out;

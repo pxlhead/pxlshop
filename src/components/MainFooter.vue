@@ -17,10 +17,13 @@
             .post-data {{ val }}
       .contact
         h4 Contact us
-        p
-        ul.list(v-for='social in socials')
-          li
-            a(:class='"social-" + social' href='#') {{ social }}
+        p 126-129 Sing Street,
+        p Soho New York City,
+        p NY 19023, United States.
+        ul.list.social-list
+          li.social-item(v-for='social in socials')
+            a.social-link
+              img(:src='"../assets/" + social + "-icon.svg"')
     .copyright
       p Developed by pxlhead. All rights reserved. &reg;
 </template>
@@ -48,18 +51,24 @@ $color-dark: #252525;
 $color-light: #fff;
 $color-grey: #666;
 
+h4 {
+  margin-bottom: 3rem;
+}
 .footer {
   display: flex;
   flex-direction: column;
   background-color: $color-dark;
-  padding: 8rem 15rem;
+  padding: 8vh 10vw;
 }
 .content {
   flex: 6;
   display: flex;
   justify-content: space-between;
 }
-.logo, .nav, .blog, .contact {
+.logo,
+.nav,
+.blog,
+.contact {
   flex: 1;
   margin: 0 2rem;
 }
@@ -69,6 +78,9 @@ $color-grey: #666;
     width: 10rem;
     height: auto;
     background-color: $color-grey;
+    &:hover {
+      background-color: darken($color-grey, 10);
+    }
   }
 }
 .list {
@@ -76,11 +88,23 @@ $color-grey: #666;
 }
 .post-data {
   margin-top: .5rem;
-  font-size: 70%;
+  font-size: 1rem;
   text-transform: uppercase;
   color: $color-light;
 }
 .copyright {
   flex: 1;
+}
+.social-list {
+  width: 15rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+.social-link {
+  display: block;
+  &:hover {
+    opacity: 0.7;
+  }
 }
 </style>
