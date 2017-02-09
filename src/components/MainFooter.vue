@@ -3,7 +3,7 @@
     .content
       .logo
         a.logo-img
-          img(src='../assets/logo.png')
+          img(src='../assets/logo.svg')
       .nav
         h4 Menu
         ul.list(v-for='page in pages')
@@ -46,6 +46,7 @@ export default {
 
 $color-dark: #252525;
 $color-light: #fff;
+$color-grey: #666;
 
 .footer {
   display: flex;
@@ -64,10 +65,11 @@ $color-light: #fff;
 }
 .logo {
   margin-left: 0;
-}
-.logo img {
-  width: 15rem;
-  height: auto;
+  img {
+    width: 10rem;
+    height: auto;
+    background-color: $color-grey;
+  }
 }
 .list {
   padding-left: 0;
