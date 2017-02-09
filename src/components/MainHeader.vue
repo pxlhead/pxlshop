@@ -90,7 +90,7 @@ a {
   background-color: $color-light;
   height: 6rem;
   top: 5vh;
-  left: 6rem;
+  left: calc(10vw - 6rem);
   z-index: 1000;
 }
 .logo {

@@ -181,7 +181,7 @@ select {
   outline: none;
 }
 .content {
-  padding: 8rem 15rem;
+  padding: 12vh 10vw 4vh 10vw;
 }
 .products,
 .gallery-row,
