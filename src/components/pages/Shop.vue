@@ -19,9 +19,10 @@
           .gallery-row(v-for='n in 4')
             .gallery-product(v-for='(product, index) in products'
             v-if='index == 2 * n - 1 || index == 2 * n - 2')
-              img.product-img(v-bind:src='product.img')
+              .product-img
+                img(v-bind:src='product.img')
               h2.product-title {{ product.name }}
-              span.product-price {{ product.price }}
+              span.product-price ${{ product.price + '.00' }}
       aside.sidebar
         .widget-top
           h3.widget-title Top Rated
@@ -124,6 +125,10 @@ hr {
   border: 0;
   border-top: 2px solid rgba(0, 0, 0, 0.2);
 }
+img {
+  width: 100%;
+  height: auto;
+}
 .filter {
   padding: 2rem 0;
   width: 100%;
@@ -139,16 +144,29 @@ hr {
   position: relative;
   border-bottom: $border;
   font-size: 1.6rem;
-}
-.select-wrap::before {
-  content: '>';
-  display: block;
-  position: absolute;
-  top: 30%;
-  right: 0;
-  width: 1rem;
-  height: 1rem;
-  transform: rotate(90deg);
+  cursor: pointer;
+  &::before {
+    content: '';
+    display: block;
+    background-color: $color-grey;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    width: 1rem;
+    height: 0.1rem;
+    transform: rotate(50deg);
+  }
+  &::after {
+    content: '';
+    display: block;
+    background-color: $color-grey;
+    position: absolute;
+    top: 50%;
+    right: 0.4rem;
+    width: 1rem;
+    height: 0.1rem;
+    transform: rotate(-50deg);
+  }
 }
 select {
   width: 100%;
@@ -159,6 +177,8 @@ select {
   text-transform: none;
   font-size: 1.6rem;
   color: $color-grey;
+  cursor: pointer;
+  outline: none;
 }
 .content {
   padding: 8rem 15rem;
@@ -174,6 +194,37 @@ select {
 .gallery {
   flex: 2;
 }
+.gallery-column {
+  flex-direction: column;
+}
+.gallery-row {
+  justify-content: space-between;
+  padding-bottom: 2rem;
+}
+.gallery-product {
+  flex-basis: 46%;
+  display: flex;
+  flex-direction: column;
+}
+.product-img {
+  overflow: hidden;
+  img {
+    transition: all 1s ease;
+    &:hover {
+      transform:scale(1.2);
+    }
+  }
+}
+.product-title {
+  font-size: 1.5vw;
+  flex: 1;
+  margin-bottom: 0.5rem;
+}
+.product-price {
+  font-size: 0.8vw;
+}
+
+// sidebar section
 .sidebar {
   flex-direction: column;
   margin-left: 3vw;
@@ -196,18 +247,5 @@ select {
 }
 .top-product-img {
   flex: 1;
-}
-.gallery-column {
-  flex-direction: column;
-}
-.gallery-row {
-  justify-content: space-between;
-}
-.gallery-product {
-  flex-basis: 46%;
-}
-.product-img {
-  width: 100%;
-  height: auto;
 }
 </style>
