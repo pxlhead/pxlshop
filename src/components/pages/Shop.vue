@@ -30,15 +30,24 @@
             li.top-product(v-for='product in products'
             v-if='product.stars == 5 || product.stars == 4')
               .top-product-info
-                a {{ product.name }}
-                span.product-stars {{ product.stars }}
-                span.product-price {{ product.price }}
+                a.product-title {{ product.name }}
+                .product-stars
+                  span.star(v-for='n in 5'
+                  v-bind:class='{ "star-full": n < product.stars }')
+                span.product-price ${{ product.price + '.00' }}
               .top-product-img
                 img.product-img(v-bind:src='product.img')
         .widget-tags
         .widget-cart
         .widget-viewed
         .widget-payment
+          h3.widget-title Payment Options
+          p.payment-details
+            | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+            | do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          .payment-icon
+            img(src='../../assets/paypal-icon.svg')
+            span PayPal
     nav.pagination
 </template>
 
@@ -112,6 +121,8 @@ export default {
 
 $color-dark: #252525;
 $color-grey: #666;
+$color-green: #87C681;
+$color-light: #fff;
 
 $border: 1px solid rgba(0, 0, 0, 0.2);
 
@@ -128,6 +139,12 @@ hr {
 img {
   width: 100%;
   height: auto;
+}
+.content {
+  padding: 12vh 10vw 4vh 10vw;
+}
+.products {
+  display: flex;
 }
 .filter {
   padding: 2rem 0;
@@ -180,24 +197,15 @@ select {
   cursor: pointer;
   outline: none;
 }
-.content {
-  padding: 12vh 10vw 4vh 10vw;
-}
-.products,
-.gallery-row,
-.gallery-column,
-.sidebar,
-.top-list,
-.top-product {
-  display: flex;
-}
 .gallery {
-  flex: 2;
+  flex: 2.5;
 }
 .gallery-column {
+  display: flex;
   flex-direction: column;
 }
 .gallery-row {
+  display: flex;
   justify-content: space-between;
   padding-bottom: 2rem;
 }
@@ -226,26 +234,77 @@ select {
 
 // sidebar section
 .sidebar {
+  flex: 1;
+  display: flex;
   flex-direction: column;
   margin-left: 3vw;
-  flex: 1;
 }
 .widget-title {
   letter-spacing: 0.1rem;
+  padding: 2rem 0;
+  margin-bottom: 0;
 }
 .top-list {
   padding: 0;
+  margin: 0;
+  display: flex;
   flex-direction: column;
-  justify-content: space-around;
 }
 .top-product {
-  margin-bottom: 5rem;
+  display: flex;
   border-bottom: $border;
+  padding: 2rem 0;
 }
 .top-product-info {
   flex: 3;
+  display: flex;
+  flex-direction: column;
+  .product-title {
+    font-size: 1vw;
+    margin-bottom: 0;
+  }
+  .product-stars, .product-price {
+    flex: 1;
+    padding-top: 1rem;
+  }
+}
+.star {
+  &::before {
+    content: '\2606';
+    color: $color-grey;
+  }
+}
+.star-full {
+  &::before {
+    content: '\2605';
+    color: $color-green;
+  }
 }
 .top-product-img {
-  flex: 1;
+  flex-basis: 5rem;
+}
+.widget-payment {
+  flex-basis: 15rem;
+  padding: 0 1rem;
+  background-color: darken($color-light, 5);
+  margin-top: 2rem;
+}
+.payment-details {
+  font-size: 1vw;
+  margin-top: 0;
+}
+.payment-icon {
+  height: 3rem;
+  img {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+  span {
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+    background-color: $color-dark;
+    color: $color-light;
+    padding-top: 0.1rem;
+  }
 }
 </style>
