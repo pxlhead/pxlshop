@@ -69,14 +69,11 @@ h4 {
 .nav,
 .blog,
 .contact {
-  flex: 1;
-  margin: 0 2rem;
+  flex-basis: 20%;
 }
 .logo {
-  margin-left: 0;
   img {
-    width: 10rem;
-    height: auto;
+    width: 60%;
     background-color: $color-grey;
     &:hover {
       background-color: darken($color-grey, 10);
@@ -96,15 +93,34 @@ h4 {
   flex: 1;
 }
 .social-list {
-  width: 15rem;
-  margin-top: 2rem;
+  width: 60%;
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
 }
 .social-link {
+  flex-basis: 20%;
   display: block;
   &:hover {
     opacity: 0.7;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer {
+    padding: 8vh 7vw;
+  }
+  .content {
+    flex-wrap: wrap;
+  }
+  .logo,
+  .nav,
+  .blog,
+  .contact {
+    flex-basis: 30%;
+  }
+  .logo {
+    order: 2;
   }
 }
 </style>

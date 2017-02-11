@@ -16,9 +16,7 @@
               option(v-for='size in sizes'
               v-bind:value='size.value') Size: {{ size.text }}
         .gallery-column
-          .gallery-row(v-for='n in 4')
-            .gallery-product(v-for='(product, index) in products'
-            v-if='index == 2 * n - 1 || index == 2 * n - 2')
+            .gallery-product(v-for='product in products')
               .product-img
                 img(v-bind:src='product.img')
               h2.product-title {{ product.name }}
@@ -97,6 +95,11 @@ export default {
           price: '89',
           stars: '2',
           img: 'https://unsplash.it/500/500/?random',
+        }, {
+          name: 'Raccoon seamless pattern',
+          price: '43',
+          stars: '3',
+          img: 'https://unsplash.it/500/500/?random',
         },
       ],
       categories: [
@@ -135,10 +138,6 @@ h1 {
 hr {
   border: 0;
   border-top: 2px solid rgba(0, 0, 0, 0.2);
-}
-img {
-  width: 100%;
-  height: auto;
 }
 .content {
   padding: 12vh 10vw 4vh 10vw;
@@ -202,15 +201,12 @@ select {
 }
 .gallery-column {
   display: flex;
-  flex-direction: column;
-}
-.gallery-row {
-  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding-bottom: 2rem;
 }
 .gallery-product {
-  flex-basis: 46%;
+  flex-basis: calc(90% / 3);
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -305,6 +301,29 @@ select {
     background-color: $color-dark;
     color: $color-light;
     padding-top: 0.1rem;
+  }
+}
+
+/* Portrait tablets and small desktops */
+@media screen and (min-width: 481px) and (max-width: 991px) {
+  .gallery-product {
+    flex-basis: calc(90% / 2);
+  }
+}
+
+/* Landscape phones and smaller */
+@media screen and (max-width: 480px) {
+  .products {
+    flex-direction: column;
+  }
+  .gallery {
+    flex: 1;
+  }
+  .sidebar {
+    flex: 1;
+  }
+  .gallery-product {
+    flex-basis: 90%;
   }
 }
 </style>

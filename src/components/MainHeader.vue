@@ -77,11 +77,6 @@ $color-grey: #666;
 $color-green: #87C681;
 $color-light: #fff;
 
-img {
-  background-size: cover;
-  width: 100%;
-  height: auto;
-}
 a {
   color: $color-dark;
 }
@@ -93,9 +88,13 @@ a {
   left: calc(10vw - 6rem);
   z-index: 1000;
 }
-.logo {
+.logo,
+.cart,
+.nav-toggle {
   width: 6rem;
   height: 6rem;
+}
+.logo {
   display: inline-block;
   vertical-align: top;
 }
@@ -114,8 +113,6 @@ a {
   }
 }
 .cart {
-  width: 6rem;
-  height: 6rem;
   position: relative;
   display: inline-block;
 }
@@ -246,7 +243,6 @@ a.cart-view {
 }
 .nav-toggle {
   width: 4rem;
-  height: 6rem;
   display: inline-block;
   position: relative;
 }
@@ -321,6 +317,27 @@ a.cart-view {
   &:hover {
     color: $color-dark;
     text-decoration: line-through;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .header {
+    height: 4rem;
+    top: 5vh;
+    left: calc(10vw - 4rem);
+  }
+  .logo,
+  .cart,
+  .nav-toggle {
+    width: 4rem;
+    height: 4rem;
+  }
+  .logo-link img {
+    top: calc(50% - 1rem);
+  }
+  .toggle-icon {
+    top: calc(50% - 1rem);
+    left: calc(50% - 1.5rem);
   }
 }
 </style>
