@@ -18,7 +18,7 @@
         .gallery-column
             .gallery-product(v-for='product in products')
               .product-img
-                img(v-bind:src='product.img')
+                img(v-bind:src='product.url')
               h2.product-title {{ product.name }}
               span.product-price ${{ product.price + '.00' }}
       aside.sidebar
@@ -34,7 +34,7 @@
                   v-bind:class='{ "star-full": n < product.stars }')
                 span.product-price ${{ product.price + '.00' }}
               .top-product-img
-                img.product-img(v-bind:src='product.img')
+                img.product-img(v-bind:src='product.url')
         .widget-tags
         .widget-cart
         .widget-viewed
@@ -44,64 +44,22 @@
             | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
             | do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           .payment-icon
-            img(src='../../assets/paypal-icon.svg')
+            img(src='../../assets/shop/paypal-icon.svg')
             span PayPal
     nav.pagination
 </template>
 
 <script>
+/* eslint-disable no-console */
+import Firebase from '../../appconfig/firebase';
+
 export default {
   name: 'shop',
+  firebase: {
+    products: Firebase.getDbRef('products'),
+  },
   data() {
     return {
-      products: [
-        {
-          name: 'Book of Design',
-          price: '135',
-          stars: '4',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Palm pattern',
-          price: '35',
-          stars: '5',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Balzac pattern',
-          price: '129',
-          stars: '3',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Deer Hunter',
-          price: '55',
-          stars: '5',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Fieldnotes Quote Book',
-          price: '35',
-          stars: '3',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Fieldnotes Quote Book',
-          price: '67',
-          stars: '2',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Typography Poster',
-          price: '132',
-          stars: '4',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Sevens Design poster',
-          price: '89',
-          stars: '2',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Raccoon seamless pattern',
-          price: '43',
-          stars: '3',
-          img: 'https://unsplash.it/500/500/?random',
-        },
-      ],
       categories: [
         { text: 'All', value: 'c0' },
         { text: 'Patterns', value: 'c1' },
@@ -116,6 +74,17 @@ export default {
         { text: 'Extra Large', value: 's4' },
       ],
     };
+  },
+  methods: {
+    // getImageURL(src) {
+    //   const imageRef = Firebase.getStorageRef(`products/${src}`);
+    //   return imageRef.getDownloadURL().then((url) => {
+    //     console.log(url);
+    //     return url;
+    //   }).catch((error) => {
+    //     console.error(error);
+    //   });
+    // },
   },
 };
 </script>

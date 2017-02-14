@@ -23,7 +23,7 @@
         ul.list.social-list
           li.social-item(v-for='social in socials')
             a.social-link
-              img(:src='"../assets/" + social + "-icon.svg"')
+              img(:src='"../assets/social/" + social + "-icon.svg"')
     .copyright
       p Developed by pxlhead. All rights reserved. &reg;
 </template>
