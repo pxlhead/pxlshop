@@ -8,18 +8,25 @@
       .gallery
         .filter
           .select-wrap
-            select
+            select(v-model='selectedCategory')
               option(v-for='category in categories'
-              v-bind:value='category.value') Category: {{ category.text }}
+              v-bind:value='category') Category: {{ category }}
+            span.select-arrow
           .select-wrap
             select
-              option(v-for='size in sizes'
-              v-bind:value='size.value') Size: {{ size.text }}
+              option(v-for='sort in sorts'
+              v-bind:value='sort') Sort by: {{ sort }}
+            span.select-arrow
         .gallery-column
-            .gallery-product(v-for='product in products')
+            .gallery-product(v-for='(product, index) in products'
+            v-if='product.type == selectedCategory\
+            || selectedCategory == "all"\
+            && index >= productsOnPage * (activePage - 1)\
+            && index < productsOnPage * activePage')
               .product-img
                 img(v-bind:src='product.url')
               h2.product-title {{ product.name }}
+              span.product-author {{ product.author }}
               span.product-price ${{ product.price + '.00' }}
       aside.sidebar
         .widget-top
@@ -47,6 +54,16 @@
             img(src='../../assets/shop/paypal-icon.svg')
             span PayPal
     nav.pagination
+      a.nav-prev(v-bind:class='{ "nav-disable": activePage == 1 }'
+      @click='changePage(activePage - 1)')
+        | Prev Page
+      .nav-pages
+        a.page-num(v-for='n in Math.ceil(products.length / productsOnPage)'
+        @click='changePage(n)'
+        v-bind:class='{ "page-active": n == activePage }') {{ n }}
+      a.nav-next(v-bind:class='{ "nav-disable": activePage == products.length }'
+      @click='changePage(activePage + 1)')
+        | Next Page
 </template>
 
 <script>
@@ -60,22 +77,17 @@ export default {
   },
   data() {
     return {
-      categories: [
-        { text: 'All', value: 'c0' },
-        { text: 'Patterns', value: 'c1' },
-        { text: 'Illustrations', value: 'c2' },
-        { text: 'Photos', value: 'c3' },
-      ],
-      sizes: [
-        { text: 'All', value: 'c0' },
-        { text: 'Small', value: 's1' },
-        { text: 'Medium', value: 's2' },
-        { text: 'Large', value: 's3' },
-        { text: 'Extra Large', value: 's4' },
-      ],
+      selectedCategory: 'all',
+      categories: ['all', 'illustrations', 'patterns', 'photos'],
+      sorts: ['popular', 'relevant'],
+      productsOnPage: 9,
+      activePage: 1,
     };
   },
   methods: {
+    changePage(page) {
+      this.activePage = page;
+    },
     // getImageURL(src) {
     //   const imageRef = Firebase.getStorageRef(`products/${src}`);
     //   return imageRef.getDownloadURL().then((url) => {
@@ -109,10 +121,11 @@ hr {
   border-top: 2px solid rgba(0, 0, 0, 0.2);
 }
 .content {
-  padding: 12vh 10vw 4vh 10vw;
+  padding: 12vh 10vw 0 10vw;
 }
 .products {
   display: flex;
+  padding-bottom: 3rem;
 }
 .filter {
   padding: 2rem 0;
@@ -130,36 +143,23 @@ hr {
   border-bottom: $border;
   font-size: 1.6rem;
   cursor: pointer;
-  &::before {
-    content: '';
+  .select-arrow {
     display: block;
-    background-color: $color-grey;
+    background: $color-light url('../../assets/shop/arrow.svg') no-repeat center center;
     position: absolute;
-    top: 50%;
-    right: 1rem;
-    width: 1rem;
-    height: 0.1rem;
-    transform: rotate(50deg);
-  }
-  &::after {
-    content: '';
-    display: block;
-    background-color: $color-grey;
-    position: absolute;
-    top: 50%;
-    right: 0.4rem;
-    width: 1rem;
-    height: 0.1rem;
-    transform: rotate(-50deg);
+    width: 2rem;
+    height: 2rem;
+    top: 1rem;
+    right: 0;
+    z-index: -10;
   }
 }
 select {
   width: 100%;
   appearance: none;
-  background-color: inherit;
+  background-color: transparent;
   border: 0;
-  letter-spacing: 0.1rem;
-  text-transform: none;
+  text-transform: capitalize;
   font-size: 1.6rem;
   color: $color-grey;
   cursor: pointer;
@@ -191,10 +191,14 @@ select {
 .product-title {
   font-size: 1.5vw;
   flex: 1;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 .product-price {
   font-size: 0.8vw;
+}
+.product-author {
+  font-size: 1vw;
+  padding-bottom: 0.5rem;
 }
 
 // sidebar section
@@ -271,6 +275,64 @@ select {
     color: $color-light;
     padding-top: 0.1rem;
   }
+}
+.pagination {
+  display: flex;
+  width: 100%;
+  padding: 5rem 0;
+  justify-content: space-between;
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  >a {
+    flex-basis: 20%;
+    position: relative;
+    opacity: 0.7;
+    &::before {
+      content: '';
+      position: absolute;
+      background: url('../../assets/shop/arrow.svg') no-repeat top center;
+      width: 2rem;
+      height: 2rem;
+      top: -10%;
+    }
+    &:hover {
+      opacity: 1;
+      color: $color-grey;
+    }
+  }
+}
+.nav-prev {
+  text-align: right;
+  &::before {
+    left: 0;
+    transform: rotate(90deg);
+  }
+}
+.nav-next {
+  &::before {
+    right: 0;
+    transform: rotate(-90deg);
+  }
+}
+.nav-disable {
+  opacity: 0.4;
+  &:hover {
+    color: inherit;
+  }
+  pointer-events: none;
+}
+.nav-pages {
+  flex-basis: 10%;
+  display: flex;
+  justify-content: space-around;
+}
+.page-num {
+  color: $color-dark;
+  &:hover {
+    color: $color-green;
+  }
+}
+.page-active {
+  color: $color-green;
 }
 
 /* Portrait tablets and small desktops */
