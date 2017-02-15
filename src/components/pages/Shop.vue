@@ -13,7 +13,7 @@
               v-bind:value='category') Category: {{ category }}
             span.select-arrow
           .select-wrap
-            select
+            select(v-model='selectedSort')
               option(v-for='sort in sorts'
               v-bind:value='sort') Sort by: {{ sort }}
             span.select-arrow
@@ -79,8 +79,9 @@ export default {
   data() {
     return {
       selectedCategory: 'all',
+      selectedSort: 'none',
       categories: ['all', 'illustrations', 'patterns', 'photos'],
-      sorts: ['popular', 'relevant'],
+      sorts: ['none', 'newest', 'popular'],
       filteredProducts: [],
       productsOnPage: 9,
       activePage: 1,
@@ -100,10 +101,25 @@ export default {
         this.filteredProducts = this.products;
         return;
       }
-      this.filteredProducts = [];
-      this.filteredProducts = this.products.filter(product => product.type
+      this.filteredProducts = this.products.filter(prod => prod.type
         === newCategory);
       this.activePage = 1;
+    },
+    selectedSort(newSort) {
+      switch (newSort) {
+        case 'popular':
+          this.filteredProducts = this.products.sort((prodA, prodB) => (
+            prodA.stars <= prodB.stars ? 1 : -1
+          ));
+          break;
+        case 'newest':
+          this.filteredProducts = this.products.sort((prodA, prodB) => (
+            Date.parse(prodA.date) <= Date.parse(prodB.date) ? 1 : -1
+          ));
+          break;
+        default:
+          this.filteredProducts = this.products;
+      }
     },
   },
 };
