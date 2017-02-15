@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container
+  .content
     section.slider
       .slider-container
         .slide(v-for='(val, key, index) in slides' v-bind:class='[index == 1 ? "slide-active" : ""]')
