@@ -17,11 +17,11 @@
               option(v-for='sort in sorts'
               v-bind:value='sort') Sort by: {{ sort }}
             span.select-arrow
-        .gallery-column
-            .gallery-product(v-for='(product, index) in products'
-            v-if='product.type == selectedCategory\
-            || selectedCategory == "all"\
-            && index >= productsOnPage * (activePage - 1)\
+        transition-group.gallery-column(name='gallery-anim' tag='div'
+        mode="out-in")
+            .gallery-product(v-for='(product, index) in filteredProducts'
+            v-bind:key='index'
+            v-if='index >= productsOnPage * (activePage - 1)\
             && index < productsOnPage * activePage')
               .product-img
                 img(v-bind:src='product.url')
@@ -58,11 +58,12 @@
       @click='changePage(activePage - 1)')
         | Prev Page
       .nav-pages
-        a.page-num(v-for='n in Math.ceil(products.length / productsOnPage)'
-        @click='changePage(n)'
+        a.page-num(@click='changePage(n)'
+        v-for='n in Math.ceil(filteredProducts.length / productsOnPage)'
         v-bind:class='{ "page-active": n == activePage }') {{ n }}
-      a.nav-next(v-bind:class='{ "nav-disable": activePage == products.length }'
-      @click='changePage(activePage + 1)')
+      a.nav-next(@click='changePage(activePage + 1)'
+      v-bind:class='{ "nav-disable": activePage ==\
+      Math.ceil(filteredProducts.length / productsOnPage) }')
         | Next Page
 </template>
 
@@ -80,23 +81,30 @@ export default {
       selectedCategory: 'all',
       categories: ['all', 'illustrations', 'patterns', 'photos'],
       sorts: ['popular', 'relevant'],
+      filteredProducts: [],
       productsOnPage: 9,
       activePage: 1,
     };
+  },
+  created() {
+    this.filteredProducts = this.products;
   },
   methods: {
     changePage(page) {
       this.activePage = page;
     },
-    // getImageURL(src) {
-    //   const imageRef = Firebase.getStorageRef(`products/${src}`);
-    //   return imageRef.getDownloadURL().then((url) => {
-    //     console.log(url);
-    //     return url;
-    //   }).catch((error) => {
-    //     console.error(error);
-    //   });
-    // },
+  },
+  watch: {
+    selectedCategory(newCategory) {
+      if (newCategory === 'all') {
+        this.filteredProducts = this.products;
+        return;
+      }
+      this.filteredProducts = [];
+      this.filteredProducts = this.products.filter(product => product.type
+        === newCategory);
+      this.activePage = 1;
+    },
   },
 };
 </script>
@@ -167,6 +175,12 @@ select {
 }
 .gallery {
   flex: 2.5;
+}
+.gallery-anim-enter-active, .gallery-anim-leave-active {
+  transition: all 1s;
+}
+.gallery-anim-leave-to, .gallery-anim-enter-to {
+  opacity: 0;
 }
 .gallery-column {
   display: flex;
@@ -333,6 +347,7 @@ select {
 }
 .page-active {
   color: $color-green;
+  pointer-events: none;
 }
 
 /* Portrait tablets and small desktops */
