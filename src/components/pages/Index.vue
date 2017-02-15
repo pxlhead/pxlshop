@@ -24,11 +24,15 @@
         .about-item
           h2.about-title
             |PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
-          p.about-text
-            |PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
+          p.about-text.
+            PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
+            PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
+            PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
+            PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
+            PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
         .about-video
           iframe(width="100%" height="auto"
-            src="http://www.youtube.com/embed/XGSy3_Czz8k")
+            src="https://www.youtube.com/embed/XZDt-O6r7rM")
     section.info
       .info-container
         h2.aside-title ABOUT
@@ -36,76 +40,84 @@
           h4.info-title
             |Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
           p.
-            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time. Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page. If you're looking for a unique creative template, then Balzac is it!
+            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time.
+            Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page.
+            If you're looking for a unique creative template, then Balzac is it!
         .info-item
           h4.info-title
             |Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
           p.
-            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time. Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page. If you're looking for a unique creative template, then Balzac is it!
+            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time.
+            Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page.
+            If you're looking for a unique creative template, then Balzac is it!
         .info-item
           h4.info-title
             |Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
           p.
-            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time. Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page. If you're looking for a unique creative template, then Balzac is it!
+            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time.
+            Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page.
+            If you're looking for a unique creative template, then Balzac is it!
     section.awards
       .awards-container
         h2.aside-title AWARDS
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |Awards '16
-          p.awards-text
-            |Awwwards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |TechCrunch
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |SiteAward '16
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |AlexaStat
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |Awards '16
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |TechCrunch
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |SiteAward '16
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |AlexaStat
-          p.awards-text
-            |Awards '16
+        .awards-row
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |Awards '16
+            p.awards-text
+              |Awwwards '16
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |TechCrunch
+            p.awards-text
+              |Awards '16
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |SiteAward '16
+            p.awards-text
+              |Awards '16
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |AlexaStat
+            p.awards-text
+              |Awards '16
+        .awards-row
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |Awards '16
+            p.awards-text
+              |Awards '16
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |TechCrunch
+            p.awards-text
+              |Awards '16
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |SiteAward '16
+            p.awards-text
+              |Awards '16
+          .awards-item
+            figure.awards-img
+              img(src='https://unsplash.it/64/64/?random', alt='')
+            h4.awards-title
+              |AlexaStat
+            p.awards-text
+              |Awards '16
     section.gallery
       section.filters
         .gallery-filter
@@ -296,6 +308,12 @@ h4 {
     font-weight: 400;
 }
 
+p {
+    font-size: 2.0rem;
+    font-weight: 400;
+    color: $color-lightgrey;
+}
+
 a{
   font-size: 1.5rem;
   font-weight: 400;
@@ -347,12 +365,12 @@ section {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: calc(50% - 50vh / 2);
+    top: calc(50% - 40vh / 2);
     left: 6vw;
     z-index: 100;
     padding: 2rem;
-    width:40vw;
-    height:50vh;
+    width:45vw;
+    max-height:50vh;
     overflow: hidden;
 }
 
@@ -380,8 +398,8 @@ section {
   &::after{
     position: absolute;
     content: "";
-    top: calc(50% - 2.5rem);
-    left:calc(50% - 2rem);
+    top: calc(50% - 1.5rem);
+    left:calc(50% - 4rem);
     border-bottom: 3px solid white;
     display: block;
     height:2rem;
@@ -533,31 +551,21 @@ section {
     flex-direction: column;
 }
 
-.about-img {
-    flex:1;
-    display: flex;
-    padding:0rem 2rem;
-    img{
-      width:100%;
-      height: auto;
-    }
-}
-
 .about-title {
-    flex:1;
-    color:$color-grey;
-    padding:0 0 2vh 0;
+    flex: 1;
+    color: $color-grey;
+    padding: 2vh 10vw;
 }
 
 .about-text {
-    padding:1rem 0rem;
+    padding: 2vh 10vw;
 }
 
 .about-video{
   flex:1;
   display: flex;
-  padding: 4rem;
-  height:70vh;
+  padding: 2vh 10vw;
+  height:60vh;
 }
 
 .info {
@@ -565,7 +573,7 @@ section {
     color: $color-grey;
     display: flex;
     flex-direction: column;
-    background:lighten($color-lightgrey, 50%);
+    background:lighten($color-lightgrey, 57%);
 }
 
 .info-container {
@@ -613,32 +621,26 @@ section {
     flex-direction: column;
     padding: 10vh 6vw 4vh 6vw;
     position: relative;
-    text-align: center;
-    .awards-img {
-        width: 5rem;
-        height: 5rem;
-        position: absolute;
-        display:block;
-        top: calc(15% - 5rem / 2);
-        left: calc(50% - 5rem / 2);
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    }
-  .awards-title{
+    // text-align: center;
+  }
+
+.awards-img{
+  display: none;
+}
+
+.awards-title{
     flex:1;
     color:$color-grey;
   }
-  .awards-text {
+
+.awards-text {
     flex:1;
     color:$color-lightgrey;
   }
-}
 
 .gallery {
     position: relative;
-    padding: $padding;
+    padding: 12vh 10vw 8vh 10vw;
     color: $color-grey;
     background-color: $color-light;
     a {
@@ -660,14 +662,13 @@ section {
     // flex-direction: column;
     flex-wrap: wrap;
     flex-direction: row;
-    max-width: 1200px;
 }
 
 .gallery-filter {
     display: flex;
     position: absolute;
-    top: calc(6vh - 0.5rem);
-    right: 10vw;
+    top: 6vh;
+    right: 11vw;
     flex-direction: row;
 }
 
@@ -685,7 +686,7 @@ section {
 .filter-link {
     list-style: none;
     // flex: 1;
-    font-size: 1.5rem;
+    font-size: 2.0rem;
     padding: 0 1rem;
     // display: flex;
     position: relative;
@@ -767,8 +768,6 @@ section {
 .components-container {
     display: flex;
             flex-wrap: wrap;
-    flex-direction: row;
-    max-width: 1200px;
 }
 
 .components-title{
@@ -779,10 +778,13 @@ section {
   flex:1;
   display:flex;
   flex-direction:column;
-  // padding:2rem;
-  width: calc(100% / 2);
+  padding: 0 2vw;
   .component-title{
     padding: 2rem;
+  }
+  .component-text{
+    padding: 2rem;
+    color: $color-light;
   }
 }
 
@@ -815,7 +817,6 @@ section {
     display: flex;
             flex-wrap: wrap;
     flex-direction: row;
-    max-width: 1200px;
 }
 
 .contact-text{
@@ -839,12 +840,6 @@ section {
 }
 // media
 @media screen and (max-width: 991px) {
-  .about-img {
-      display: none;
-      img{
-        display: none;
-      }
-  }
 
     .info-item {
       flex: none;
@@ -856,14 +851,6 @@ section {
       flex:1;
       display:flex;
       flex-wrap: wrap;
-    }
-
-    .about-container {
-        flex: 1;
-        display: flex;
-        flex-direction: row;
-                flex-wrap: wrap;
-        padding: $padding;
     }
 
     .awards-text {
@@ -893,12 +880,6 @@ section {
     }
 }
 @media screen and (max-width: 480px) {
-  .about-img {
-      display: none;
-      img{
-        display: none;
-      }
-  }
 
   .aside-title {
       position: relative;
