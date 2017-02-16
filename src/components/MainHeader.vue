@@ -334,10 +334,24 @@ a.cart-view {
   }
   .nav {
     height: 4rem;
+    left: 4rem;
   }
   .nav-link {
     line-height: 4rem;
     padding: 1rem;
+  }
+  @media screen and (max-width: 480px) {
+    .header {
+      left: calc(15vw - 4rem);
+    }
+    .nav {
+      height: 4rem;
+      left: 3rem;
+    }
+    .nav-link {
+      line-height: 4rem;
+      padding: 0.6rem;
+    }
   }
 }
 </style>
