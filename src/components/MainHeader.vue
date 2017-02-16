@@ -74,7 +74,7 @@ export default {
 
 $color-dark: #252525;
 $color-grey: #666;
-$color-green: #87C681;
+$color-green: #7BEFB2;
 $color-light: #fff;
 
 a {
