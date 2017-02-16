@@ -13,7 +13,7 @@
               v-bind:value='category') Category: {{ category }}
             span.select-arrow
           .select-wrap
-            select
+            select(v-model='selectedSort')
               option(v-for='sort in sorts'
               v-bind:value='sort') Sort by: {{ sort }}
             span.select-arrow
@@ -24,7 +24,11 @@
             v-if='index >= productsOnPage * (activePage - 1)\
             && index < productsOnPage * activePage')
               .product-img
-                img(v-bind:src='product.url')
+                img(v-bind:src='product.url' v-bind:alt='product.name')
+                .product-actions
+                  a.cart-link
+                  a.star.star-link(v-bind:class='{"star-full": starAdded}'
+                  @click='starAdded = !starAdded')
               h2.product-title {{ product.name }}
               span.product-author {{ product.author }}
               span.product-price ${{ product.price + '.00' }}
@@ -41,7 +45,8 @@
                   v-bind:class='{ "star-full": n < product.stars }')
                 span.product-price ${{ product.price + '.00' }}
               .top-product-img
-                img.product-img(v-bind:src='product.url')
+                img.product-img(v-bind:src='product.url'
+                v-bind:alt='product.name')
         .widget-tags
         .widget-cart
         .widget-viewed
@@ -79,11 +84,13 @@ export default {
   data() {
     return {
       selectedCategory: 'all',
+      selectedSort: 'none',
       categories: ['all', 'illustrations', 'patterns', 'photos'],
-      sorts: ['popular', 'relevant'],
+      sorts: ['none', 'newest', 'popular'],
       filteredProducts: [],
       productsOnPage: 9,
       activePage: 1,
+      starAdded: false,
     };
   },
   created() {
@@ -100,10 +107,25 @@ export default {
         this.filteredProducts = this.products;
         return;
       }
-      this.filteredProducts = [];
-      this.filteredProducts = this.products.filter(product => product.type
+      this.filteredProducts = this.products.filter(prod => prod.type
         === newCategory);
       this.activePage = 1;
+    },
+    selectedSort(newSort) {
+      switch (newSort) {
+        case 'popular':
+          this.filteredProducts = this.products.sort((prodA, prodB) => (
+            prodA.stars <= prodB.stars ? 1 : -1
+          ));
+          break;
+        case 'newest':
+          this.filteredProducts = this.products.sort((prodA, prodB) => (
+            Date.parse(prodA.date) <= Date.parse(prodB.date) ? 1 : -1
+          ));
+          break;
+        default:
+          this.filteredProducts = this.products;
+      }
     },
   },
 };
@@ -113,7 +135,7 @@ export default {
 
 $color-dark: #252525;
 $color-grey: #666;
-$color-green: #87C681;
+$color-green: #7BEFB2;
 $color-light: #fff;
 
 $border: 1px solid rgba(0, 0, 0, 0.2);
@@ -140,12 +162,10 @@ hr {
   width: 100%;
   border: 0;
   display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
+  justify-content: space-between;
 }
 .select-wrap {
-  flex-basis: 40%;
-  margin-right: 10%;
+  flex-basis: 30%;
   padding: 1rem 0;
   position: relative;
   border-bottom: $border;
@@ -153,7 +173,8 @@ hr {
   cursor: pointer;
   .select-arrow {
     display: block;
-    background: $color-light url('../../assets/shop/arrow.svg') no-repeat center center;
+    background-color: $color-light;
+    background: url('../../assets/shop/arrow.svg') no-repeat center center;
     position: absolute;
     width: 2rem;
     height: 2rem;
@@ -195,6 +216,10 @@ select {
 }
 .product-img {
   overflow: hidden;
+  position: relative;
+  &:hover .product-actions {
+    transform: translateX(0%);
+  }
   img {
     transition: all 1s ease;
     &:hover {
@@ -202,16 +227,47 @@ select {
     }
   }
 }
+.product-actions {
+  position: absolute;
+  top: calc(50% - 3rem);
+  right: 1rem;
+  width: 3rem;
+  background-color: $color-light;
+  transform: translateX(200%);
+  transition: 1s;
+  a {
+    display: block;
+    height: 3rem;
+    width: 100%;
+    &:hover {
+      background-color: $color-green;
+    }
+  }
+  .star-full {
+    &::before {
+      color: $color-dark;
+    }
+  }
+}
+.cart-link {
+  background: url('../../assets/cart.svg') no-repeat center center;
+  background-size: 40%;
+}
+.star-link {
+  text-align: center;
+  line-height: 3rem;
+  vertical-align: middle;
+  font-size: 1rem;
+}
 .product-title {
   font-size: 1.5vw;
   flex: 1;
   margin-bottom: 0.3rem;
 }
-.product-price {
-  font-size: 0.8vw;
+.product-price, .product-author {
+  font-size: 1vw;
 }
 .product-author {
-  font-size: 1vw;
   padding-bottom: 0.5rem;
 }
 
@@ -350,26 +406,45 @@ select {
   pointer-events: none;
 }
 
-/* Portrait tablets and small desktops */
-@media screen and (min-width: 481px) and (max-width: 991px) {
+@media screen and (max-width: 991px) {
   .gallery-product {
     flex-basis: calc(90% / 2);
   }
+  .product-title {
+    font-size: 2.5vw;
+  }
+  .product-price, .product-author {
+    font-size: 1.5vw;
+  }
+  .select-wrap {
+    flex-basis: 40%;
+  }
 }
 
-/* Landscape phones and smaller */
 @media screen and (max-width: 480px) {
+  h1 {
+    font-size: 5vw;
+  }
+  .filter {
+    flex-direction: column;
+  }
+  .content {
+    padding: 12vh 15vw 0 15vw;
+  }
   .products {
     flex-direction: column;
   }
-  .gallery {
-    flex: 1;
-  }
-  .sidebar {
+  .gallery, .sidebar {
     flex: 1;
   }
   .gallery-product {
-    flex-basis: 90%;
+    flex-basis: 100%;
+  }
+  .product-title {
+    font-size: 4vw;
+  }
+  .product-price, .product-author {
+    font-size: 3vw;
   }
 }
 </style>
