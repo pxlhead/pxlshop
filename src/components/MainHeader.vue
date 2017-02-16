@@ -181,29 +181,11 @@ a {
 .product-remove {
   flex-basis: 2rem;
   height: 2rem;
-  position: relative;
-  background-color: $color-grey;
-  border-radius: 50%;
+  background-image: url('../assets/close-btn.svg');
+  background-position: center center;
+  background-size: cover;
   &:hover {
-    background-color: darken($color-grey, 10);
-  }
-  &::before,
-  &::after {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    width: 1rem;
-    content: '';
-    display: block;
-    border-bottom: 1px solid $color-light;
-  }
-  &::before {
-    top: 1rem;
-    transform: rotate(45deg);
-  }
-  &::after {
-    top: 1rem;
-    transform: rotate(135deg);
+    opacity: 0.7;
   }
 }
 .cart-subtotal {
@@ -338,6 +320,24 @@ a.cart-view {
   .toggle-icon {
     top: calc(50% - 1rem);
     left: calc(50% - 1.5rem);
+  }
+  .cart-submenu {
+    top: 4rem;
+    left: 0;
+    padding: 2rem;
+    width: 20rem;
+    height: 23rem;
+  }
+  .product-remove {
+    flex-basis: 1.5rem;
+    height: 1.5rem;
+  }
+  .nav {
+    height: 4rem;
+  }
+  .nav-link {
+    line-height: 4rem;
+    padding: 1rem;
   }
 }
 </style>
