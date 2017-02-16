@@ -1,254 +1,307 @@
 <template lang="pug">
-  .content
-    section.slider
-      .slider-container
-        .slide(v-for='(val, key, index) in slides' v-bind:class='[index == 1 ? "slide-active" : ""]')
-          .slide-content
-            h1.slide-title {{ key }}
-            h4.slide-text {{ val }}
-            .slide-action
-              a.slide-link Read more
-              a.slide-link See works
-          .slide-overlay
-          figure.slide-img
-            img(src='https://unsplash.it/1920/1080/?random', alt='')
-        nav.slider-nav
-          .slider-nav-container
-            a.nav-point.point-active
-            a.nav-point
-            a.nav-point
-        a.nav-arrow.arrow-prev
-        a.nav-arrow.arrow-next
-    section.about
-      .about-container
-        .about-item
-          h2.about-title
-            |PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
-          p.about-text
-            |PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
-        .about-video
-          iframe(width="100%" height="auto"
-            src="http://www.youtube.com/embed/XGSy3_Czz8k")
-    section.info
-      .info-container
-        h2.aside-title ABOUT
-        .info-item
-          h4.info-title
-            |Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
-          p.
-            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time. Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page. If you're looking for a unique creative template, then Balzac is it!
-        .info-item
-          h4.info-title
-            |Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
-          p.
-            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time. Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page. If you're looking for a unique creative template, then Balzac is it!
-        .info-item
-          h4.info-title
-            |Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
-          p.
-            Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time. Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of components that can be dropped into any page. If you're looking for a unique creative template, then Balzac is it!
-    section.awards
-      .awards-container
-        h2.aside-title AWARDS
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |Awards '16
-          p.awards-text
-            |Awwwards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |TechCrunch
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |SiteAward '16
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |AlexaStat
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |Awards '16
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |TechCrunch
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |SiteAward '16
-          p.awards-text
-            |Awards '16
-        .awards-item
-          figure.awards-img
-            img(src='https://unsplash.it/64/64/?random', alt='')
-          h4.awards-title
-            |AlexaStat
-          p.awards-text
-            |Awards '16
-    section.gallery
-      section.filters
-        .gallery-filter
-          ul.filter-list
-            li.filter-item
-              a.filter-link Illustration
-                span.filter-number 3
-            li.filter-item
-              a.filter-link Pattern
-                span.filter-number 3
-            li.filter-item
-              a.filter-link Photo
-                span.filter-number 3
-            li.filter-item
-              a.filter-link Font
-                span.filter-number 3
-      .gallery-container
-        h2.aside-title GALLERY
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-        .gallery-item
-          a.gallery-link
-            figure.gallery-img
-              img(src='https://unsplash.it/800/800/?random', alt='')
-              .img-overlay
-                h2.overlay-title
-                  |One of our great illustration
-                p.overlay-text
-                  |Pxlhead Team
-    section.components
-      .components-container
-        h2.aside-title COMMENTS
-        //- h4.components-title
-        //-   |Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
-        .component
-          .component-content
-            h4.component-title
-              | "Lorrem Ipsum"
-            p.component-text
-              | Alex, Google
-            figure.component-img
-              img(src='https://unsplash.it/120/120/?random', alt='')
-        .component
-          .component-content
-            h4.component-title
-              | Lorrem Ipsum
-            p.component-text
-              |Lorrem Ipsum
-            figure.component-img
-              img(src='https://unsplash.it/120/120/?random', alt='')
-        .component
-          .component-content
-            h4.component-title
-              | Lorrem Ipsum
-            p.component-text
-              |Lorrem Ipsum
-            figure.component-img
-              img(src='https://unsplash.it/120/120/?random', alt='')
-        .component
-          .component-content
-            h4.component-title
-              | Lorrem Ipsum
-            p.component-text
-              |Lorrem Ipsum
-            figure.component-img
-              img(src='https://unsplash.it/120/120/?random', alt='')
-        .component
-          .component-content
-            h4.component-title
-              | Lorrem Ipsum
-            p.component-text
-              |Lorrem Ipsum
-            figure.component-img
-              img(src='https://unsplash.it/120/120/?random', alt='')
-        .component
-          .component-content
-            h4.component-title
-              | Lorrem Ipsum
-            p.component-text
-              |Lorrem Ipsum
-            figure.component-img
-              img(src='https://unsplash.it/120/120/?random', alt='')
+
+	.content
+		section.slider
+			.slider-container
+				.slide(v-for='(val, key, index) in slides' v-bind:class='[index == 1 ? "slide-active" : ""]')
+					.slide-content
+						h1.slide-title {{ key }}
+						h4.slide-text {{ val }}
+						.slide-action
+							a.slide-link Read more
+							a.slide-link See works
+					.slide-overlay
+					figure.slide-img
+						img(src='https://unsplash.it/1920/1080/?random', alt='')
+				nav.slider-nav
+					.slider-nav-container
+						a.nav-point.point-active
+						a.nav-point
+						a.nav-point
+				a.nav-arrow.arrow-prev
+				a.nav-arrow.arrow-next
+		section.about
+			.about-container
+				.about-item
+					h2.about-title
+						|PXLSHOP is a platform for handcrafted, mousemade design content from independent creatives around the world.
+					p.about-text.
+						You are sleeping. You don not want to believe!
+						You are sleeping. You don not want to believe!
+						You are sleeping. You don not want to believe!
+						You are sleeping. You don not want to believe!
+						You are sleeping. You don not want to believe!
+				.about-video
+					iframe(width="100%" height="auto"
+						src="https://www.youtube.com/embed/XZDt-O6r7rM")
+		section.info
+			.info-container
+				h2.aside-title ABOUT
+				.info-item
+					h4.info-title
+						|Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
+					p.
+						Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time.
+						Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of comments that can be dropped into any page.
+						If you're looking for a unique creative template, then Balzac is it!
+				.info-item
+					h4.info-title
+						|Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
+					p.
+						Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time.
+						Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of comments that can be dropped into any page.
+						If you're looking for a unique creative template, then Balzac is it!
+				.info-item
+					h4.info-title
+						|Balzac is a template for the creative design or ad agency looking for an eye popping, hip and modern look.
+					p.
+						Balzac comes with a wide variety of carfully crafted pages that are ready-to-use and built to save you time.
+						Balzac includes portfolio layouts, about layouts, blog layouts, utility layouts, e-commerce layouts and a ton of comments that can be dropped into any page.
+						If you're looking for a unique creative template, then Balzac is it!
+		section.awards
+			.awards-container
+				h2.aside-title AWARDS
+				.awards-row
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|Awards '16
+						p.awards-text
+							|Awwwards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|TechCrunch
+						p.awards-text
+							|Awards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|SiteAward '16
+						p.awards-text
+							|Awards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|AlexaStat
+						p.awards-text
+							|Awards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|AlexaStat
+						p.awards-text
+							|Awards '16
+				.awards-row
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|Awards '16
+						p.awards-text
+							|Awards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|AlexaStat
+						p.awards-text
+							|Awards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|TechCrunch
+						p.awards-text
+							|Awards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|SiteAward '16
+						p.awards-text
+							|Awards '16
+					.awards-item
+						figure.awards-img
+							img(src='https://unsplash.it/64/64/?random', alt='')
+						h4.awards-title
+							|AlexaStat
+						p.awards-text
+							|Awards '16
+		section.gallery
+			section.filters
+				.gallery-filter
+					ul.filter-list
+						li.filter-item
+							a.filter-link Illustration
+								span.filter-number 3
+						li.filter-item
+							a.filter-link Pattern
+								span.filter-number 3
+						li.filter-item
+							a.filter-link Photo
+								span.filter-number 3
+						li.filter-item
+							a.filter-link Font
+								span.filter-number 3
+			.gallery-container
+				h2.aside-title GALLERY
+				.gallery-row
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+				.gallery-row
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+					.gallery-item
+						a.gallery-link
+							figure.gallery-img
+								img(src='https://unsplash.it/800/800/?random', alt='')
+								.img-overlay
+									h2.overlay-title
+										|One of our great illustration
+									p.overlay-text
+										|Pxlhead Team
+		section.comments
+			.comments-container
+				h2.aside-title COMMENTS
+				.comments-row
+					.comment
+							p.comment-title.
+								"Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+								sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis"
+							a.comment-text
+								| Alex, Google
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
+					.comment
+							p.comment-title.
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, se
+								d do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis
+							a.comment-text
+								|Lorrem Ipsum
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
+					.comment
+							p.comment-title.
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, se
+								d do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis
+							a.comment-text
+								|Lorrem Ipsum
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
+					.comment
+							p.comment-title.
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, se
+								d do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis
+							a.comment-text
+								|Lorrem Ipsum
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
+				.comments-row
+					.comment
+							p.comment-title.
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, se
+								d do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis
+							a.comment-text
+								|Lorrem Ipsum
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
+					.comment
+							p.comment-title.
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, se
+								d do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis
+							a.comment-text
+								|Lorrem Ipsum
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
+					.comment
+							p.comment-title.
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, se
+								d do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis
+							a.comment-text
+								|Lorrem Ipsum
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
+					.comment
+							p.comment-title.
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, se
+								d do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								Ut enim ad minim veniam, quis
+							a.comment-text
+								|Lorrem Ipsum
+							figure.comment-img
+								img(src='https://unsplash.it/60/60/?random', alt='')
 </template>
 
 <script>
@@ -267,13 +320,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 $padding: 8vh 10vw;
 
 $color-dark: #252525;
-$color-grey: #444;
-$color-lightgrey: #666;
-$color-green: #87C681;
+$color-grey: #666;
+$color-green: #7befb2;
 $color-pink: #D9879C;
 $color-light: #fff;
 
@@ -296,13 +347,19 @@ h4 {
     font-weight: 400;
 }
 
-a{
-  font-size: 1.5rem;
-  font-weight: 400;
-  color:$color-light;
-  &:hover{
-    color:$color-green;
-  }
+p {
+    font-size: 2.0rem;
+    font-weight: 400;
+    color: $color-grey;
+}
+
+a {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: $color-light;
+    &:hover {
+        color: $color-green;
+    }
 }
 
 figure {
@@ -347,12 +404,12 @@ section {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: calc(50% - 50vh / 2);
+    top: calc(50% - 40vh / 2);
     left: 6vw;
     z-index: 100;
     padding: 2rem;
-    width:40vw;
-    height:50vh;
+    width: 45vw;
+    max-height: 50vh;
     overflow: hidden;
 }
 
@@ -363,31 +420,33 @@ section {
     height: 100vh;
 }
 
-.slide-title,.slide-text,.slide-link{
-    flex:1;
+.slide-link,
+.slide-text,
+.slide-title {
+    flex: 1;
     padding: 2rem 0;
 }
 
-.slide-action{
-  flex:1;
-  display: flex;
-  position: relative;
-  width:20vw;
-  .slide-link{
-    font-weight: 500;
-    font-size: 2rem;
-  }
-  &::after{
-    position: absolute;
-    content: "";
-    top: calc(50% - 2.5rem);
-    left:calc(50% - 2rem);
-    border-bottom: 3px solid white;
-    display: block;
-    height:2rem;
-    width:2rem;
-    transform: rotate(65deg);
-  }
+.slide-action {
+    flex: 1;
+    display: flex;
+    position: relative;
+    width: 20vw;
+    .slide-link {
+        font-weight: 500;
+        font-size: 2rem;
+    }
+    &::after {
+        position: absolute;
+        content: "";
+        top: calc(50% - 1.5rem);
+        left: calc(50% - 4rem);
+        border-bottom: 3px solid white;
+        display: block;
+        height: 2rem;
+        width: 2rem;
+        transform: rotate(65deg);
+    }
 }
 
 .slider-nav {
@@ -411,8 +470,8 @@ section {
     position: relative;
     opacity: 0.6;
     z-index: 101;
-    &:hover{
-      opacity: 1;
+    &:hover {
+        opacity: 1;
     }
     &::before {
         position: absolute;
@@ -442,8 +501,8 @@ section {
     opacity: 0.6;
     z-index: 101;
     cursor: pointer;
-    &:hover{
-      opacity:1;
+    &:hover {
+        opacity: 1;
     }
 }
 .slider:hover .nav-arrow {
@@ -517,7 +576,7 @@ section {
     color: $color-grey;
     display: flex;
     flex-direction: column;
-    background:$color-light;
+    background: $color-light;
 }
 
 .about-container {
@@ -528,36 +587,26 @@ section {
 }
 
 .about-item {
-    flex:1;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.about-img {
-    flex:1;
-    display: flex;
-    padding:0rem 2rem;
-    img{
-      width:100%;
-      height: auto;
-    }
-}
-
 .about-title {
-    flex:1;
-    color:$color-grey;
-    padding:0 0 2vh 0;
+    flex: 1;
+    color: $color-dark;
+    padding: 2vh 10vw;
 }
 
 .about-text {
-    padding:1rem 0rem;
+    padding: 2vh 10vw;
 }
 
-.about-video{
-  flex:1;
-  display: flex;
-  padding: 4rem;
-  height:70vh;
+.about-video {
+    flex: 1;
+    display: flex;
+    padding: 2vh 10vw;
+    height: 60vh;
 }
 
 .info {
@@ -565,80 +614,80 @@ section {
     color: $color-grey;
     display: flex;
     flex-direction: column;
-    background:lighten($color-lightgrey, 50%);
+    background: lighten($color-grey, 57%);
 }
 
 .info-container {
     flex: 1;
     display: flex;
     flex-direction: row;
-            flex-wrap: wrap;
+    flex-wrap: wrap;
     padding: $padding;
+    justify-content: space-between;
 }
 
 .info-item {
-    flex: 1;
+    flex-basis: 30%;
     display: flex;
     flex-direction: column;
-    padding:2rem;
-    width:100%;
-    // padding: 5rem;
+    // padding:2rem;
 }
 
 .info-title {
-    flex:1;
-    color:$color-grey;
-    padding:0 0 4vh 0;
+    flex: 1;
+    color: $color-dark;
+    padding: 0 0 4vh;
 }
 
-.awards{
-  display:flex;
-  position: relative;
-  right: 0;
-  left: 0;
-  padding:$padding;
-  color:$color-grey;
-  background-color:$color-green;
+.awards {
+    display: flex;
+    position: relative;
+    right: 0;
+    left: 0;
+    padding: $padding;
+    color: $color-grey;
+    background-color: $color-green;
 }
 
-.awards-container{
-  flex:1;
-  display:flex;
-  flex-wrap: wrap;
+.awards-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.awards-row {
+    flex: 1;
+    display: flex;
 }
 
 .awards-item {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 10vh 6vw 4vh 6vw;
+    padding: 6vh 0;
     position: relative;
-    text-align: center;
-    .awards-img {
-        width: 5rem;
-        height: 5rem;
-        position: absolute;
-        display:block;
-        top: calc(15% - 5rem / 2);
-        left: calc(50% - 5rem / 2);
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    }
-  .awards-title{
-    flex:1;
-    color:$color-grey;
-  }
-  .awards-text {
-    flex:1;
-    color:$color-lightgrey;
-  }
+    // text-align: center;
+}
+
+.awards-img {
+    display: none;
+}
+
+.awards-title {
+    flex: 1;
+    align-self: center;
+    color: $color-dark;
+}
+
+.awards-text {
+    flex: 1;
+    align-self: center;
+    color: $color-grey;
 }
 
 .gallery {
     position: relative;
-    padding: $padding;
+    padding: 12vh 10vw 8vh;
     color: $color-grey;
     background-color: $color-light;
     a {
@@ -647,27 +696,30 @@ section {
 }
 
 .aside-title {
-    position:absolute;
+    position: absolute;
     top: 45%;
-    left: 0rem;
+    left: 0;
     font-size: 3rem;
     transform: rotate(90deg);
-    color: $color-grey;
+    color: $color-dark;
 }
 
 .gallery-container {
     display: flex;
-    // flex-direction: column;
-    flex-wrap: wrap;
-    flex-direction: row;
-    max-width: 1200px;
+    flex-direction: column;
+}
+
+.gallery-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
 }
 
 .gallery-filter {
     display: flex;
     position: absolute;
-    top: calc(6vh - 0.5rem);
-    right: 10vw;
+    top: 6vh;
+    right: 11vw;
     flex-direction: row;
 }
 
@@ -685,7 +737,7 @@ section {
 .filter-link {
     list-style: none;
     // flex: 1;
-    font-size: 1.5rem;
+    font-size: 2.0rem;
     padding: 0 1rem;
     // display: flex;
     position: relative;
@@ -695,21 +747,21 @@ section {
 
 .filter-number {
     position: absolute;
-        color:$color-lightgrey;
+    color: $color-dark;
     display: block;
     top: -1rem;
-    right: 0rem;
+    right: 0;
 }
 
 .gallery-item {
-    width: calc(100% / 4);
+    flex-basis: calc(90% / 4);
+    display: flex;
 }
 
 .gallery-img {
-    margin: 1rem;
     padding: 0;
     position: relative;
-    overflow:hidden;
+    overflow: hidden;
     img {
         max-width: 100%;
         height: auto;
@@ -717,262 +769,264 @@ section {
 }
 
 .img-overlay {
-  transform: translateY(-100%);
-  background-color:rgba(0,0,0,0.5);
-  width:100%;
-  height:99%;
-  position:absolute;
-  top:0;
-  left:0;
-  display: block;
-  transition: 0.5s;
+    transform: translateY(-100%);
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 99%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    transition: 0.5s;
 }
 
-.overlay-title{
-  width:75%;
-  height:25%;
-  position:absolute;
-  color:$color-light;
-  top:calc(50% - 25% / 2);
-  left:calc(50% - 75% / 2);
-  display: block;
-  text-align: center;
+.overlay-title {
+    width: 75%;
+    height: 25%;
+    position: absolute;
+    color: $color-light;
+    top: calc(50% - 30% / 2);
+    left: calc(50% - 75% / 2);
+    display: block;
+    text-align: center;
+    overflow: hidden;
 }
 
-.overlay-text{
-  width:75%;
-  height:25%;
-  position:absolute;
-  color:$color-light;
-  top:calc(75% - 25% / 2);
-  left:calc(50% - 75% / 2);
-  display: block;
-  text-align: center;
+.overlay-text {
+    width: 75%;
+    height: 25%;
+    position: absolute;
+    color: $color-light;
+    top: calc(75% - 20% / 2);
+    left: calc(50% - 75% / 2);
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    &:hover {
+        color: $color-green;
+    }
+}
+.gallery-img:hover .img-overlay {
+    transform: translateY(0%);
+    transition: 0.5s;
 }
 
-.gallery-img:hover .img-overlay{
-  transform: translateY(0%);
-  transition: 0.5s;
+.comments {
+    position: relative;
+    padding: $padding;
+    color: $color-light;
+    background-color: lighten($color-grey,20%);
+    text-align: center;
 }
 
-
-.components{
-  position: relative;
-  padding: $padding;
-  color: $color-light;
-  background-color:$color-lightgrey;
-  text-align:center;
-}
-
-.components-container {
+.comments-container {
     display: flex;
-            flex-wrap: wrap;
-    flex-direction: row;
-    max-width: 1200px;
+    flex-direction: column;
 }
 
-.components-title{
-  padding: 0 2rem 5rem 2rem;
+.comments-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 2em 0;
 }
 
-.component{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  // padding:2rem;
-  width: calc(100% / 2);
-  .component-title{
-    padding: 2rem;
-  }
+.comments-title {
+    padding: 0 2rem 5rem;
+    color: lighten($color-grey,50%);
 }
 
-.component-img {
-    margin: auto;
-    padding: 1rem;
+.comment {
+    flex-basis: calc(90% / 4);
+    display: flex;
+    flex-direction: column;
+    .comment-title {
+        flex: 3;
+        padding: 2rem;
+        overflow: hidden;
+        color: $color-light;
+    }
+    .comment-text {
+        flex:1;
+        padding: 2rem;
+        color: $color-light;
+    }
+}
+
+.comment-img {
+    // margin: auto;
+    width: calc(100% / 4);
+    align-self: center;
     img {
         max-width: 100%;
+        border-radius: 50%;
     }
 }
 
-.components{
-  .aside-title{
-    color:$color-light;
-    &::after{
-      background-color:$color-light;
-    }
-  }
-}
-
-.contact{
-  position: relative;
-  padding: $padding;
-  color: $color-grey;
-  background-color:$color-light;
-  text-align:center;
-}
-
-.contact-container {
-    display: flex;
-            flex-wrap: wrap;
-    flex-direction: row;
-    max-width: 1200px;
-}
-
-.contact-text{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  padding:2rem;
-  width: calc(100% / 3);
-  .component-title{
-    padding:0.5rem;
-    color: $color-grey;
-  }
-}
-
-.contact-img {
-    margin: auto;
-    padding: 1rem;
-    img {
-        max-width: 100%;
+.comments {
+    .aside-title {
+        color: $color-light;
+        &::after {
+            background-color: $color-light;
+        }
     }
 }
-// media
+
 @media screen and (max-width: 991px) {
-  .about-img {
-      display: none;
-      img{
-        display: none;
-      }
+
+  .slide-content{
+    top: calc(50% - 80vh / 2);
+    max-height: 80vh;
+    .slide-action{
+      width: 40vw;
+    }
+  }
+  .slide-img{
+    img{
+      height: 100%;
+    }
   }
 
-    .info-item {
-      flex: none;
-      width: calc(100% / 1);
-      padding:1rem 0;
+  .info-container{
+    flex-direction: column;
+    .info-item{
+      padding: 2rem 0;
+    }
+  }
+
+  .awards-container{
+    flex-direction: row;
+    .awards-row{
+      flex-direction: column;
+    }
+  }
+
+  .gallery-container{
+    flex-direction: row;
+    .gallery-row{
+      flex-direction: column;
+      .gallery-item{
+        padding: 2rem;
+      }
+    }
+  }
+
+  .comments-container{
+    flex-direction: row;
+    .comments-row{
+      flex-direction: column;
+    }
+  }
+}
+@media screen and (max-width: 480px) {
+
+    .slide-content{
+        transform: scale(0.8);
+        width:80vw;
+        .slide-action{
+          width:80vw;
+        }
+    }
+
+    .slider-nav{
+        left: 35%;
+    }
+
+    .aside-title {
+        position: relative;
+        display: flex;
+        padding: 3vh 23vw;
+        flex: 1;
+        font-size: 3rem;
+        text-align: center;
+        transform: none;
+        top: 0;
+        left: 0;
+        &::after {
+            position: absolute;
+            content: "";
+            top: calc(80%);
+            left: calc(50% - 2.5rem);
+            display: block;
+            width: 4rem;
+            height: 0.2rem;
+            background-color: $color-dark;
+        }
+    }
+
+    .info {
+        .aside-title {
+            left: calc(50% - 17rem);
+            &::after {
+                left: calc(50% - 8vw);
+                top: calc(80% - 0vh);
+            }
+        }
     }
 
     .awards-container{
-      flex:1;
-      display:flex;
+      flex-direction: row;
       flex-wrap: wrap;
+      max-width:100vw;
+      .awards-row{
+        flex-direction: column;
+      }
     }
 
-    .about-container {
-        flex: 1;
-        display: flex;
-        flex-direction: row;
-                flex-wrap: wrap;
-        padding: $padding;
+    .gallery-container{
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-width:100vw;
+      .gallery-row{
+        flex-direction: column;
+        .gallery-item{
+          padding: 2rem;
+        }
+      }
     }
 
-    .awards-text {
-      display:none;
+    .comments-container{
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-width:100vw;
+      .comments-row{
+        flex-direction: column;
+      }
     }
 
-    .aside-title{
-      left: -4vh;
+    .awards {
+        padding: 2vh 10vw;
     }
-
-    .gallery-container {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
+    .awards-item {
+        padding: 3vh;
     }
-    .gallery-item {
-        width: calc(100% / 2);;
-    }
-
-    .components-container {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-    }
-    .component {
-        width: calc(100% / 2);
-    }
-}
-@media screen and (max-width: 480px) {
-  .about-img {
-      display: none;
-      img{
+    .awards-img {
         display: none;
-      }
-  }
-
-  .aside-title {
-      position: relative;
-      display: flex;
-      padding:3vh 23vw;
-      flex:1;
-      font-size: 3rem;
-      text-align: center;
-      transform: none;
-      top:0;
-      left:0;
-      &::after{
-        position:absolute;
-        content: "";
-        top:calc(80%);
-        left:calc(50% - 2.5rem);
-        display: block;
-        width:4rem;
-        height:0.2rem;
-        background-color: $color-grey;
-      }
-  }
-
-  .info{
-    .aside-title {
-      left:calc(50% - 17rem);
-      &::after{
-        left:calc(50% - 8vw);
-        top:calc(80% - 0vh);
-      }
+        img {
+            display: none;
+        }
     }
-  }
-
-  .awards{
-    padding:2vh 10vw;
-  }
-  .awards-item{
-    padding:3vh;
-  }
-  .awards-img{
-    display: none;
-    img{
-      display: none;
+    .gallery-container {
+        .aside-title {
+            padding-bottom: 10vh;
+            &::after {
+                top: calc(80% - 5vh);
+            }
+        }
     }
-  }
-  .gallery-container{
-    .aside-title {
-      padding-bottom: 10vh;
-      &::after{
-        top:calc(80% - 5vh);
-      }
+
+
+    .comments {
+        .aside-title {
+            left: calc(50% - 19rem);
+            &::after {
+                top: calc(80% - 0vh);
+            }
+        }
     }
-  }
 
-  .components{
-    .aside-title {
-      left:calc(50% - 19rem);
-      &::after{
-        top:calc(80% - 0vh);
-      }
+    .gallery-filter {
+        top: calc(27vh - 0.5rem);
+        left: calc(50% - 17rem);
     }
-  }
-
-  .gallery-filter{
-    top:calc(22vh - 0.5rem);
-    left:calc(50% - 15rem);
-  }
-
-  .gallery-item {
-      width: calc(100%);
-  }
-
-  .component {
-      width: calc(100%);
-  }
 }
 </style>
