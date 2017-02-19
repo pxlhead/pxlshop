@@ -1,23 +1,25 @@
 <template lang="pug">
   .content
-    section.slider
-      .slide(v-for='(val, key, index) in slides'
-      v-bind:class='[index == 1 ? "slide-active" : ""]')
+    .slider
+      .slide(v-for='(slide, index) in slides'
+      v-bind:class='{"slide-active" : index == activeSlide}')
         .slide-content
-          h1.slide-title {{ key }}
-          h4.slide-text {{ val }}
+          h1.slide-title {{ slide.title }}
+          h4.slide-text {{ slide.text }}
           .slide-action
             a Read more
             a See works
         .slide-overlay
         figure.slide-img
-          img(src='../../assets/index/yellow-sofa.jpg' alt='Welcome picture')
+          img(v-bind:src='loadImage(slide.name)'
+          v-bind:class='`img-${slide.name}`'
+          alt='Welcome picture')
       nav.slider-nav
-        a.nav-point.point-active
-        a.nav-point
-        a.nav-point
-      a.nav-arrow.arrow-prev
-      a.nav-arrow.arrow-next
+        a.nav-point(v-for='(slide, index) in slides'
+        v-bind:class='{"point-active": index == activeSlide}'
+        @click='changeSlide(index)')
+      a.nav-arrow.arrow-prev(@click='changeSlide("prev")')
+      a.nav-arrow.arrow-next(@click='changeSlide("next")')
     section.about
       .about-item
         h2.about-title
@@ -38,7 +40,7 @@
           Artists are at the heart of everything we do and the reason why
           pxlshop continues to be an important destination for stock content.
           By providing a platform for our artists to distribute some of the best
-          stock content in the world, iStock has given them the opportunity to
+          stock content in the world, we give them the opportunity to
           transform their lives by making a living through their art.
       .info-item
         h4.info-title We kind to our culture
@@ -57,21 +59,20 @@
     section.awards
       h2.aside-title AWARDS
       .awards-item(v-for='n in 4')
-        img(src='' alt='award.name')
+        img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
     section.gallery
       h2.aside-title GALLERY
       .gallery-item(v-for='n in 3')
-        a.gallery-link
-          figure.gallery-img
-            img(src='https://unsplash.it/800/800/?random' alt='')
-            .img-overlay
-              h2.overlay-title Title
-              p.overlay-author Author
+        figure.gallery-img
+          img(src='https://unsplash.it/800/800/?random' alt='')
+          .img-overlay
+            h2.overlay-title Title
+            p.overlay-author Author
     section.comments
       h2.aside-title COMMENTS
       .comment(v-for='n in 4')
         figure.comment-img
-          img(src='../../assets/avatar.svg' alt='')
+          img(src='../../assets/avatar.svg' alt='Author avatar')
         cite.comment-author Alex, Google
         blockquote.comment-text
           | Lorem ipsum dolor sit amet, consectetur adipisicing elit,
@@ -79,16 +80,50 @@
 </template>
 
 <script>
+/* eslint-disable no-multi-str */
+/* eslint-disable global-require */
+/* eslint-disable no-unused-expressions */
 export default {
   name: 'index',
   data() {
     return {
-      slides: {
-        'Welcome to our creative marketplace!': 'We are really enjoy to see you here again',
-        'Welcome to our media marketplace!': 'Stock on photos, illustrations and video from best creatives around the world',
-        'Welcome to our!': 'We are really enjon',
-      },
+      activeSlide: 0,
+      slides: [{
+        name: 'main',
+        title: 'Welcome to our media market place!',
+        text: 'Stock on photos, illustrations and videos from best creatives\
+        around the world',
+      }, {
+        name: 'team',
+        title: 'Join our creative team',
+        text: 'Stock on photos, illustrations and videos from best creatives\
+        around the world',
+      }, {
+        name: 'shop',
+        title: 'Welcome to our media market place!',
+        text: 'Stock on photos, illustrations and videos from best creatives\
+        around the world',
+      }],
     };
+  },
+  methods: {
+    changeSlide(n) {
+      if (n === 'prev') {
+        this.activeSlide !== 0 ? this.activeSlide -= 1 : this.activeSlide = 2;
+      } else if (n === 'next') {
+        this.activeSlide !== 2 ? this.activeSlide += 1 : this.activeSlide = 0;
+      } else {
+        this.activeSlide = n;
+      }
+    },
+    loadImage(slide) {
+      if (slide === 'main') {
+        return require('../../assets/index/yellow-sofa.jpg');
+      } else if (slide === 'team') {
+        return require('../../assets/index/deer.jpg');
+      }
+      return require('../../assets/index/plant.jpg');
+    },
   },
 };
 
@@ -103,15 +138,6 @@ $color-green: #7BEFB2;
 $color-pink: #D9879C;
 $color-light: #fff;
 
-h1 {
-  font-size: 5.6rem;
-}
-h2 {
-  font-size: 3.5rem;
-}
-h4 {
-  font-size: 3.0rem;
-}
 p {
   font-size: 2.0rem;
   color: $color-grey;
@@ -125,12 +151,10 @@ a {
   }
 }
 .slider {
-  display: flex;
   position: relative;
   overflow: hidden;
 }
 .slide {
-  flex: 1;
   height: 100vh;
   display: none;
   flex-direction: column;
@@ -148,9 +172,11 @@ a {
 }
 .slide-img {
 	margin: 0;
-	img {
-		transform: translateY(-10%);
-	}
+}
+.img-main,
+.img-team,
+.img-shop {
+  transform: translateY(-10%);
 }
 .slide-title {
 	font-size: 8vh;
@@ -264,6 +290,7 @@ a {
 }
 .about-title {
   color: $color-dark;
+  font-size: 3.5rem;
 }
 .about-text {
   padding-bottom: 2rem;
@@ -295,6 +322,7 @@ iframe {
 }
 .info-title {
   color: $color-dark;
+  font-size: 3.0rem;
 }
 .aside-title {
   position: absolute;
@@ -308,12 +336,22 @@ iframe {
 }
 .awards {
   background-color: $color-green;
+  justify-content: center;
   .aside-title {
     top: 25%;
   }
 }
 .awards-item {
-  flex-basis: 20%;
+  flex-basis: 15%;
+  border: 1px dashed rgba(6, 0, 0, 0.3);
+  border-left: 0;
+  padding: 0 5rem;
+  &:last-child {
+    border-right: 0;
+  }
+  img {
+    margin: 0 auto;
+  }
 }
 .gallery {
   .aside-title {
@@ -407,29 +445,40 @@ iframe {
     img {
       height: 100vh;
       width: auto;
-      transform: translateY(0) scale(1.8);
     }
   }
-  .info {
+  .img-main,
+  .img-team,
+  .img-shop {
+    transform: translateY(0);
+  }
+  .img-main {
+    transform: scale(1.8);
+  }
+  .img-team {
+    transform: translateX(-20%) scale(1.2);
+  }
+  .info,
+  .gallery,
+  .comments {
     flex-direction: column;
+    align-items: center;
   }
   .info-item {
     padding: 2rem 0;
   }
-  .gallery-container {
-    flex-direction: row;
-    .gallery-row {
-      flex-direction: column;
-      .gallery-item {
-        padding: 2rem;
-      }
-    }
+  .aside-title {
+    left: 7vw;
   }
-  .comments-container {
-    flex-direction: row;
-    .comments-row {
-      flex-direction: column;
-    }
+  .awards-item:nth-child(3) {
+    border-right: 0;
+  }
+  .gallery-item {
+    width: 80%;
+  }
+  .awards-item {
+    flex-basis: 20%;
+    padding: 0 5rem;
   }
 }
 
@@ -438,106 +487,28 @@ iframe {
     transform: scale(0.8);
     width: 80vw;
     top: 10vh;
-    .slide-action {
-      width: 80vw;
+  }
+  .slide-img {
+    img {
+      height: 100vh;
+      width: auto;
     }
   }
-	.slide-img {
-		img {
-			height: 100vh;
-			width: auto;
-			transform: translateX(-20%);
-		}
-	}
-  .slider-nav {
-    left: 35%;
+  .img-main {
+    transform: translateX(-20%);
   }
-  .aside-title {
-    position: relative;
-    display: flex;
-    padding: 3vh 23vw;
-    flex: 1;
-    font-size: 3rem;
-    text-align: center;
-    transform: none;
-    top: 0;
-    left: 0;
-    &::after {
-      position: absolute;
-      content: "";
-      top: calc(80%);
-      left: calc(50% - 2.5rem);
-      display: block;
-      width: 4rem;
-      height: 0.2rem;
-      background-color: $color-dark;
-    }
+  .img-team {
+    transform: translateX(-40%);
   }
-  .aside-title {
-    left: calc(50% - 17rem);
-    &::after {
-      left: calc(50% - 8vw);
-      top: calc(80% - 0vh);
-    }
+  .img-shop {
+    transform: translateX(-30%) scale(1.4);
   }
-  .awards-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 100vw;
-    .awards-row {
-      flex-direction: column;
-    }
-  }
-  .gallery-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 100vw;
-    .gallery-row {
-      flex-direction: column;
-      .gallery-item {
-        padding: 2rem;
-      }
-    }
-  }
-  .comments-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 100vw;
-    .comments-row {
-      flex-direction: column;
-    }
-  }
-  .awards {
-    padding: 2vh 10vw;
+  .about-title {
+    font-size: 2.6rem;
   }
   .awards-item {
-    padding: 3vh;
-  }
-  .awards-img {
-    display: none;
-    img {
-      display: none;
-    }
-  }
-  .gallery-container {
-    .aside-title {
-      padding-bottom: 10vh;
-      &::after {
-        top: calc(80% - 5vh);
-      }
-    }
-  }
-  .comments {
-    .aside-title {
-      left: calc(50% - 19rem);
-      &::after {
-        top: calc(80% - 0vh);
-      }
-    }
-  }
-  .gallery-filter {
-    top: calc(27vh - 0.5rem);
-    left: calc(50% - 17rem);
+    border-right: 0;
+    flex-basis: 30%;
   }
 }
 </style>
