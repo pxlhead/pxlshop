@@ -174,7 +174,7 @@ hr {
   .select-arrow {
     display: block;
     background-color: $color-light;
-    background: url('../../assets/shop/arrow.svg') no-repeat center center;
+    background: url('../../assets/arrow.svg') no-repeat center center;
     position: absolute;
     width: 2rem;
     height: 2rem;
@@ -359,7 +359,7 @@ select {
     &::before {
       content: '';
       position: absolute;
-      background: url('../../assets/shop/arrow.svg') no-repeat top center;
+      background: url('../../assets/arrow.svg') no-repeat top center;
       width: 2rem;
       height: 2rem;
       top: -10%;

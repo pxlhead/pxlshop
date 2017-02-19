@@ -27,9 +27,9 @@ a {
   color: $color-grey;
   text-decoration: none;
   cursor: pointer;
-}
-a:hover {
-  color: $color-green;
+  &:hover {
+    color: $color-green;
+  }
 }
 img {
   background-size: cover;
