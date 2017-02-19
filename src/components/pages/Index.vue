@@ -173,10 +173,12 @@ a {
 .slide-img {
 	margin: 0;
 }
-.img-main,
-.img-team,
-.img-shop {
+.img-main {
   transform: translateY(-10%);
+}
+.img-shop,
+.img-team {
+  transform: translateY(-2%) translateX(4%) scale(1.1);
 }
 .slide-title {
 	font-size: 8vh;
