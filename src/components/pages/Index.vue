@@ -60,14 +60,14 @@
       h2.aside-title AWARDS
       .awards-item(v-for='n in 4')
         img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
-    section.gallery
+    section.gallery(v-if='sortTopProducts')
       h2.aside-title GALLERY
-      .gallery-item(v-for='n in 3')
+      .gallery-item(v-for='product in topProducts')
         figure.gallery-img
-          img(src='https://unsplash.it/800/800/?random' alt='')
+          img(v-bind:src='product.url' alt='product.name')
           .img-overlay
-            h2.overlay-title Title
-            p.overlay-author Author
+            h2.overlay-title {{ product.name }}
+            p.overlay-author {{ product.author }}
     section.comments
       h2.aside-title COMMENTS
       .comment(v-for='n in 4')
@@ -83,8 +83,13 @@
 /* eslint-disable no-multi-str */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-expressions */
+import Firebase from '../../appconfig/firebase';
+
 export default {
   name: 'index',
+  firebase: {
+    products: Firebase.getDbRef('products'),
+  },
   data() {
     return {
       activeSlide: 0,
@@ -95,7 +100,7 @@ export default {
         around the world',
       }, {
         name: 'team',
-        title: 'Join our creative team',
+        title: 'Join our creative team!',
         text: 'Stock on photos, illustrations and videos from best creatives\
         around the world',
       }, {
@@ -104,7 +109,16 @@ export default {
         text: 'Stock on photos, illustrations and videos from best creatives\
         around the world',
       }],
+      topProducts: {},
     };
+  },
+  computed: {
+    sortTopProducts() {
+      this.topProducts = this.products.sort((prodA, prodB) => (
+        prodA.stars <= prodB.stars ? 1 : -1
+      )).slice(0, 3);
+      return this.topProducts.length >= 1;
+    },
   },
   methods: {
     changeSlide(n) {
@@ -376,7 +390,7 @@ iframe {
   transform: translateY(-100%);
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
-  height: 100%;
+  height: 99%;
   position: absolute;
   top: 0;
   left: 0;
@@ -385,16 +399,17 @@ iframe {
 .overlay-title {
   position: absolute;
   color: $color-light;
-  top: calc(50% - 6rem);
-  left: calc(50% - 3rem);
+  bottom: 20%;
+  left: 5%;
   overflow: hidden;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .overlay-author {
   position: absolute;
   color: $color-light;
-  top: 50%;
-  left: calc(50% - 3rem);
+  font-size: 1.6rem;
+  bottom: 5%;
+  left: 5%;
   overflow: hidden;
   &:hover {
     color: $color-green;
