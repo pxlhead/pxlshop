@@ -9,10 +9,9 @@ const config = {
 };
 
 const firebaseApp = firebase.initializeApp(config);
-const db = firebaseApp.database();
 
 export default {
-  getDbRef(path) {
-    return db.ref(path);
-  },
+  firebase: firebaseApp,
+  dbProductsRef: firebaseApp.database().ref('products'),
+  auth: firebaseApp.auth(),
 };

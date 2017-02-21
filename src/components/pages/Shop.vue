@@ -73,13 +73,12 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
 import Firebase from '../../appconfig/firebase';
 
 export default {
   name: 'shop',
   firebase: {
-    products: Firebase.getDbRef('products'),
+    products: Firebase.dbProductsRef,
   },
   data() {
     return {
