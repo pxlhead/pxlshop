@@ -5,7 +5,7 @@
         img(src='../assets/logo.svg' alt='Logo')
     .cart
         a.cart-link
-          img(src='../assets/cart.svg' alt='Cart')
+          img(src='../assets/icons/cart.svg' alt='Cart')
           span.cart-count
         .cart-submenu
           ul.submenu-list

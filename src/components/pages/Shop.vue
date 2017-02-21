@@ -56,7 +56,7 @@
             | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
             | do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           .payment-icon
-            img(src='../../assets/shop/paypal-icon.svg')
+            img(src='../../assets/icons/paypal.svg')
             span PayPal
     nav.pagination
       a.nav-prev(v-bind:class='{ "nav-disable": activePage == 1 }'
@@ -250,7 +250,7 @@ select {
   }
 }
 .cart-link {
-  background: url('../../assets/cart.svg') no-repeat center center;
+  background: url('../../assets/icons/cart.svg') no-repeat center center;
   background-size: 40%;
 }
 .star-link {

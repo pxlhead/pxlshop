@@ -72,7 +72,7 @@
       h2.aside-title COMMENTS
       .comment(v-for='n in 4')
         figure.comment-img
-          img(src='../../assets/avatar.svg' alt='Author avatar')
+          img(src='../../assets/icons/avatar.svg' alt='Author avatar')
         cite.comment-author Alex, Google
         blockquote.comment-text
           | Lorem ipsum dolor sit amet, consectetur adipisicing elit,
