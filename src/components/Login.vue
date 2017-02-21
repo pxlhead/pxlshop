@@ -1,31 +1,49 @@
 <template lang="pug">
-  .content
-      .login-overlay
-      form.login
-        .login-social
-          h4.social-title Sign Up
-          .social-img
-            a.social-link.social-facebook
-            a.social-link.social-twitter
-            a.social-link.social-google
-        p.login-title or Be Classical
-        .login-content
-          .input-box
-            .input-icon.icon-face
-            input.input-line(type='text', placeholder='First Name...')
-          .input-box
-            .input-icon.icon-mail
-            input.input-line(type='text', placeholder='Email...')
-          .input-box
-            .input-icon.icon-lock
-            input.input-line(type='password', placeholder='Password...')
-        a.login-action Get Started
+  .modal
+    .login-sign
+      a.sign-btn(@click='showLogin("in")') Sign In
+      a.sign-btn(@click='showLogin("up")') Sign Up
+    .login-overlay(@click='login = false'
+    v-if='login')
+    a.close-btn(@click='login = false'
+    v-if='login')
+    form.login(v-if='login')
+      .login-social
+        h4.social-title {{ title }}
+        .social-img
+          a.social-link.social-facebook
+          a.social-link.social-twitter
+          a.social-link.social-google
+      p.login-title or Be Classical
+      .login-content
+        .input-box(v-if='login === "up"')
+          .input-icon.icon-face
+          input.input-line(type='text', placeholder='First Name...')
+        .input-box
+          .input-icon.icon-mail
+          input.input-line(type='text', placeholder='Email...')
+        .input-box
+          .input-icon.icon-lock
+          input.input-line(type='password', placeholder='Password...')
+      a.login-action {{ enter }}
 </template>
 
 <script>
 export default {
   name: 'login',
   data() {
+    return {
+      login: false,
+      title: '',
+      enter: '',
+    };
+  },
+  methods: {
+    showLogin(opt) {
+      this.login = opt;
+      this.title = `Sign ${opt}`;
+      this.enter = opt === 'in' ? 'Enter' : 'Get Started';
+    },
   },
 };
 </script>
@@ -36,6 +54,28 @@ $color-grey: #666;
 $color-green: #7befb2;
 $color-light: #fff;
 
+.login-sign {
+  position: absolute;
+  height: 4rem;
+  width: 15vw;
+  top: 6vh;
+  right: calc(10vw - 6rem);
+  display: flex;
+  justify-content: space-between;
+}
+.sign-btn {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 4rem;
+  flex-basis: 40%;
+  border-bottom: 2px solid lighten($color-grey, 40);
+  color: $color-grey;
+  font-size: 1.8rem;
+  overflow: hidden;
+  &:hover {
+    border-color: $color-green;
+  }
+}
 .login-overlay {
   position: fixed;
   top: 0;
@@ -46,12 +86,22 @@ $color-light: #fff;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 10000;
 }
+.close-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10002;
+  width: 3rem;
+  height: 3rem;
+  background: url('../assets/close-btn.svg') no-repeat center;
+  background-size: cover;
+}
 .login {
   position: fixed;
-  top: calc(50vh - 25rem + 6rem);
-  left: calc(50vw - 20rem);
-  width: 36rem;
-  height: 36rem;
+  top: calc(50% - 25rem + 6rem);
+  left: calc(50% - 17rem);
+  width: 30rem;
+  height: 30rem;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
@@ -67,7 +117,7 @@ $color-light: #fff;
   position: absolute;
   top: -6rem;
   left: 2rem;
-  width: 28rem;
+  width: 22rem;
   height: 8rem;
   display: flex;
   flex-direction: column;
@@ -83,6 +133,7 @@ $color-light: #fff;
   align-self: center;
   font-size: 2rem;
   font-weight: 500;
+  text-transform: capitalize;
 }
 .social-img {
   flex: 1;
@@ -90,18 +141,18 @@ $color-light: #fff;
   justify-content: space-around;
 }
 .social-link {
-    flex-basis: 10%;
+  flex-basis: 10%;
   background-position: center center;
   background-repeat: no-repeat;
 }
 .social-facebook {
-  background-image: url('../assets/facebook.svg');
+  background-image: url('../assets/icons/facebook.svg');
 }
 .social-twitter {
-  background-image: url('../assets/twitter.svg');
+  background-image: url('../assets/icons/twitter.svg');
 }
 .social-google {
-  background-image: url('../assets/google.svg');
+  background-image: url('../assets/icons/google.svg');
 }
 .login-title {
   flex: 1;
@@ -124,13 +175,13 @@ $color-light: #fff;
   background-repeat: no-repeat;
 }
 .icon-face{
-  background-image: url('../assets/name.svg');
+  background-image: url('../assets/icons/name.svg');
 }
 .icon-mail{
-  background-image: url('../assets/mail.svg');
+  background-image: url('../assets/icons/mail.svg');
 }
 .icon-lock{
-  background-image: url('../assets/lock.svg');
+  background-image: url('../assets/icons/lock.svg');
 }
 .input-line {
   flex: 6;
@@ -146,9 +197,31 @@ $color-light: #fff;
 }
 .login-action {
   flex: 2;
-  color: $color-green;
+  color: $color-grey;
   padding: 1rem;
   font-weight: 500;
   font-size: 2rem;
+  &:hover {
+    color: $color-green;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .login-sign {
+    height: 3rem;
+    width: 25vw;
+    top: 5vh;
+    right: calc(10vw - 4rem);
+  }
+  .sign-btn {
+    line-height: 3rem;
+    font-size: 1.4rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .login-sign {
+    width: 30vw;
+    right: calc(10vw - 2rem);
+  }
 }
 </style>
