@@ -1,15 +1,13 @@
 <template lang="pug">
   .modal
     .login-sign
-      a.sign-btn(@click='showLogin("in")') Sign In
-      a.sign-btn(@click='showLogin("up")') Sign Up
-    .login-overlay(@click='login = false'
-    v-if='login')
-    a.close-btn(@click='login = false'
-    v-if='login')
+      a.sign-btn(@click='login = "in"') Sign In
+      a.sign-btn(@click='login = "up"') Sign Up
+    .login-overlay(@click='login = false' v-if='login')
+    a.close-btn(@click='login = false' v-if='login')
     form.login(v-if='login')
       .login-social
-        h4.social-title {{ title }}
+        h4.social-title(v-text='login === "in" ? "Sign In" : "Sign Up"')
         .social-img
           a.social-link.social-facebook
           a.social-link.social-twitter
@@ -18,31 +16,57 @@
       .login-content
         .input-box(v-if='login === "up"')
           .input-icon.icon-face
-          input.input-line(type='text', placeholder='First Name...')
+          input.input-line(type='text' placeholder='First Name...'
+          v-model='name')
         .input-box
           .input-icon.icon-mail
-          input.input-line(type='text', placeholder='Email...')
+          input.input-line(type='email' placeholder='Email...'
+          v-model='email')
         .input-box
           .input-icon.icon-lock
-          input.input-line(type='password', placeholder='Password...')
-      a.login-action {{ enter }}
+          input.input-line(type='password' placeholder='Password...'
+          v-model='password')
+      a.login-action(v-text='login === "in" ? "Enter" : "Get Started"'
+        @click='signUpWithPassword')
 </template>
 
 <script>
+/* eslint-disable no-console */
+import Firebase from '../appconfig/firebase';
+
 export default {
   name: 'login',
   data() {
     return {
       login: false,
-      title: '',
-      enter: '',
+      name: '',
+      email: '',
+      password: '',
+      user: null,
     };
   },
+  created() {
+    Firebase.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user;
+        console.log(user);
+      } else {
+        console.log('not logged in');
+      }
+    });
+  },
   methods: {
-    showLogin(opt) {
-      this.login = opt;
-      this.title = `Sign ${opt}`;
-      this.enter = opt === 'in' ? 'Enter' : 'Get Started';
+    signUpWithPassword() {
+      // check real email
+      Firebase.auth.createUserWithEmailAndPassword(
+        this.email, this.password)
+        .then(() => this.signInWithPassword())
+        .catch(e => console.log(e.message));
+    },
+    signInWithPassword() {
+      Firebase.auth.signInWithEmailAndPassword(
+        this.email, this.password)
+        .catch(e => console.log(e.message));
     },
   },
 };
