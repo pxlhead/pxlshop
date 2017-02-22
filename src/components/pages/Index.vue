@@ -88,7 +88,7 @@ import Firebase from '../../appconfig/firebase';
 export default {
   name: 'index',
   firebase: {
-    products: Firebase.getDbRef('products'),
+    products: Firebase.dbProductsRef,
   },
   data() {
     return {

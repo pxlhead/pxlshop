@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal
+  .auth
     .login-sign
       a.sign-btn(@click='login = "in"') Sign In
       a.sign-btn(@click='login = "up"') Sign Up
@@ -27,7 +27,7 @@
           input.input-line(type='password' placeholder='Password...'
           v-model='password')
       a.login-action(v-text='login === "in" ? "Enter" : "Get Started"'
-        @click='signUpWithPassword')
+        @click='enter')
 </template>
 
 <script>
@@ -45,25 +45,22 @@ export default {
       user: null,
     };
   },
-  created() {
-    Firebase.auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.user = user;
-        console.log(user);
-      } else {
-        console.log('not logged in');
-      }
-    });
-  },
   methods: {
-    signUpWithPassword() {
+    enter() {
+      if (this.login === 'up') {
+        this.signUp();
+      } else {
+        this.signIn();
+      }
+    },
+    signUp() {
       // check real email
       Firebase.auth.createUserWithEmailAndPassword(
         this.email, this.password)
-        .then(() => this.signInWithPassword())
+        .then(() => this.signIn())
         .catch(e => console.log(e.message));
     },
-    signInWithPassword() {
+    signIn() {
       Firebase.auth.signInWithEmailAndPassword(
         this.email, this.password)
         .catch(e => console.log(e.message));
