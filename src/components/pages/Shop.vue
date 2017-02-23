@@ -42,7 +42,7 @@
                 a.product-title {{ product.name }}
                 .product-stars
                   span.star(v-for='n in 5'
-                  v-bind:class='{ "star-full": n < product.stars }')
+                  v-bind:class='{ "star-full": n <= product.stars }')
                 span.product-price ${{ product.price + '.00' }}
               .top-product-img
                 img.product-img(v-bind:src='product.url'

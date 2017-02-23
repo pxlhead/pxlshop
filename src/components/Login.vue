@@ -14,10 +14,6 @@
           a.social-link.social-google
       p.login-title or Be Classical
       .login-content
-        .input-box(v-if='login === "up"')
-          .input-icon.icon-face
-          input.input-line(type='text' placeholder='First Name...'
-          v-model='name')
         .input-box
           .input-icon.icon-mail
           input.input-line(type='email' placeholder='Email...'
@@ -39,10 +35,8 @@ export default {
   data() {
     return {
       login: false,
-      name: '',
       email: '',
       password: '',
-      user: null,
     };
   },
   methods: {
@@ -78,23 +72,23 @@ $color-light: #fff;
 .login-sign {
   position: absolute;
   height: 4rem;
-  width: 15vw;
   top: 6vh;
   right: calc(10vw - 6rem);
   display: flex;
-  justify-content: space-between;
 }
 .sign-btn {
   text-align: center;
   vertical-align: middle;
   line-height: 4rem;
-  flex-basis: 40%;
   border-bottom: 2px solid lighten($color-grey, 40);
   color: $color-grey;
   font-size: 1.8rem;
   overflow: hidden;
   &:hover {
     border-color: $color-green;
+  }
+  &:first-child {
+    margin-right: 3rem;
   }
 }
 .login-overlay {
@@ -122,7 +116,7 @@ $color-light: #fff;
   top: calc(50% - 25rem + 6rem);
   left: calc(50% - 17rem);
   width: 30rem;
-  height: 30rem;
+  height: 23rem;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
@@ -230,18 +224,19 @@ $color-light: #fff;
 @media screen and (max-width: 991px) {
   .login-sign {
     height: 3rem;
-    width: 25vw;
     top: 5vh;
     right: calc(10vw - 4rem);
   }
   .sign-btn {
     line-height: 3rem;
     font-size: 1.4rem;
+    &:first-child {
+      margin-right: 2rem;
+    }
   }
 }
 @media screen and (max-width: 480px) {
   .login-sign {
-    width: 30vw;
     right: calc(10vw - 2rem);
   }
 }

@@ -4,7 +4,7 @@
     shop
     main-footer
     login(v-if='!user')
-    profile(v-if='user')
+    profile(v-if='user' v-bind:user='user')
 </template>
 
 <script>
@@ -37,6 +37,7 @@ export default {
         this.user = user;
         console.log(user);
       } else {
+        this.user = null;
         console.log('not logged in');
       }
     });
