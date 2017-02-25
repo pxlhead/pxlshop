@@ -1,9 +1,8 @@
 <template lang="pug">
   .profile
-    span.profile-name {{ user.displayName || 'OWL' }}
+    a.profile-name(v-bind:class='{"name-light": lightProfile}') {{ user.displayName || 'OWL' }}
     a.profile-img
       img(src='../assets/icons/avatar.svg' alt='Avatar')
-    a.profile-settings
       ul.profile-dropdown
         li.dropdown-item(v-for='option in options')
           a(@click='option.action') {{ option.name }}
@@ -14,7 +13,7 @@ import Firebase from '../appconfig/firebase';
 
 export default {
   name: 'profile',
-  props: ['user'],
+  props: ['user', 'lightProfile'],
   data() {
     return {
       options: [{
@@ -47,15 +46,16 @@ $color-light: #fff;
 .profile {
   position: absolute;
   height: 4rem;
-  top: 6vh;
+  top: 5vh;
   right: calc(10vw - 6rem);
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  z-index: 900;
 }
 .profile-name {
   display: block;
   text-align: center;
-  vertical-align: top;
+  vertical-align: middle;
   line-height: 4rem;
   border-bottom: 2px solid lighten($color-grey, 40);
   color: $color-grey;
@@ -64,22 +64,21 @@ $color-light: #fff;
     border-color: $color-green;
   }
 }
-.profile-img {
-  display: block;
-  padding-left: 3rem;
-  img {
-    width: 3rem;
-    height: 3rem;
-    padding: 0.5rem;
+.name-light {
+  color: $color-light;
+  border-color: $color-green;
+  &:hover {
+    border-color: lighten($color-grey, 20);
   }
 }
-.profile-settings {
-  width: 3rem;
-  padding-left: 4rem;
-  margin: 0;
+.profile-img {
   display: block;
+  width: 4rem;
+  height: 4rem;
+  background-color: $color-light;
+  border-radius: 50%;
+  margin-left: 3rem;
   position: relative;
-  background: url('../assets/icons/dots.svg') no-repeat center;
   &:hover .profile-dropdown {
     display: flex;
   }
@@ -114,7 +113,7 @@ $color-light: #fff;
 
 @media screen and (max-width: 991px) {
   .profile {
-    height: 3rem;
+    height: 4rem;
     top: 5vh;
     right: calc(10vw - 4rem);
   }
@@ -123,14 +122,12 @@ $color-light: #fff;
     font-size: 1.4rem;
   }
   .profile-img {
-    padding-left: 2rem;
+    margin-left: 2rem;
+    width: 3rem;
+    height: 3rem;
     img {
       padding: 0;
     }
-  }
-  .profile-settings {
-    width: 2rem;
-    padding-left: 3rem;
   }
   .profile-dropdown {
     top: 3rem;
@@ -147,6 +144,9 @@ $color-light: #fff;
 @media screen and (max-width: 480px) {
   .profile {
     right: calc(10vw - 2rem);
+  }
+  .profile-img {
+    margin-left: 1rem;
   }
 }
 </style>

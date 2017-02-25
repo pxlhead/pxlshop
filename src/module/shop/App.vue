@@ -4,11 +4,11 @@
     shop
     main-footer
     login(v-if='!user')
-    profile(v-if='user' v-bind:user='user')
+    profile(v-if='user' v-bind:user='user'
+    v-bind:lightProfile='lightProfile')
 </template>
 
 <script>
-/* eslint-disable no-console */
 import Firebase from '../../appconfig/firebase';
 
 import Shop from '../../components/pages/Shop';
@@ -29,16 +29,15 @@ export default {
   data() {
     return {
       user: null,
+      lightProfile: false,
     };
   },
   created() {
     Firebase.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
-        console.log(user);
       } else {
         this.user = null;
-        console.log('not logged in');
       }
     });
   },
