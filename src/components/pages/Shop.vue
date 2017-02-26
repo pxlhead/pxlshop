@@ -222,7 +222,7 @@ select {
   img {
     transition: all 1s ease;
     &:hover {
-      transform:scale(1.2);
+      transform: scale(1.2);
     }
   }
 }

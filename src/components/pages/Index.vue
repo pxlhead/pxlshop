@@ -242,7 +242,7 @@ a {
 .nav-arrow {
   position: absolute;
   display: none;
-  width: 5rem;
+  width: 4rem;
   height: 10vh;
   content: '';
   background-color: $color-dark;

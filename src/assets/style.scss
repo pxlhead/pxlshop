@@ -39,3 +39,98 @@ img {
 li {
   list-style-type: none;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+}
+.close-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10002;
+  width: 3rem;
+  height: 3rem;
+  background: url('../assets/close-btn.svg') no-repeat center;
+  background-size: cover;
+}
+.modal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  background-color: $color-light;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+              0 4px 25px 0px rgba(0, 0, 0, 0.12),
+              0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  z-index: 10002;
+  align-items: center;
+}
+.modal-head {
+  position: absolute;
+  display: flex;
+  border-radius: 5px;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+              0 4px 25px 0px rgba(0, 0, 0, 0.12),
+              0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  background-color: $color-green;
+}
+.modal-title {
+  flex: 1;
+}
+.modal-content {
+  width: 100%;
+  display: flex;
+}
+.input-box {
+  display: flex;
+  flex: 1;
+}
+.input-icon {
+  flex: 1;
+  margin: 1rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.icon-face{
+  background-image: url('../assets/icons/name.svg');
+}
+.icon-mail{
+  background-image: url('../assets/icons/mail.svg');
+}
+.icon-lock{
+  background-image: url('../assets/icons/lock.svg');
+}
+.input-line {
+  flex: 6;
+  margin: 1rem;
+  border: 0;
+  border-bottom: 2px solid lighten($color-grey, 50);
+  font-weight: 500;
+  font-size: 1.5rem;
+  outline: none;
+  &:hover{
+    border-bottom: 2px solid $color-green;
+  }
+}
+.modal-action {
+  color: $color-grey;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: lighten($color-grey, 50);
+  border-radius: 3px;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten($color-grey, 40);
+    color: inherit;
+  }
+}

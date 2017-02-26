@@ -1,19 +1,54 @@
 <template lang="pug">
   .profile
-    a.profile-name(v-bind:class='{"name-light": lightProfile}') {{ user.displayName || 'OWL' }}
+    a.profile-name(v-bind:class='{"text-light": light}') {{ name }}
     a.profile-img
       img(src='../assets/icons/avatar.svg' alt='Avatar')
       ul.profile-dropdown
         li.dropdown-item(v-for='option in options')
           a(@click='option.action') {{ option.name }}
+
+    .modal-overlay(@click='modal = false' v-if='modal')
+    a.close-btn(@click='modal = false' v-if='modal')
+    form.modal(v-if='modal')
+      .modal-head
+        a.modal-title Profile
+      .modal-head.modal-subhead
+        a.modal-title Payment
+      .modal-content
+        .profile-photo
+          img(src='../assets/icons/avatar.svg' alt='Avatar')
+          input.modal-upload(name='photo' id='photo' type='file'
+          @change='uploadPhoto')
+          label.modal-action(for='photo') Choose
+        .profile-info
+          .input-box
+            .input-icon.icon-face
+            input.input-line(name='name' type='text' v-model='name'
+            v-bind:placeholder='updateInfo ? "New name..." : name'
+            v-bind='{readonly: !updateInfo}' @blur='updateInfo = false')
+          .input-box
+            .input-icon.icon-mail
+            input.input-line(name='email' type='email' v-model='email'
+            v-bind:placeholder='updateInfo ? "New email..." : email'
+            v-bind='{readonly: !updateInfo}' @blur='updateInfo = false')
+          a.modal-action(v-bind:class='{"action-update": updateInfo}'
+            @click='changeInfo') {{ updateInfo ? 'Update' : 'Change...'}}
+          .input-box
+            .input-icon.icon-lock
+            input.input-line(name='password' type='password' v-model='password'
+            v-bind:placeholder='updatePassword ? "New password..." : "Password"'
+            v-bind='{readonly: !updatePassword}' @blur='updatePassword = false')
+          a.modal-action(v-bind:class='{"action-update": updatePassword}'
+          @click='changePassword') {{ updatePassword ? 'Update' : 'Change...'}}
 </template>
 
 <script>
+/* eslint-disable no-console */
 import Firebase from '../appconfig/firebase';
 
 export default {
   name: 'profile',
-  props: ['user', 'lightProfile'],
+  props: ['user', 'light'],
   data() {
     return {
       options: [{
@@ -21,16 +56,70 @@ export default {
         action: this.logOut,
       }, {
         name: 'Settings',
-        action: this.logOut,
+        action: this.showModal,
       }, {
         name: 'Log out',
         action: this.logOut,
       }],
+      modal: true,
+      name: '',
+      email: '',
+      password: '',
+      photoUrl: '',
+      updateInfo: false,
+      updatePassword: false,
     };
+  },
+  created() {
+    this.name = this.user.displayName || this.user.email.split('@')[0];
+    this.email = this.user.email;
+    this.photoUrl = this.user.photoURL;
   },
   methods: {
     logOut() {
       Firebase.auth.signOut();
+    },
+    showModal() {
+      this.modal = true;
+    },
+    uploadPhoto(event) {
+      const file = event.target.files[0];
+      const sorageFileRef = Firebase.storageAvatarsRef.child(file.name);
+      const task = sorageFileRef.put(file);
+      task.on('state_changed',
+        function complete() {
+          sorageFileRef.getDownloadURL().then((url) => {
+            this.photoUrl = url;
+          });
+        });
+    },
+    changePhoto() {
+      this.user.updateProfile({
+        photoURL: this.photoUrl,
+      });
+    },
+    changeInfo() {
+      if (!this.updateInfo) {
+        this.updateInfo = true;
+      } else {
+        this.user.updateProfile({
+          displayName: this.name,
+        }).then(() => {
+          this.user.updateEmail(this.email).then(() => {
+            this.updateInfo = false;
+          });
+        });
+      }
+    },
+    changePassword() {
+      if (!this.updatePassword) {
+        this.updatePassword = true;
+      } else {
+        this.user.updatePassword(this.password).then(() => {
+          this.updatePassword = false;
+          console.log('update');
+        });
+      }
     },
   },
 };
@@ -64,7 +153,7 @@ $color-light: #fff;
     border-color: $color-green;
   }
 }
-.name-light {
+.text-light {
   color: $color-light;
   border-color: $color-green;
   &:hover {
@@ -109,6 +198,77 @@ $color-light: #fff;
       color: $color-green;
     }
   }
+}
+.modal {
+  top: calc(50% - 11rem - 2rem);
+  left: calc(50% - 20rem - 2rem);
+  width: 40rem;
+  height: 22rem;
+  padding: 5rem 2rem 2rem 2rem;
+}
+.modal-head {
+  top: -3rem;
+  left: 2rem;
+  width: 19rem;
+  height: 6rem;
+  align-items: center;
+}
+.modal-subhead {
+  right: 2rem;
+  height: 3rem;
+  left: auto;
+  z-index: -1;
+  background-color: lighten($color-grey, 15);
+}
+.modal-head + .modal-head {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  box-shadow: inset 0 -8px 15px -5px rgba(0, 0, 0, 0.43);
+  &:hover {
+    background-color: lighten($color-grey, 30);
+  }
+}
+.modal-title {
+  font-size: 2rem;
+  text-align: center;
+  letter-spacing: 0.1rem;
+  &:hover {
+    color: inherit;
+  }
+}
+.profile-photo {
+  padding-top: 1rem;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 8rem;
+    height: 8rem;
+  }
+}
+.modal-upload {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+.profile-info {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  .modal-action {
+    width: 85%;
+    align-self: center;
+  }
+}
+.input-box:last-of-type {
+  margin-top: 2rem;
+}
+.action-update {
+  background-color: $color-green;
 }
 
 @media screen and (max-width: 991px) {

@@ -3,9 +3,9 @@
     main-header
     shop
     main-footer
-    login(v-if='!user')
+    login(v-if='!user' v-bind:light='light')
     profile(v-if='user' v-bind:user='user'
-    v-bind:lightProfile='lightProfile')
+    v-bind:light='light')
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       user: null,
-      lightProfile: false,
+      light: false,
     };
   },
   created() {
