@@ -2,7 +2,8 @@
   .profile
     a.profile-name(v-bind:class='{"text-light": light}') {{ name }}
     a.profile-img
-      img(src='../assets/icons/avatar.svg' alt='Avatar')
+      .img-box
+        img(v-bind:src='photoUrl' alt='Avatar')
       ul.profile-dropdown
         li.dropdown-item(v-for='option in options')
           a(@click='option.action') {{ option.name }}
@@ -16,7 +17,8 @@
         a.modal-title Payment
       .modal-content
         .profile-photo
-          img(src='../assets/icons/avatar.svg' alt='Avatar')
+          .img-box
+            img(v-bind:src='photoUrl' alt='Avatar')
           input.modal-upload(name='photo' id='photo' type='file'
           @change='uploadPhoto')
           label.modal-action(for='photo') Choose
@@ -40,15 +42,24 @@
             v-bind='{readonly: !updatePassword}' @blur='updatePassword = false')
           a.modal-action(v-bind:class='{"action-update": updatePassword}'
           @click='changePassword') {{ updatePassword ? 'Update' : 'Change...'}}
+    transition(name='note')
+      notification(v-bind:message='message' v-if='message.length > 0'
+      v-on:click.native='message = ""')
 </template>
 
 <script>
 /* eslint-disable no-console */
+/* eslint-disable global-require */
 import Firebase from '../appconfig/firebase';
+
+import Notification from './Notification';
 
 export default {
   name: 'profile',
   props: ['user', 'light'],
+  components: {
+    Notification,
+  },
   data() {
     return {
       options: [{
@@ -61,19 +72,20 @@ export default {
         name: 'Log out',
         action: this.logOut,
       }],
-      modal: true,
+      modal: false,
       name: '',
       email: '',
       password: '',
       photoUrl: '',
       updateInfo: false,
       updatePassword: false,
+      message: '',
     };
   },
   created() {
     this.name = this.user.displayName || this.user.email.split('@')[0];
     this.email = this.user.email;
-    this.photoUrl = this.user.photoURL;
+    this.photoUrl = this.user.photoURL || require('../assets/icons/avatar.svg');
   },
   methods: {
     logOut() {
@@ -81,17 +93,42 @@ export default {
     },
     showModal() {
       this.modal = true;
+      this.message = '';
     },
     uploadPhoto(event) {
       const file = event.target.files[0];
-      const sorageFileRef = Firebase.storageAvatarsRef.child(file.name);
+      if (file.size / 1024 > 2048) {
+        this.message = 'Your image is too big. Maximal file size is 2MB.';
+        return;
+      }
+      const fileName = this.user.email.split('@')[0];
+      const sorageFileRef = Firebase.storageAvatarsRef.child(fileName);
       const task = sorageFileRef.put(file);
       task.on('state_changed',
-        function complete() {
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          this.message = `Upload is ${Math.round(progress)}% done`;
+        },
+        (error) => {
+          switch (error.code) {
+            case 'storage/unauthorized':
+              this.message = 'Sorry, but you don\'t have permission to upload files';
+              break;
+            case 'storage/canceled':
+              this.message = 'You canceled the upload';
+              break;
+            default:
+              this.message = error.code;
+          }
+        },
+        () => {
           sorageFileRef.getDownloadURL().then((url) => {
             this.photoUrl = url;
+            this.changePhoto();
           });
-        });
+          this.message = 'Upload is complete!';
+        }
+      );
     },
     changePhoto() {
       this.user.updateProfile({
@@ -117,7 +154,6 @@ export default {
       } else {
         this.user.updatePassword(this.password).then(() => {
           this.updatePassword = false;
-          console.log('update');
         });
       }
     },
@@ -164,12 +200,17 @@ $color-light: #fff;
   display: block;
   width: 4rem;
   height: 4rem;
-  background-color: $color-light;
-  border-radius: 50%;
   margin-left: 3rem;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover .profile-dropdown {
     display: flex;
+  }
+  .img-box {
+    width: 3rem;
+    height: 3rem;
   }
 }
 .profile-dropdown {
@@ -242,10 +283,19 @@ $color-light: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  img {
+  .img-box {
     width: 8rem;
     height: 8rem;
+    margin-bottom: 1rem;
   }
+}
+.img-box {
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: $color-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .modal-upload {
   width: 0.1px;
@@ -270,6 +320,17 @@ $color-light: #fff;
 .action-update {
   background-color: $color-green;
 }
+.note-enter-active, .note-leave-active {
+  animation: scale 0.25s;
+}
+.note-leave-active {
+  animation-direction: reverse;
+}
+
+@keyframes scale {
+	0% { opacity: 0; transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }
+	100% { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1); }
+}
 
 @media screen and (max-width: 991px) {
   .profile {
@@ -286,7 +347,8 @@ $color-light: #fff;
     width: 3rem;
     height: 3rem;
     img {
-      padding: 0;
+      width: 3rem;
+      height: 3rem;
     }
   }
   .profile-dropdown {
@@ -307,6 +369,19 @@ $color-light: #fff;
   }
   .profile-img {
     margin-left: 1rem;
+  }
+  .modal {
+    left: calc(50% - 15rem - 2rem);
+    width: 30rem;
+  }
+  .modal-head {
+    width: 14rem;
+  }
+  .profile-info {
+    flex: 4;
+  }
+  .input-line {
+    width: 50%;
   }
 }
 </style>
