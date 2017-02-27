@@ -86,7 +86,7 @@ a {
   height: 6rem;
   top: 5vh;
   left: calc(10vw - 6rem);
-  z-index: 1000;
+  z-index: 800;
 }
 .logo,
 .cart,
@@ -340,18 +340,18 @@ a.cart-view {
     line-height: 4rem;
     padding: 1rem;
   }
-  @media screen and (max-width: 480px) {
-    .header {
-      left: calc(15vw - 4rem);
-    }
-    .nav {
-      height: 4rem;
-      left: 3rem;
-    }
-    .nav-link {
-      line-height: 4rem;
-      padding: 0.6rem;
-    }
+}
+@media screen and (max-width: 480px) {
+  .header {
+    left: calc(15vw - 4rem);
+  }
+  .nav {
+    height: 4rem;
+    left: 3rem;
+  }
+  .nav-link {
+    line-height: 4rem;
+    padding: 0.6rem;
   }
 }
 </style>

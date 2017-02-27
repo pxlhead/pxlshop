@@ -3,7 +3,6 @@
 $color-dark: #252525;
 $color-grey: #666;
 $color-green: #7BEFB2;
-$color-pink: #D9879C;
 $color-light: #fff;
 
 html {
@@ -33,7 +32,7 @@ a {
 }
 img {
   background-size: cover;
-  width: 100%;
+  max-width: 100%;
   height: auto;
 }
 li {
@@ -51,14 +50,16 @@ li {
   z-index: 10000;
 }
 .close-btn {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 10002;
   width: 3rem;
   height: 3rem;
   background: url('../assets/close-btn.svg') no-repeat center;
   background-size: cover;
+}
+.modal-overlay + .close-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10002;
 }
 .modal {
   position: fixed;
@@ -112,6 +113,7 @@ li {
   margin: 1rem;
   border: 0;
   border-bottom: 2px solid lighten($color-grey, 50);
+  padding-bottom: 1rem;
   font-weight: 500;
   font-size: 1.5rem;
   outline: none;
