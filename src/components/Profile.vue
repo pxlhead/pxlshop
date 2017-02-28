@@ -22,6 +22,7 @@
           input.modal-upload(name='photo' id='photo' type='file'
           @change='uploadPhoto')
           label.modal-action(for='photo') Choose
+          a.delete-action Delete account
         .profile-info
           .input-box
             .input-icon.icon-face
@@ -42,6 +43,7 @@
             v-bind='{readonly: !updatePassword}' @blur='updatePassword = false')
           a.modal-action(v-bind:class='{"action-update": updatePassword}'
           @click='changePassword') {{ updatePassword ? 'Update' : 'Change...'}}
+
     transition(name='note')
       notification(v-bind:message='message' v-if='message.length > 0'
       v-on:click.native='message = ""')
@@ -51,8 +53,12 @@
 /* eslint-disable no-console */
 /* eslint-disable global-require */
 import Firebase from '../appconfig/firebase';
-
 import Notification from './Notification';
+
+/*
+TODO: Add user re-autentification
+(to change password and delete an account)
+*/
 
 export default {
   name: 'profile',
@@ -283,10 +289,11 @@ $color-light: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  position: relative;
   .img-box {
     width: 8rem;
     height: 8rem;
-    margin-bottom: 1rem;
   }
 }
 .img-box {
@@ -304,6 +311,17 @@ $color-light: #fff;
   overflow: hidden;
   z-index: -1;
 }
+.delete-action {
+  margin-top: 8rem;
+  display: block;
+  font-size: 1.2rem;
+  background: url('../assets/icons/delete.svg') no-repeat 0 center;
+  background-size: contain;
+  padding-left: 1.5rem;
+  &:hover {
+    color: #E83838;
+  }
+}
 .profile-info {
   flex: 5;
   display: flex;
@@ -319,17 +337,6 @@ $color-light: #fff;
 }
 .action-update {
   background-color: $color-green;
-}
-.note-enter-active, .note-leave-active {
-  animation: scale 0.25s;
-}
-.note-leave-active {
-  animation-direction: reverse;
-}
-
-@keyframes scale {
-	0% { opacity: 0; transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }
-	100% { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1); }
 }
 
 @media screen and (max-width: 991px) {

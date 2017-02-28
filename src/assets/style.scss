@@ -136,3 +136,15 @@ li {
     color: inherit;
   }
 }
+
+.note-enter-active, .note-leave-active {
+  animation: scale 0.25s;
+}
+.note-leave-active {
+  animation-direction: reverse;
+}
+
+@keyframes scale {
+	0% { opacity: 0; transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }
+	100% { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1); }
+}

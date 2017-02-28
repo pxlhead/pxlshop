@@ -26,20 +26,29 @@
           v-model='password')
       a.modal-action(v-text='login === "in" ? "Enter" : "Get Started"'
         @click='enter')
+
+    transition(name='note')
+      notification(v-bind:message='message' v-if='message.length > 0'
+      v-on:click.native='message = ""')
 </template>
 
 <script>
 /* eslint-disable no-console */
 import Firebase from '../appconfig/firebase';
+import Notification from './Notification';
 
 export default {
   name: 'login',
   props: ['light'],
+  components: {
+    Notification,
+  },
   data() {
     return {
       login: false,
       email: '',
       password: '',
+      message: '',
     };
   },
   methods: {
@@ -55,12 +64,42 @@ export default {
       Firebase.auth.createUserWithEmailAndPassword(
         this.email, this.password)
         .then(() => this.signIn())
-        .catch(e => console.log(e.message));
+        .catch((error) => {
+          switch (error.code) {
+            case 'auth/weak-password':
+              this.message = 'The password should be at least six symbols.';
+              break;
+            case 'auth/email-already-in-use':
+              this.message = 'There already exists an account with the given email address.';
+              break;
+            case 'auth/invalid-email':
+              this.message = 'The email address is not valid.';
+              break;
+            default:
+              this.message = error.code;
+          }
+        }
+      );
     },
     signIn() {
       Firebase.auth.signInWithEmailAndPassword(
         this.email, this.password)
-        .catch(e => console.log(e.message));
+        .catch((error) => {
+          switch (error.code) {
+            case 'auth/user-not-found':
+              this.message = 'There is no user corresponding to the given email.';
+              break;
+            case 'auth/wrong-password':
+              this.message = 'The password is invalid for the given email';
+              break;
+            case 'auth/invalid-email':
+              this.message = 'The email address is not valid.';
+              break;
+            default:
+              this.message = error.code;
+          }
+        }
+      );
     },
   },
 };
