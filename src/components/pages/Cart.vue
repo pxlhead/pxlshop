@@ -21,8 +21,8 @@
           .cart-footer
             form.cart-coupon
               input.coupon-line(type='text' placeholder='Put you code here...')
-              a.coupon-btn Apply
-            a.cart-renew Renew Cart
+              a.action-btn Apply
+            a.action-btn Renew Cart
       .payment
         .payment-content
           h2.payment-title Payment Options
@@ -31,11 +31,11 @@
             | sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           .payment-option
             figure.option-img.img-paypal
-              img(src='../../assets/shop/paypal-icon.svg')
+              img(src='../../assets/icons/paypal.svg')
             figure.option-img.img-paypal
-              img(src='../../assets/shop/visa-icon.svg')
+              img(src='../../assets/icons/visa.svg')
             figure.option-img.img-paypal
-              img(src='../../assets/shop/mastercard-icon.svg')
+              img(src='../../assets/icons/mastercard.svg')
         .payment-total
           h2.total-title Cart Total
           .subtotal-line
@@ -44,13 +44,15 @@
           .total-line
             p.line-text Total
             p.line-price $15
-          a.total-btn Proceed to Checkout
+          a.action-btn Proceed to Checkout
 </template>
 
 <script>
 export default {
   name: 'cart',
   data() {
+    return {
+    };
   },
 };
 </script>
@@ -148,6 +150,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   margin-top: 5rem;
+  height: 4rem;
 }
 .cart-coupon {
   flex-basis: 20%;
@@ -161,26 +164,6 @@ h1 {
   padding: 2rem;
   &:hover{
     border-color: $color-green;
-  }
-}
-.coupon-btn{
-  flex: 1;
-  padding: 2rem;
-  background-color: $color-green;
-  &:hover{
-    background-color: darken($color-green, 10);
-    color: inherit;
-  }
-}
-.cart-renew {
-  flex-basis: 10%;
-  text-align: center;
-  align-self: flex-end;
-  padding: 2rem;
-  background-color: $color-green;
-  &:hover{
-    background-color: darken($color-green, 10);
-    color: inherit;
   }
 }
 .payment {
@@ -220,6 +203,9 @@ h1 {
   flex-direction: column;
   padding: 3rem;
   border: 1px solid lighten($color-grey, 50);
+  .action-btn {
+    margin-top: 2rem;
+  }
 }
 .total-title {
   flex: 1;
@@ -237,17 +223,6 @@ h1 {
   .line-text, .line-price {
     font-weight: 500;
     color: $color-dark;
-  }
-}
-.total-btn {
-  margin-top: 4rem;
-  text-align: center;
-  align-self: flex-end;
-  padding: 2rem;
-  background-color: $color-green;
-  &:hover{
-    background-color: darken($color-green, 10);
-    color: inherit;
   }
 }
 @media screen and (max-width: 991px) {
