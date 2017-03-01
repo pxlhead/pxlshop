@@ -251,7 +251,7 @@ input:checked {
   }
 }
 @media screen and (max-width: 480px) {
-  cart-item {
+  .cart-item {
     flex-basis: 10%;
     font-size: 1rem;
   }
