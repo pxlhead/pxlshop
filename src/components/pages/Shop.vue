@@ -34,10 +34,9 @@
               span.product-price ${{ product.price + '.00' }}
       aside.sidebar
         .widget-top
-          h3.widget-title Top Rated
+          h3.widget-title(v-if='sortTopProducts') Top Rated
           ul.top-list
-            li.top-product(v-for='product in products'
-            v-if='product.stars == 5 || product.stars == 4')
+            li.top-product(v-for='product in topProducts')
               .top-product-info
                 a.product-title {{ product.name }}
                 .product-stars
@@ -55,9 +54,13 @@
           p.payment-details
             | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
             | do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          .payment-icon
-            img(src='../../assets/icons/paypal.svg')
-            span PayPal
+          .payment-option
+            a.option-img
+              img(src='../../assets/icons/paypal.svg')
+            a.option-img
+              img(src='../../assets/icons/visa.svg')
+            a.option-img
+              img(src='../../assets/icons/mastercard.svg')
     nav.pagination
       a.nav-prev(v-bind:class='{ "nav-disable": activePage == 1 }'
       @click='changePage(activePage - 1)')
@@ -87,6 +90,7 @@ export default {
       categories: ['all', 'illustrations', 'patterns', 'photos'],
       sorts: ['none', 'newest', 'popular'],
       filteredProducts: [],
+      topProducts: {},
       productsOnPage: 9,
       activePage: 1,
       starAdded: false,
@@ -94,6 +98,14 @@ export default {
   },
   created() {
     this.filteredProducts = this.products;
+  },
+  computed: {
+    sortTopProducts() {
+      this.topProducts = this.products.sort((prodA, prodB) => (
+        prodA.stars <= prodB.stars ? 1 : -1
+      )).slice(0, 4);
+      return this.topProducts.length >= 1;
+    },
   },
   methods: {
     changePage(page) {
@@ -323,27 +335,24 @@ select {
 }
 .widget-payment {
   flex-basis: 15rem;
-  padding: 0 1rem;
+  padding: 0 2rem 2.5rem 2rem;
   background-color: darken($color-light, 5);
   margin-top: 2rem;
 }
 .payment-details {
   font-size: 1vw;
   margin-top: 0;
+  text-align: justify;
 }
-.payment-icon {
-  height: 3rem;
-  img {
-    height: 1.2rem;
-    width: 1.2rem;
-  }
-  span {
-    margin-left: 0.5rem;
-    font-size: 1.2rem;
-    background-color: $color-dark;
-    color: $color-light;
-    padding-top: 0.1rem;
-  }
+.payment-option {
+  display: flex;
+  justify-content: space-around;
+}
+.option-img {
+  flex-basis: 20%;
+ &:hover {
+  opacity: 0.8;
+ }
 }
 .pagination {
   display: flex;
