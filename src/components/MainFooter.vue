@@ -105,7 +105,11 @@ h4 {
     opacity: 0.7;
   }
 }
-
+@media screen and (max-width: 991px) {
+  .social-list {
+    width: 80%;
+  }
+}
 @media screen and (max-width: 480px) {
   .footer {
     padding: 8vh 7vw;
@@ -119,6 +123,7 @@ h4 {
   .contact {
     flex-basis: 30%;
   }
+
   .logo {
     order: 2;
   }
