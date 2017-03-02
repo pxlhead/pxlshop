@@ -1,6 +1,7 @@
 <template lang="pug">
   .profile
-    a.profile-name(v-bind:class='{"text-light": light}') {{ name }}
+    a.profile-name(v-bind:class='{"text-light": light}'
+    @click='showModal') {{ name }}
     a.profile-img
       .img-box
         img(v-bind:src='photoUrl' alt='Avatar')
@@ -8,13 +9,13 @@
         li.dropdown-item(v-for='option in options')
           a(@click='option.action') {{ option.name }}
 
-    .modal-overlay(@click='modal = false' v-if='modal')
-    a.close-btn(@click='modal = false' v-if='modal')
-    form.modal(v-if='modal')
+    .modal-overlay(@click='closeModal' v-if='modal')
+    a.close-btn(@click='closeModal' v-if='modal')
+    form.modal(v-if='modal && !checkPassword')
       .modal-head
         a.modal-title Profile
       .modal-head.modal-subhead
-        a.modal-title Payment
+        a.modal-title
       .modal-content
         .profile-photo
           .img-box
@@ -22,27 +23,32 @@
           input.modal-upload(name='photo' id='photo' type='file'
           @change='uploadPhoto')
           label.modal-action(for='photo') Choose
-          a.delete-action Delete account
+          a.delete-action(@click='deleteUser') Delete account
         .profile-info
           .input-box
             .input-icon.icon-face
             input.input-line(name='name' type='text' v-model='name'
-            v-bind:placeholder='updateInfo ? "New name..." : name'
-            v-bind='{readonly: !updateInfo}' @blur='updateInfo = false')
+            v-bind:placeholder='lockInfo ? name : "New name..."'
+            v-bind='{readonly: lockInfo}' @blur='lockInfo = true')
           .input-box
             .input-icon.icon-mail
             input.input-line(name='email' type='email' v-model='email'
-            v-bind:placeholder='updateInfo ? "New email..." : email'
-            v-bind='{readonly: !updateInfo}' @blur='updateInfo = false')
-          a.modal-action(v-bind:class='{"action-update": updateInfo}'
-            @click='changeInfo') {{ updateInfo ? 'Update' : 'Change...'}}
+            v-bind:placeholder='lockInfo ? email : "New email..."'
+            v-bind='{readonly: lockInfo}' @blur='lockInfo = true')
+          a.modal-action(v-bind:class='{"action-update": !lockInfo}'
+            @click='changeInfo') {{ lockInfo ? 'Change...' : 'Update'}}
           .input-box
             .input-icon.icon-lock
             input.input-line(name='password' type='password' v-model='password'
-            v-bind:placeholder='updatePassword ? "New password..." : "Password"'
-            v-bind='{readonly: !updatePassword}' @blur='updatePassword = false')
-          a.modal-action(v-bind:class='{"action-update": updatePassword}'
-          @click='changePassword') {{ updatePassword ? 'Update' : 'Change...'}}
+            v-bind:placeholder='lockPassword ? "Password" : "New password..."'
+            v-bind='{readonly: lockPassword}' @blur='lockPassword = true')
+          a.modal-action(v-bind:class='{"action-update": !lockPassword}'
+          @click='activatePassword') {{ lockPassword ? "Change..." : "Update"}}
+
+    .modal.modal-confirm(v-if='checkPassword')
+      input.input-line(name='password' type='password' v-model='password'
+      placeholder='Password')
+      a.modal-action.action-update(@click='reAuth') Confirm
 
     transition(name='note')
       notification(v-bind:message='message' v-if='message.length > 0'
@@ -55,11 +61,6 @@
 import Firebase from '../appconfig/firebase';
 import Notification from './Notification';
 
-/*
-TODO: Add user re-autentification
-(to change password and delete an account)
-*/
-
 export default {
   name: 'profile',
   props: ['user', 'light'],
@@ -70,7 +71,7 @@ export default {
     return {
       options: [{
         name: 'My Profile',
-        action: this.logOut,
+        action: this.showModal,
       }, {
         name: 'Settings',
         action: this.showModal,
@@ -80,17 +81,22 @@ export default {
       }],
       modal: false,
       name: '',
+      uid: '',
       email: '',
       password: '',
       photoUrl: '',
-      updateInfo: false,
-      updatePassword: false,
+      avatar: '',
+      lockInfo: true,
+      lockPassword: true,
+      checkPassword: false,
+      reAuthAction: null,
       message: '',
     };
   },
   created() {
     this.name = this.user.displayName || this.user.email.split('@')[0];
     this.email = this.user.email;
+    this.uid = this.user.uid;
     this.photoUrl = this.user.photoURL || require('../assets/icons/avatar.svg');
   },
   methods: {
@@ -99,6 +105,13 @@ export default {
     },
     showModal() {
       this.modal = true;
+    },
+    closeModal() {
+      this.modal = false;
+      this.lockInfo = true;
+      this.lockPassword = true;
+      this.checkPassword = false;
+      this.reAuthAction = null;
       this.message = '';
     },
     uploadPhoto(event) {
@@ -107,9 +120,9 @@ export default {
         this.message = 'Your image is too big. Maximal file size is 2MB.';
         return;
       }
-      const fileName = this.user.email.split('@')[0];
-      const sorageFileRef = Firebase.storageAvatarsRef.child(fileName);
-      const task = sorageFileRef.put(file);
+      this.avatar = this.uid;
+      const storageFileRef = Firebase.storageAvatarsRef.child(this.avatar);
+      const task = storageFileRef.put(file);
       task.on('state_changed',
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -128,7 +141,7 @@ export default {
           }
         },
         () => {
-          sorageFileRef.getDownloadURL().then((url) => {
+          storageFileRef.getDownloadURL().then((url) => {
             this.photoUrl = url;
             this.changePhoto();
           });
@@ -136,32 +149,63 @@ export default {
         }
       );
     },
+    deletePhoto() {
+      if (this.avatar) {
+        Firebase.storageAvatarsRef.child(`avatars/${this.avatar}`).delete();
+      }
+    },
     changePhoto() {
       this.user.updateProfile({
         photoURL: this.photoUrl,
       });
     },
     changeInfo() {
-      if (!this.updateInfo) {
-        this.updateInfo = true;
-      } else {
-        this.user.updateProfile({
-          displayName: this.name,
-        }).then(() => {
-          this.user.updateEmail(this.email).then(() => {
-            this.updateInfo = false;
-          });
-        });
+      if (this.lockInfo) {
+        this.lockInfo = false;
+        return;
       }
+      this.user.updateProfile({
+        displayName: this.name,
+      });
+      this.user.updateEmail(this.email);
+      this.lockInfo = true;
+    },
+    activatePassword() {
+      if (this.lockPassword) {
+        this.changePassword();
+        return;
+      }
+      this.updatePassword();
     },
     changePassword() {
-      if (!this.updatePassword) {
-        this.updatePassword = true;
-      } else {
-        this.user.updatePassword(this.password).then(() => {
-          this.updatePassword = false;
-        });
-      }
+      this.reAuthAction = 'change';
+      this.checkPassword = true;
+      this.message = 'Please confirm your password';
+    },
+    updatePassword() {
+      this.user.updatePassword(this.password).then(() => {
+        this.message = 'Your password was updated!';
+      });
+    },
+    deleteUser() {
+      this.reAuthAction = 'delete';
+      this.checkPassword = true;
+      this.message = 'Please confirm your password';
+    },
+    reAuth() {
+      const credential = Firebase.emailAuth.credential(this.user.email, this.password);
+      this.user.reauthenticate(credential).then(() => {
+        if (this.reAuthAction === 'delete') {
+          this.user.delete().then(() => {
+            this.message = 'You have just been erased';
+            this.deletePhoto();
+          });
+        } else if (this.reAuthAction === 'change') {
+          this.lockPassword = false;
+          this.checkPassword = false;
+          this.message = 'Please enter new password';
+        }
+      });
     },
   },
 };
@@ -337,6 +381,18 @@ $color-light: #fff;
 }
 .action-update {
   background-color: $color-green;
+}
+.modal-confirm {
+  top: calc(50% - 5rem - 2rem);
+  height: 10rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  .input-line {
+    width: 60%;
+    align-self: center;
+  }
 }
 
 @media screen and (max-width: 991px) {
