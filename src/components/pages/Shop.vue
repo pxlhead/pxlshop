@@ -46,9 +46,23 @@
               .top-product-img
                 img.product-img(v-bind:src='product.url'
                 v-bind:alt='product.name')
-        .widget-tags
         .widget-cart
-        .widget-viewed
+          h3.widget-title Cart Review
+          ul.cart-list
+            li.cart-product(v-for='(product, index) in products' v-if='index < 3')
+              a.product-thumbnail
+                img(v-bind:src='product.url' alt='')
+              .product-description
+                a.product-title {{ product.name }}
+                .product-price
+                  span.product-quantity 2 x
+                  span.currency ${{ product.price }}
+              a.product-remove
+          .cart-subtotal Sub Total
+              span.amount $77.00
+          .cart-links
+            a.cart-view View Cart
+            a.cart-checkout Checkout
         .widget-payment
           h3.widget-title Payment Options
           p.payment-details
@@ -353,6 +367,87 @@ select {
  &:hover {
   opacity: 0.8;
  }
+}
+.widget-cart {
+  flex-basis: 15rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.cart-list {
+  padding: 0;
+  margin: 0;
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+}
+.cart-product {
+  flex-basis: 10%;
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  border-bottom: $border;
+  .product-title {
+    font-size: 1vw;
+    margin-bottom: 0;
+  }
+}
+.cart-product:last-child {
+  border:0;
+}
+.product-thumbnail {
+  flex-basis: 7rem;
+  position: relative;
+}
+.product-description {
+  flex-basis: 60%;
+  margin-left: 2rem;
+}
+.product-price {
+  margin-top: 0.7rem;
+}
+.product-remove {
+  flex-basis: 2rem;
+  height: 2rem;
+  background-image: url('../../assets/close-btn.svg');
+  background-position: center center;
+  background-size: cover;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+.cart-subtotal {
+  flex: 0.5;
+  border-bottom: 1px solid $color-grey;
+  color: $color-light;
+  text-transform: uppercase;
+}
+.amount {
+  float: right;
+}
+.cart-links {
+  flex-basis: 4rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+a.cart-view {
+  flex-basis: 8rem;
+  line-height: 4rem;
+  vertical-align: middle;
+  color: $color-grey;
+  &:hover {
+    color: $color-green;
+  }
+}
+.cart-checkout {
+  flex-basis: 10rem;
+  text-align: center;
+  line-height: 4rem;
+  vertical-align: middle;
+  background-color: $color-green;
+  &:hover {
+    background-color: darken($color-green, 10);
+  }
 }
 .pagination {
   display: flex;
