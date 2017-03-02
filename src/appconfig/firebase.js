@@ -13,6 +13,9 @@ const firebaseApp = firebase.initializeApp(config);
 export default {
   firebase: firebaseApp,
   dbProductsRef: firebaseApp.database().ref('products'),
+  dbUsersRef: firebaseApp.database().ref('users'),
   storageAvatarsRef: firebaseApp.storage().ref('avatars'),
   auth: firebaseApp.auth(),
+  googleAuth: new firebase.auth.GoogleAuthProvider(),
+  emailAuth: firebase.auth.EmailAuthProvider,
 };
