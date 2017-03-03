@@ -1,11 +1,9 @@
 <template lang="pug">
   .container
     main-header
-    checkout
+    checkout(v-bind:user='user')
     main-footer
-    login(v-if='!user' v-bind:light='light')
-    profile(v-if='user' v-bind:user='user'
-    v-bind:light='light')
+    profile(v-if='user' v-bind='{user, light}')
 </template>
 
 <script>
@@ -14,7 +12,6 @@ import Firebase from '../../appconfig/firebase';
 import MainHeader from '../../components/MainHeader';
 import Checkout from '../../components/pages/Checkout';
 import MainFooter from '../../components/MainFooter';
-import Login from '../../components/Login';
 import Profile from '../../components/Profile';
 
 export default {
@@ -23,7 +20,6 @@ export default {
     MainHeader,
     Checkout,
     MainFooter,
-    Login,
     Profile,
   },
   data() {

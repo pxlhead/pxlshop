@@ -56,7 +56,7 @@
                 a.product-title {{ product.name }}
                 .product-price
                   span.product-quantity 2 x
-                  span.currency ${{product.price }}
+                  span.currency ${{ product.price }}
               a.product-remove
           .cart-subtotal Sub Total
               span.amount $77.00
@@ -368,10 +368,6 @@ select {
   opacity: 0.8;
  }
 }
-
-
-// cart
-
 .widget-cart {
   flex-basis: 15rem;
   margin-top: 2rem;
@@ -453,7 +449,6 @@ a.cart-view {
     background-color: darken($color-green, 10);
   }
 }
-
 .pagination {
   display: flex;
   width: 100%;

@@ -11,9 +11,9 @@
       .modal-head
         h4.social-title(v-text='login === "in" ? "Sign In" : "Sign Up"')
         .social-img
-          a.social-link.social-facebook
+          a.social-link.social-google(@click='signInGoogle')
           a.social-link.social-twitter
-          a.social-link.social-google
+          a.social-link.social-facebook
       p.modal-title or Be Classical
       .modal-content
         .input-box
@@ -33,7 +33,6 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
 import Firebase from '../appconfig/firebase';
 import Notification from './Notification';
 
@@ -100,6 +99,10 @@ export default {
           }
         }
       );
+    },
+    signInGoogle() {
+      const provider = Firebase.googleAuth;
+      Firebase.auth.signInWithRedirect(provider);
     },
   },
 };

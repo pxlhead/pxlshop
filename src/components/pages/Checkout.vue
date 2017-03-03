@@ -7,42 +7,53 @@
           form.order-form
             h2.aside-title  Billing
             .input-box
-              input.input-line(type='text' placeholder='First Name...')
-              input.input-line(type='text', placeholder='Second Name...')
+              input.input-line(type='text' placeholder='First Name...'
+              v-model='billing.firstName' name='firstName')
+              input.input-line(type='text', placeholder='Second Name...'
+              v-model='billing.secondName' name='secondName')
             .input-box
-              input.input-line(type='email' placeholder='Email...')
-              input.input-line(type='text' placeholder='Phone...')
+              input.input-line(type='email' placeholder='Email...'
+              v-model='email' name='email')
+              input.input-line(type='text' placeholder='Phone...'
+              v-model.number='phone' name='phone')
             .input-box
-              input.input-line(type='text' placeholder='Country...')
+              input.input-line(type='text' placeholder='Country...'
+              v-model='billing.country' name='country')
             .input-box
-              input.input-line(type='text' placeholder='Billing Address 1...')
+              input.input-line(type='text' placeholder='Billing Address'
+              v-model='billing.address' name='address')
             .input-box
-              input.input-line(type='text' placeholder='Billing Address 2...')
-            .input-box
-              input.input-line(type='text' placeholder='City...')
-              input.input-line(type='text' placeholder='Zip...')
+              input.input-line(type='text' placeholder='City...'
+              v-model='billing.city' name='city')
+              input.input-line(type='text' placeholder='Zip...'
+              v-model.number='billing.zip' name='zip')
             .input-box
               .input-checkbox
-                input.input-check(type='checkbox' id='address')
+                input.input-check(type='checkbox' id='address'
+                @click='remAddress')
                 label.input-label(for='address') Remember address?
               .input-checkbox
-                input.input-check(type='checkbox' id='shipping')
+                input.input-check(type='checkbox' id='shipping'
+                @click='completeShipping')
                 label.input-label(for='shipping') Same shipping address?
           form.order-form
             h2.aside-title  Shipping
             .input-box
-              input.input-line(type='text' placeholder='First Name...')
-              input.input-line(type='text', placeholder='Second Name...')
+              input.input-line(type='text' placeholder='First Name...'
+              v-model='shipping.firstName' name='firstName')
+              input.input-line(type='text', placeholder='Second Name...'
+              v-model='shipping.secondName' name='secondName')
             .input-box
-              input.input-line(type='email' placeholder='Email...')
-              input.input-line(type='text' placeholder='Phone...')
+              input.input-line(type='text' placeholder='Country...'
+              v-model='shipping.country' name='country')
             .input-box
-              input.input-line(type='text' placeholder='Country...')
+              input.input-line(type='text' placeholder='Shipping Address'
+              v-model='shipping.address' name='address')
             .input-box
-              input.input-line(type='text' placeholder='Shipping Address')
-            .input-box
-              input.input-line(type='text' placeholder='City...')
-              input.input-line(type='text' placeholder='Zip...')
+              input.input-line(type='text' placeholder='City...'
+              v-model='shipping.city' name='city')
+              input.input-line(type='text' placeholder='Zip...'
+              v-model.number='shipping.zip' name='zip')
       .payment
         .payment-content
           h2 Payment Options
@@ -70,8 +81,41 @@
 </template>
 
 <script>
+import Firebase from '../../appconfig/firebase';
+
 export default {
   name: 'checkout',
+  props: ['user'],
+  data() {
+    return {
+      billing: {
+        firstName: '',
+        secondName: '',
+        country: '',
+        address: '',
+        city: '',
+        zip: '',
+      },
+      shipping: {
+        firstName: '',
+        secondName: '',
+        country: '',
+        address: '',
+        city: '',
+        zip: '',
+      },
+      email: '',
+      phone: '',
+    };
+  },
+  methods: {
+    remAddress() {
+      Firebase.dbUsersRef.child(`${this.user.uid}/address`).set(this.billing);
+    },
+    completeShipping() {
+      this.shipping = this.billing;
+    },
+  },
 };
 </script>
 

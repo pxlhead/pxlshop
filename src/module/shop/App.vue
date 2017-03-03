@@ -3,9 +3,8 @@
     main-header
     shop
     main-footer
-    login(v-if='!user' v-bind:light='light')
-    profile(v-if='user' v-bind:user='user'
-    v-bind:light='light')
+    login(v-if='!user' v-bind:light='light' v-on:signInGoogle='getUserGoogle')
+    profile(v-if='user' v-bind='{user, light}')
 </template>
 
 <script>
@@ -40,6 +39,13 @@ export default {
         this.user = null;
       }
     });
+  },
+  methods: {
+    getUserGoogle() {
+      Firebase.auth.getRedirectResult().then((result) => {
+        this.user = result.user;
+      });
+    },
   },
 };
 </script>

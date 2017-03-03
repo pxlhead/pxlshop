@@ -105,11 +105,13 @@ h4 {
     opacity: 0.7;
   }
 }
+
 @media screen and (max-width: 991px) {
-  .social-list {
-    width: 80%;
-  }
-}
+   .social-list {
+     width: 80%;
+   }
+ }
+
 @media screen and (max-width: 480px) {
   .footer {
     padding: 8vh 7vw;
