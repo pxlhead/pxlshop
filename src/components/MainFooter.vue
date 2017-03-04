@@ -107,10 +107,10 @@ h4 {
 }
 
 @media screen and (max-width: 991px) {
-   .social-list {
-     width: 80%;
-   }
- }
+  .social-list {
+    width: 80%;
+  }
+}
 
 @media screen and (max-width: 480px) {
   .footer {
