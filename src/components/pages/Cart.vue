@@ -6,18 +6,19 @@
         h2.aside-title  You have 3 item
         .cart-table
           .cart-header
-            h3.cart-title NAME
-            h3.cart-title PRICE
-            h3.cart-title QUANTITY
-            h3.cart-title TOTAL
-          .cart-item(v-for='n in 3')
+            .cart-item
+            h3.cart-item NAME
+            h3.cart-item PRICE
+            h3.cart-item QUANTITY
+            h3.cart-item TOTAL
+          .cart-product(v-for='n in 3')
             a.item-close
             figure.item-img
               img(src='https://unsplash.it/800/800/?random' alt='')
-            p.item-name Fox Illustration by pxlhead studio
-            p.item-price $15
-            input.item-quantity(type="number" step="1" min="1" name="quantity" value="1")
-            p.item-total $15
+            p.cart-item Fox Illustration by pxlhead studio
+            p.cart-item $15
+            input.input-line(type="text" name="quantity" value="1")
+            p.cart-item $15
           .cart-footer
             form.cart-coupon
               input.coupon-line(type='text' placeholder='Put you code here...')
@@ -71,6 +72,9 @@ h1 {
   font-size: 3.8vw;
   margin-bottom: 10rem;
 }
+input:checked {
+  appearance: none;
+}
 .content {
   padding: 12vh 10vw 0 10vw;
 }
@@ -96,12 +100,11 @@ h1 {
   margin-bottom: 10rem;
 }
 .cart-table {
-  flex: 1;
   display: flex;
   flex-direction: column;
   padding: 0 2vw;
 }
-.cart-header, .cart-item {
+.cart-header, .cart-product {
   flex: 1;
   display: flex;
   justify-content: space-between;
@@ -111,40 +114,38 @@ h1 {
 .cart-header {
   border-top: 2px solid lighten($color-grey, 50);
 }
-.cart-item {
-  padding: 2.5em 0;
+.cart-product{
+  padding: 2rem 0;
 }
-.cart-title, .item-name, .item-price, .item-quantity, .item-total {
-  flex-basis: 17%;
+.cart-item {
+  flex-basis: 15%;
   text-align: center;
-      line-height: 6rem;
   font-size: 1.8rem;
   color: lighten($color-grey, 10)
 }
-.cart-title:nth-child(1) {
-  flex-basis: 45%;
+.cart-item:first-child {
+  flex-basis: 16rem;
+}
+.input-line {
+  flex: none;
+  flex-basis: 18%;
+  min-width: 3rem;
   text-align: center;
+  border: 0;
 }
 .item-img {
-  flex-basis: 8%;
+  width: 5rem;
 }
 .item-close {
-  flex-basis: 2rem;
+  width: 2rem;
   height: 2rem;
-  margin-top: 4rem;
+  margin-top: 3rem;
   background-image: url('../../assets/close-btn.svg');
   background-position: center center;
   background-size: cover;
   &:hover {
     opacity: 0.7;
   }
-}
-.item-name {
-  flex-basis: 36%;
-  text-align: center;
-}
-.item-quantity {
-  border: 0;
 }
 .cart-footer {
   display: flex;
@@ -162,7 +163,7 @@ h1 {
   border: 0;
   border-bottom: 2px solid lighten($color-grey, 50);
   padding: 2rem;
-  &:hover{
+  &:hover {
     border-color: $color-green;
   }
 }
@@ -229,16 +230,45 @@ h1 {
   .basket {
     flex-direction: column;
   }
-  .item-close {
-    flex-basis: 3rem;
+  .cart-item {
+    flex-basis: 13%;
+    font-size: 1.3rem;
   }
-  .item-price {
-    flex-basis: 7%;
+  .input-line {
+    width: 1.2rem;
+    flex-basis: 0;
+    // min-width: 0;
+  }
+  .item-img {
+    margin: 0;
+    margin-top: 1rem;
+  }
+  .cart-item:nth-child(3) {
+    flex-basis: 25%;
+  }
+  .cart-item:first-child {
+    flex-basis: 13rem;
   }
 }
 @media screen and (max-width: 480px) {
+  .cart-item {
+    flex-basis: 10%;
+    font-size: 1rem;
+  }
+  .input-line {
+    width: 1rem;
+    flex-basis: 0;
+    // min-width: 0;
+  }
   .item-img {
-    display: none;
+    margin: 0;
+    margin-top: 1rem;
+  }
+  .cart-item:nth-child(3) {
+    flex-basis: 25%;
+  }
+  .cart-item:first-child {
+    flex-basis: 13rem;
   }
 }
 </style>
