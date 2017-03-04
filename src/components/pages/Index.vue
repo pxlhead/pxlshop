@@ -436,6 +436,12 @@ iframe {
   margin: 2rem auto;
   border-radius: 50%;
   background-color: $color-light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 80%;
+  }
 }
 .comment-author {
 }
