@@ -5,6 +5,7 @@
     main-footer
     login(v-if='!user' v-bind:light='light' v-on:signInGoogle='getUserGoogle')
     profile(v-if='user' v-bind='{user, light}')
+    product
 </template>
 
 <script>
@@ -15,6 +16,7 @@ import MainHeader from '../../components/MainHeader';
 import MainFooter from '../../components/MainFooter';
 import Login from '../../components/Login';
 import Profile from '../../components/Profile';
+import Product from '../../components/Product';
 
 export default {
   name: 'app',
@@ -24,6 +26,7 @@ export default {
     MainFooter,
     Login,
     Profile,
+    Product,
   },
   data() {
     return {
