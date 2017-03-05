@@ -3,33 +3,28 @@
     .modal-overlay
     a.close-btn
     section.modal
-      h1 One of the best illustration ever
       .details
         h2.aside-title Details
-        .details-img
-          //- img(v-bind:src='product.url' v-bind:alt='product.name')
-          //- .product-actions
-          //-   a.cart-link
-          //-   a.star.star-link
+        .details-img(v-for='(product, index) in products' v-if='index < 1')
+          img(v-bind:src='product.url')
         .details-content
+          h2.product-name One of the best illustration ever
           .product-info
-            .product-stars
-              span.star
             span.product-price $55
+            .product-stars
+              span.star(v-for='n in 5')
           .product-about
             p.about-text
               |Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               |Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               |Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              |Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           .product-cart
             input.input-line(type="text" name="quantity" value="1")
             a.input-btn Add to Card
-          .product-index
-            span.index-text 123515
-            span.index-text XTYE
-            span.index-text Lorem Ipsum
-          .product-social
+          ul.product-social
+            li.social-item(v-for='social in socials')
+              a.social-link
+                img(:src='"../assets/icons/" + social + ".svg"')
       .related
         h2.aside-title Related
         .gallery-product(v-for='(product, index) in products' v-if='index < 4')
@@ -52,6 +47,7 @@ export default {
   },
   data() {
     return {
+      socials: ['twitter', 'facebook', 'youtube', 'instagram'],
     };
   },
 };
@@ -67,10 +63,6 @@ $color-light: #fff;
 h1, h2, h3 {
   color: $color-dark;
 }
-h1 {
-  font-size: 3.4vw;
-  margin-bottom: 5rem;
-}
 
 .modal {
   top: calc(50% - 40% - 2rem);
@@ -81,23 +73,24 @@ h1 {
   display: flex;
   flex-direction: column;
 }
-
+.close-btn {
+  width: 4.5rem;
+  height: 4.5rem;
+}
 .aside-title {
   left: 2rem;
 }
-
 .details {
-  flex-basis: 50%;
-  width: 100%;
+  flex-basis: 60%;
+  padding: 4rem 9rem 0rem 9rem;
   position: relative;
   display: flex;
   flex-direction: row;
 }
-
 .details-img {
   flex: 1;
+  padding: 1rem 3.5rem;
 }
-
 .details-content {
   flex: 1;
   display: flex;
@@ -105,35 +98,47 @@ h1 {
   justify-content: space-between;
   padding: 1rem 5rem;
 }
-
-.product-info, .product-about, .product-cart, .product-index, .product-social {
-  flex-basis: calc(80% / 5);
+.product-name, .product-info, .product-about, .product-cart, .product-social {
+  flex-basis: calc(80% / 6);
 }
-
 .product-info {
   display: flex;
+  width: 40%;
 }
-
+.product-about {
+  padding: 1rem;
+  line-height: 2.5rem;
+}
 .product-stars, .product-price {
   flex: 1;
-  padding-top: 1rem;
+  padding: 1rem;
 }
-
+.product-social {
+  width: 30%;
+  padding: 2rem 2rem 0rem 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+.social-link {
+  flex-basis: 20%;
+  display: block;
+  &:hover {
+    opacity: 0.7;
+  }
+}
 .star {
 &::before {
   content: '\2606';
   color: $color-grey;
-}
+  }
 }
 .product-index {
   display: flex;
   flex-direction: column;
 }
-
 .input-line {
   text-align: center;
 }
-
 .input-btn {
   background-color: $color-green;
   padding: 1rem;
@@ -142,10 +147,9 @@ h1 {
     background-color: darken($color-green, 10);
   }
 }
-
 .related {
   flex: 1;
-  width: 100%;
+  padding: 4rem 4rem 0 4rem;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -160,6 +164,10 @@ h1 {
   padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
+}
+.product-name {
+  font-size: 2vw;
+  padding: 1rem;
 }
 .product-img {
   overflow: hidden;
@@ -219,22 +227,47 @@ h1 {
 }
 
 @media screen and (max-width: 991px) {
-  .login-sign {
-    height: 3rem;
-    top: 5vh;
-    right: calc(10vw - 4rem);
+  .details {
+    flex-direction: column;
+    flex-basis: 100%;
+    padding: 2rem;
   }
-  .sign-btn {
-    line-height: 3rem;
-    font-size: 1.4rem;
-    &:first-child {
-      margin-right: 2rem;
-    }
+  .related {
+    display: none;
+  }
+
+  .details-img {
+    flex-basis: 30%;
+    padding: 2rem 6rem;
+  }
+
+  .details-content {
+    flex-basis: 60%;
+  }
+  .product-social {
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    height: 18%;
+    top: calc(50% - 12rem);
+  }
+  .product-price {
+    font-size: 1.5vw;
+  }
+  .product-name {
+    padding: 0rem 1rem;
   }
 }
-@media screen and (max-width: 480px) {
-  .login-sign {
-    right: calc(10vw - 2rem);
+
+@media screen and (max-width: 560px) {
+  .details-img {
+    flex-basis: 30%;
+    padding: 2rem 3rem;
+  }
+  .product-price {
+    font-size: 3vw;
   }
 }
 </style>
