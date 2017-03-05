@@ -1,7 +1,7 @@
 <template lang="pug">
   .container
     main-header
-    shop
+    shop(v-bind:user='user')
     main-footer
     login(v-if='!user' v-bind:light='light' v-on:signInGoogle='getUserGoogle')
     profile(v-if='user' v-bind='{user, light}')

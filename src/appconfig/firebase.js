@@ -12,6 +12,7 @@ const firebaseApp = firebase.initializeApp(config);
 
 export default {
   firebase: firebaseApp,
+  dbRef: firebaseApp.database().ref(),
   dbProductsRef: firebaseApp.database().ref('products'),
   dbUsersRef: firebaseApp.database().ref('users'),
   storageAvatarsRef: firebaseApp.storage().ref('avatars'),
