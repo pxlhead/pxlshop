@@ -1,7 +1,7 @@
 <template lang="pug">
   .container
     main-header
-    shop(v-bind:user='user')
+    shop(v-bind='{user, productsInCart}')
     main-footer
     login(v-if='!user' v-bind:light='light' v-on:signInGoogle='getUserGoogle')
     profile(v-if='user' v-bind='{user, light}')
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       user: null,
+      productsInCart: {},
       light: false,
     };
   },
@@ -35,6 +36,7 @@ export default {
     Firebase.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
+        this.getProductsInCart();
       } else {
         this.user = null;
       }
@@ -44,6 +46,13 @@ export default {
     getUserGoogle() {
       Firebase.auth.getRedirectResult().then((result) => {
         this.user = result.user;
+      });
+    },
+    getProductsInCart() {
+      Firebase.dbUsersRef.child(`${this.user.uid}/cart/`).on('value', (snapshot) => {
+        snapshot.forEach((product) => {
+          this.productsInCart[product.key] = product.val();
+        });
       });
     },
   },

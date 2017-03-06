@@ -25,9 +25,12 @@
             && index < productsOnPage * activePage')
               .product-img
                 img(v-bind:src='product.url' v-bind:alt='product.name')
-                .product-actions
-                  a.cart-link(@click='addCart(product)')
-                  span.star.star-link(v-for='star in 5'
+                .product-actions(v-bind:class='{".product-actions--active": starBoxHover}')
+                  a.cart-link(@click='addToCart(product)'
+                  v-bind:class='{"cart-link--active": checkInCart(product)}')
+                  .star-box(@mouseenter='starBoxHover = true'
+                  @mouseleave='starBoxHover = false')
+                    span.star.star-link(v-for='star in 5'
                   @click='rateProduct(product, (6 - star))')
               h2.product-title {{ product.name }}
               span.product-author {{ product.author }}
@@ -46,17 +49,17 @@
               .top-product-img
                 img.product-img(v-bind:src='product.url'
                 v-bind:alt='product.name')
-        .widget-cart
+        .widget-cart(v-if='productsInCart.length > 0')
           h3.widget-title Cart Review
           ul.cart-list
-            li.cart-product(v-for='(product, index) in products' v-if='index < 3')
+            li.cart-product(v-for='product in productsInCart')
               a.product-thumbnail
                 img(v-bind:src='product.url' alt='')
               .product-description
                 a.product-title {{ product.name }}
                 .product-price
                   span.product-quantity 2 x
-                  span.currency ${{ product.price }}
+                  span.currency $ {{ product.price }}
               a.product-remove
           .cart-subtotal Sub Total
               span.amount $77.00
@@ -97,7 +100,7 @@ export default {
   firebase: {
     products: Firebase.dbProductsRef,
   },
-  props: ['user'],
+  props: ['user', 'productsInCart'],
   data() {
     return {
       selectedCategory: 'all',
@@ -109,6 +112,7 @@ export default {
       productsOnPage: 12,
       activePage: 1,
       productsStars: {},
+      starBoxHover: false,
     };
   },
   created() {
@@ -147,6 +151,18 @@ export default {
       const updates = {};
       updates[`/products/${product['.key']}/rating/${this.user.uid}`] = stars;
       Firebase.dbRef.update(updates);
+    },
+    addToCart(product) {
+      const key = product['.key'];
+      const productData = {
+        name: product.name,
+        price: product.price,
+        url: product.url,
+      };
+      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${key}`).set(productData);
+    },
+    checkInCart(product) {
+      return Object.prototype.hasOwnProperty.call(this.productsInCart, product['.key']);
     },
     getStars(product) {
       return this.productsStars[product['.key']];
@@ -285,12 +301,12 @@ select {
   width: 2rem;
   transform: translateX(200%);
   transition: 1s;
-  &:hover {
-    top: calc(50% - 6rem);
-  }
-  &:hover .star-link {
-    transform: translateY(0);
-  }
+}
+.product-actions--active {
+  top: calc(50% - 6rem);
+}
+.star-box:hover .star-link {
+  transform: translateY(0);
 }
 .cart-link,
 .star-link {
@@ -304,6 +320,10 @@ select {
   width: 100%;
   background: $color-light url('../../assets/icons/cart.svg') no-repeat center center;
   background-size: 40%;
+}
+.cart-link--active {
+  background-color: $color-green;
+  pointer-events: none;
 }
 .star-link {
   display: block;
