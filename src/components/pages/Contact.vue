@@ -3,14 +3,6 @@
     h1 Hi there! We're an awesome group of creatives from a variety of different backgrounds with a variety of skills.
     section.email
       h2.aside-title CONTACT US
-      .contact
-        p.contact-address 126-129 Sing Street,
-        p.contact-address Soho New York City,
-        p.contact-address NY 19023, United States.
-        ul.social-list
-          li.social-item(v-for='social in socials')
-            a.social-link
-              img(:src='"../../assets/icons/" + social + ".svg"')
       form.email-form
         .input-box
           input.input-line(type='text' placeholder='First Name...'
@@ -23,10 +15,21 @@
           input.input-line(type='text' placeholder='Company...'
           name='company')
         .input-box
-          input.input-line(type='text' placeholder='Text...'
+          textarea.input-line.input-text(type='text' placeholder='Text...'
           name='text')
+        a.action-btn Submit
+      .contact
+        p.contact-address 9000456,
+        p.contact-address 2426 Sing Street,
+        p.contact-address Quesnel BC,
+        p.contact-address V2J 4P7, Canada.
+        ul.social-list
+          li.social-item(v-for='social in socials')
+            a.social-link
+              img(:src='"../../assets/icons/" + social + ".svg"')
     section.map
       h2.aside-title FIND US
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2403.423905567938!2d-122.44442138383793!3d52.95878827989962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x53870578f27359f5%3A0xf834004e0cdb5bf2!2zU2luZyBTdCwgUXVlc25lbCwgQkMsINCa0LDQvdCw0LTQsA!5e0!3m2!1sru!2sru!4v1488793347529" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 </template>
 
 <script>
@@ -106,20 +109,39 @@ h1 {
 .email-form {
   flex-basis: 60%;
 }
-.order-form {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  margin-bottom: 5rem;
+.input-text {
+  padding: 4rem;
   border: 2px solid lighten($color-grey, 50);
+  &:hover {
+    border: 2px solid $color-green;
+  }
 }
-
+.action-btn {
+  margin: 1rem;
+  width: 25%;
+}
 
 @media screen and (max-width: 991px) {
-
-}
-@media screen and (max-width: 480px) {
-
+  .email {
+    flex-direction: column;
+    padding: 4vh 12vw;
+  }
+  .contact {
+    flex-basis: 30%;
+    padding-bottom: 4rem;
+  }
+  .input-box {
+    display: block;
+  }
+  .email-form {
+    width: 100%;
+    padding-bottom: 4rem;
+  }
+  h1 {
+    font-size: 4.8vw;
+  }
+  .social-list {
+    width: 60%;
+  }
 }
 </style>
