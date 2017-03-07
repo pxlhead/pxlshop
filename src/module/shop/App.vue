@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       user: null,
-      productsInCart: {},
+      productsInCart: [],
       light: false,
     };
   },
@@ -51,7 +51,9 @@ export default {
     getProductsInCart() {
       Firebase.dbUsersRef.child(`${this.user.uid}/cart/`).on('value', (snapshot) => {
         snapshot.forEach((product) => {
-          this.productsInCart[product.key] = product.val();
+          if (this.productsInCart
+            .some(productCart => productCart.name === product.val().name)) return;
+          this.productsInCart.push(product.val());
         });
       });
     },

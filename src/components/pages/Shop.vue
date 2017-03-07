@@ -25,7 +25,7 @@
             && index < productsOnPage * activePage')
               .product-img
                 img(v-bind:src='product.url' v-bind:alt='product.name')
-                .product-actions(v-bind:class='{".product-actions--active": starBoxHover}')
+                .product-actions(v-bind:class='{"product-actions--active": starBoxHover}')
                   a.cart-link(@click='addToCart(product)'
                   v-bind:class='{"cart-link--active": checkInCart(product)}')
                   .star-box(@mouseenter='starBoxHover = true'
@@ -49,7 +49,7 @@
               .top-product-img
                 img.product-img(v-bind:src='product.url'
                 v-bind:alt='product.name')
-        .widget-cart(v-if='productsInCart.length > 0')
+        .widget-cart
           h3.widget-title Cart Review
           ul.cart-list
             li.cart-product(v-for='product in productsInCart')
@@ -59,7 +59,7 @@
                 a.product-title {{ product.name }}
                 .product-price
                   span.product-quantity 2 x
-                  span.currency $ {{ product.price }}
+                  span.currency ${{ product.price }}
               a.product-remove
           .cart-subtotal Sub Total
               span.amount $77.00
@@ -153,16 +153,14 @@ export default {
       Firebase.dbRef.update(updates);
     },
     addToCart(product) {
-      const key = product['.key'];
-      const productData = {
+      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${product['.key']}`).set({
         name: product.name,
         price: product.price,
         url: product.url,
-      };
-      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${key}`).set(productData);
+      });
     },
     checkInCart(product) {
-      return Object.prototype.hasOwnProperty.call(this.productsInCart, product['.key']);
+      return this.productsInCart.some(productCart => productCart.name === product.name);
     },
     getStars(product) {
       return this.productsStars[product['.key']];
