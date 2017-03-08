@@ -37,9 +37,9 @@
               span.product-price ${{ product.price + '.00' }}
       aside.sidebar
         .widget-top
-          h3.widget-title(v-if='sortTopProducts') Top Rated
+          h3.widget-title Top Rated
           ul.top-list
-            li.top-product(v-for='product in topProducts.slice(0, 3)')
+            li.top-product(v-for='product in sortByRating(products).slice(0, 3)')
               .top-product-info
                 a.product-title {{ product.name }}
                 .product-stars
@@ -128,9 +128,12 @@ export default {
       }
     });
   },
-  computed: {
-    sortTopProducts() {
-      this.topProducts = this.products.concat().sort((prodA, prodB) => {
+  methods: {
+    changePage(page) {
+      this.activePage = page;
+    },
+    sortByRating(products) {
+      return this.deepClone(products).sort((prodA, prodB) => {
         if (prodA.rating && prodB.rating) {
           const ratingA = Object.values(prodA.rating).reduce(
             (sum, val) => sum + val, 0);
@@ -140,12 +143,6 @@ export default {
         }
         return prodB.rating ? 1 : -1;
       });
-      return this.topProducts.length >= 1;
-    },
-  },
-  methods: {
-    changePage(page) {
-      this.activePage = page;
     },
     rateProduct(product, stars) {
       const updates = {};
@@ -160,10 +157,16 @@ export default {
       });
     },
     checkInCart(product) {
-      return this.productsInCart.some(productCart => productCart.name === product.name);
+      if (product) {
+        return this.productsInCart[product['.key']] !== undefined;
+      }
+      return false;
     },
     getStars(product) {
       return this.productsStars[product['.key']];
+    },
+    deepClone(obj) {
+      return JSON.parse(JSON.stringify(obj));
     },
   },
   watch: {
@@ -172,17 +175,17 @@ export default {
         this.filteredProducts = this.products;
         return;
       }
-      this.filteredProducts = this.products.filter(prod => prod.type
-        === newCategory);
+      this.filteredProducts = this.deepClone(this.products)
+        .filter(prod => prod.type === newCategory);
       this.activePage = 1;
     },
     selectedSort(newSort) {
       switch (newSort) {
         case 'popular':
-          this.filteredProducts = this.topProducts;
+          this.filteredProducts = this.sortByRating(this.products);
           break;
         case 'newest':
-          this.filteredProducts = this.products.concat().sort((prodA, prodB) => (
+          this.filteredProducts = this.deepClone(this.products).sort((prodA, prodB) => (
             Date.parse(prodA.date) < Date.parse(prodB.date) ? 1 : -1
           ));
           break;
