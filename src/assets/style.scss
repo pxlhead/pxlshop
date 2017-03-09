@@ -55,6 +55,9 @@ li {
   height: 3rem;
   background: url('../assets/close-btn.svg') no-repeat center;
   background-size: cover;
+  &:hover {
+    opacity: 0.7;
+  }
 }
 .modal-overlay + .close-btn {
   position: fixed;
@@ -232,4 +235,16 @@ li {
     background-color: darken($color-green, 10);
     color: inherit;
   }
+}
+
+.aside-title {
+  position: absolute;
+  top: calc(50% - 6rem);
+  left: -5vw;
+  font-size: 2rem;
+  transform: rotate(90deg);
+  transform-origin: left;
+  color: $color-dark;
+  margin: 0;
+  letter-spacing: 0.2rem;
 }

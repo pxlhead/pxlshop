@@ -17,9 +17,9 @@
             .post-data {{ val }}
       .contact
         h4 Contact us
-        p 126-129 Sing Street,
-        p Soho New York City,
-        p NY 19023, United States.
+        p 2426 Sing Street,
+        p Quesnel BC,
+        p V2J 4P7, Canada.
         ul.list.social-list
           li.social-item(v-for='social in socials')
             a.social-link

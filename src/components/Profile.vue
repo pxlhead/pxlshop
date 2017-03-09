@@ -347,6 +347,9 @@ $color-light: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  img {
+    transform: scale(0.8);
+  }
 }
 .modal-upload {
   width: 0.1px;
