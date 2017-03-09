@@ -17,7 +17,7 @@
               span.product-price $ {{ product.price }}
             a.product-remove(@click='removeFromCart(key)')
         .cart-subtotal
-          span Sub Total
+          span Subtotal
           span $ {{ cartAmount() }}
         .cart-links
           a.cart-view View Cart

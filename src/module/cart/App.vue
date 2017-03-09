@@ -1,7 +1,7 @@
 <template lang="pug">
   .container
     main-header(v-bind='{user, productsInCart}')
-    cart
+    cart(v-bind='{user, productsInCart}')
     main-footer
     profile(v-if='user' v-bind='{user, light}')
 </template>
