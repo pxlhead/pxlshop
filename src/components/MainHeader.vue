@@ -4,25 +4,24 @@
       a.logo-link
         img(src='../assets/logo.svg' alt='Logo')
     .cart
-        a.cart-link
-          img(src='../assets/icons/cart.svg' alt='Cart')
-          span.cart-count
-        .cart-submenu
-          ul.submenu-list
-            li.submenu-product(v-for='product in products')
-              a.product-thumbnail
-                img(:src='product.img' alt='')
-              .product-description
-                a.product-title {{ product.name }}
-                .product-price
-                  span.product-quantity 2 x
-                  span.currency ${{product.price }}
-              a.product-remove
-          .cart-subtotal Sub Total
-              span.amount $77.00
-          .cart-links
-            a.cart-view View Cart
-            a.cart-checkout Checkout
+      a.cart-link
+        img(src='../assets/icons/cart.svg' alt='Cart')
+        span.cart-count(v-if='cartShow')
+      .cart-submenu
+        ul.cart-list
+          li.cart-product(v-for='(product, key) in productsInCart')
+            a.product-thumbnail
+              img(v-bind:src='product.url' alt='product.name')
+            .product-description
+              a.product-title {{ product.name }}
+              span.product-price $ {{ product.price }}
+            a.product-remove(@click='removeFromCart(key)')
+        .cart-subtotal
+          span Sub Total
+          span $ {{ cartAmount() }}
+        .cart-links
+          a.cart-view View Cart
+          a.cart-checkout Checkout
     a.nav-toggle(@click='showMenu = !showMenu')
       .toggle-icon(:class='{open: showMenu}')
         span
@@ -35,37 +34,36 @@
 
 <script>
 /* eslint-disable no-undef */
+import Firebase from '../appconfig/firebase';
+
 export default {
   name: 'main-header',
+  props: ['user', 'productsInCart'],
   data() {
     return {
       pages: [
         'Home',
         'About',
         'Shop',
-        'Blog',
         'Contacts',
       ],
       showMenu: false,
-      products: [
-        {
-          name: 'Book of Design',
-          price: '135',
-          stars: '4',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Palm pattern',
-          price: '35',
-          stars: '5',
-          img: 'https://unsplash.it/500/500/?random',
-        }, {
-          name: 'Balzac pattern',
-          price: '129',
-          stars: '3',
-          img: 'https://unsplash.it/500/500/?random',
-        },
-      ],
     };
+  },
+  computed: {
+    cartShow() {
+      return Object.keys(this.productsInCart).length > 0;
+    },
+  },
+  methods: {
+    cartAmount() {
+      return Object.values(this.productsInCart)
+        .reduce((sum, product) => sum + Number(product.price), 0);
+    },
+    removeFromCart(key) {
+      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${key}`).remove();
+      this.$delete(this.productsInCart, key);
+    },
   },
 };
 </script>
@@ -139,13 +137,11 @@ a {
 .cart-submenu {
   display: none;
   flex-direction: column;
-  justify-content: center;
   position: absolute;
   top: 6rem;
   left: 0;
-  padding: 2rem;
   width: 25rem;
-  height: 28rem;
+  padding: 2rem;
   background-color: $color-dark;
   a {
     color: $color-light;
@@ -153,75 +149,6 @@ a {
 }
 .cart:hover .cart-submenu {
   display: flex;
-}
-.submenu-list {
-  padding: 0;
-  margin: 0;
-  flex: 5;
-  display: flex;
-  flex-direction: column;
-}
-.submenu-product {
-  flex-basis: 5rem;
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: row;
-}
-.product-thumbnail {
-  flex-basis: 5rem;
-  position: relative;
-}
-.product-description {
-  flex-basis: 16rem;
-  margin-left: 2rem;
-}
-.product-price {
-  margin-top: 0.3rem;
-}
-.product-remove {
-  flex-basis: 2rem;
-  height: 2rem;
-  background-image: url('../assets/close-btn.svg');
-  background-position: center center;
-  background-size: cover;
-  &:hover {
-    opacity: 0.7;
-  }
-}
-.cart-subtotal {
-  flex: 0.5;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid $color-grey;
-  color: $color-light;
-  text-transform: uppercase;
-}
-.amount {
-  float: right;
-}
-.cart-links {
-  flex-basis: 4rem;
-  margin-top: 2rem;
-  display: flex;
-  justify-content: space-between;
-}
-a.cart-view {
-  flex-basis: 8rem;
-  line-height: 4rem;
-  vertical-align: middle;
-  color: $color-grey;
-  &:hover {
-    color: $color-green;
-  }
-}
-.cart-checkout {
-  flex-basis: 10rem;
-  text-align: center;
-  line-height: 4rem;
-  vertical-align: middle;
-  background-color: $color-green;
-  &:hover {
-    background-color: darken($color-green, 10);
-  }
 }
 .nav-toggle {
   width: 4rem;
@@ -324,13 +251,7 @@ a.cart-view {
   .cart-submenu {
     top: 4rem;
     left: 0;
-    padding: 2rem;
     width: 20rem;
-    height: 23rem;
-  }
-  .product-remove {
-    flex-basis: 1.5rem;
-    height: 1.5rem;
   }
   .nav {
     height: 4rem;

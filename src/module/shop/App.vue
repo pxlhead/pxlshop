@@ -1,6 +1,6 @@
 <template lang="pug">
   .container
-    main-header
+    main-header(v-bind='{user, productsInCart}')
     shop(v-bind='{user, productsInCart}')
     main-footer
     login(v-if='!user' v-bind:light='light' v-on:signInGoogle='getUserGoogle')
@@ -49,9 +49,16 @@ export default {
       });
     },
     getProductsInCart() {
+      // TODO: fix initial cart items upload
       Firebase.dbUsersRef.child(`${this.user.uid}/cart/`).on('value', (snapshot) => {
+        if (!Object.keys(this.productsInCart).length) {
+          snapshot.forEach((productInCart) => {
+            this.productsInCart[productInCart.key] = productInCart.val();
+          });
+          return;
+        }
         snapshot.forEach((productInCart) => {
-          this.productsInCart[productInCart.key] = productInCart.val();
+          this.$set(this.productsInCart, productInCart.key, productInCart.val());
         });
       });
     },
