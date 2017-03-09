@@ -9,16 +9,12 @@
             .cart-item
             h3.cart-item NAME
             h3.cart-item PRICE
-            h3.cart-item QUANTITY
-            h3.cart-item TOTAL
-          .cart-product(v-for='n in 3')
-            a.item-close
+          .cart-product(v-for='(product, key) in productsInCart')
             figure.item-img
-              img(src='https://unsplash.it/800/800/?random' alt='')
-            p.cart-item Fox Illustration by pxlhead studio
-            p.cart-item $15
-            input.input-line(type="text" name="quantity" value="1")
-            p.cart-item $15
+              img(v-bind:src='product.url' alt='product.name')
+            p.cart-item {{ product.name }}
+            p.cart-item $ {{ product.price }}
+            a.product-remove(@click='removeFromCart(key)')
           .cart-footer
             form.cart-coupon
               input.coupon-line(type='text' placeholder='Put you code here...')
@@ -41,19 +37,32 @@
           h2.total-title Cart Total
           .subtotal-line
             p.line-text Subtotal
-            p.line-price $15
+            p.line-price ${{ cartAmount() }}
           .total-line
             p.line-text Total
-            p.line-price $15
+            p.line-price ${{ cartAmount() }}
           a.action-btn Proceed to Checkout
 </template>
 
 <script>
+import Firebase from '../../appconfig/firebase';
+
 export default {
   name: 'cart',
+  props: ['user', 'productsInCart'],
   data() {
     return {
     };
+  },
+  methods: {
+    cartAmount() {
+      return Object.values(this.productsInCart)
+        .reduce((sum, product) => sum + Number(product.price), 0);
+    },
+    removeFromCart(key) {
+      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${key}`).remove();
+      this.$delete(this.productsInCart, key);
+    },
   },
 };
 </script>
@@ -135,17 +144,6 @@ input:checked {
 }
 .item-img {
   width: 5rem;
-}
-.item-close {
-  width: 2rem;
-  height: 2rem;
-  margin-top: 3rem;
-  background-image: url('../../assets/close-btn.svg');
-  background-position: center center;
-  background-size: cover;
-  &:hover {
-    opacity: 0.7;
-  }
 }
 .cart-footer {
   display: flex;
@@ -237,7 +235,6 @@ input:checked {
   .input-line {
     width: 1.2rem;
     flex-basis: 0;
-    // min-width: 0;
   }
   .item-img {
     margin: 0;
