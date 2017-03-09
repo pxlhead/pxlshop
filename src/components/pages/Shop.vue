@@ -25,41 +25,43 @@
             && index < productsOnPage * activePage')
               .product-img
                 img(v-bind:src='product.url' v-bind:alt='product.name')
-                .product-actions
-                  a.cart-link
-                  a.star.star-link(v-bind:class='{"star-full": starAdded}'
-                  @click='starAdded = !starAdded')
+                .product-actions(v-bind:class='{"product-actions--active": starBoxHover}')
+                  a.cart-link(@click='addToCart(product)'
+                  v-bind:class='{"cart-link--active": checkInCart(product)}')
+                  .star-box(@mouseenter='starBoxHover = true'
+                  @mouseleave='starBoxHover = false')
+                    span.star.star-link(v-for='star in 5'
+                  @click='rateProduct(product, (6 - star))')
               h2.product-title {{ product.name }}
               span.product-author {{ product.author }}
               span.product-price ${{ product.price + '.00' }}
       aside.sidebar
         .widget-top
-          h3.widget-title(v-if='sortTopProducts') Top Rated
+          h3.widget-title Top Rated
           ul.top-list
-            li.top-product(v-for='product in topProducts')
+            li.top-product(v-for='product in sortByRating(products).slice(0, 3)')
               .top-product-info
                 a.product-title {{ product.name }}
                 .product-stars
                   span.star(v-for='n in 5'
-                  v-bind:class='{ "star-full": n <= product.stars }')
+                  v-bind:class='{ "star-full": n <= getStars(product) }')
                 span.product-price ${{ product.price + '.00' }}
               .top-product-img
                 img.product-img(v-bind:src='product.url'
                 v-bind:alt='product.name')
-        .widget-cart
+        .widget-cart(v-if='cartShow')
           h3.widget-title Cart Review
           ul.cart-list
-            li.cart-product(v-for='(product, index) in products' v-if='index < 3')
+            li.cart-product(v-for='(product, key) in productsInCart')
               a.product-thumbnail
-                img(v-bind:src='product.url' alt='')
+                img(v-bind:src='product.url' alt='product.name')
               .product-description
                 a.product-title {{ product.name }}
-                .product-price
-                  span.product-quantity 2 x
-                  span.currency ${{ product.price }}
-              a.product-remove
-          .cart-subtotal Sub Total
-              span.amount $77.00
+                span.product-price $ {{ product.price }}
+              a.product-remove(@click='removeFromCart(key)')
+          .cart-subtotal
+            span Subtotal
+            span $ {{ cartAmount() }}
           .cart-links
             a.cart-view View Cart
             a.cart-checkout Checkout
@@ -97,33 +99,86 @@ export default {
   firebase: {
     products: Firebase.dbProductsRef,
   },
+  props: ['user', 'productsInCart'],
   data() {
     return {
       selectedCategory: 'all',
       selectedSort: 'none',
       categories: ['all', 'illustrations', 'patterns', 'photos'],
       sorts: ['none', 'newest', 'popular'],
-      filteredProducts: [],
-      topProducts: {},
-      productsOnPage: 9,
+      filteredProducts: {},
+      topProducts: [],
+      productsOnPage: 12,
       activePage: 1,
-      starAdded: false,
+      productsStars: {},
+      starBoxHover: false,
     };
   },
   created() {
     this.filteredProducts = this.products;
+    this.$firebaseRefs.products.on('value', (snapshot) => {
+      for (const [key, value] of Object.entries(snapshot.val())) {
+        if (value.rating) {
+          this.$set(this.productsStars, key, Object.values(value.rating)
+            .reduce((sum, val) => sum + val, 0));
+        } else {
+          this.$set(this.productsStars, key, 0);
+        }
+      }
+    });
   },
   computed: {
-    sortTopProducts() {
-      this.topProducts = this.products.sort((prodA, prodB) => (
-        prodA.stars <= prodB.stars ? 1 : -1
-      )).slice(0, 4);
-      return this.topProducts.length >= 1;
+    cartShow() {
+      return Object.keys(this.productsInCart).length > 0;
     },
   },
   methods: {
     changePage(page) {
       this.activePage = page;
+    },
+    sortByRating(products) {
+      return this.deepClone(products).sort((prodA, prodB) => {
+        if (prodA.rating && prodB.rating) {
+          const ratingA = Object.values(prodA.rating).reduce(
+            (sum, val) => sum + val, 0);
+          const ratingB = Object.values(prodB.rating).reduce(
+            (sum, val) => sum + val, 0);
+          return ratingA <= ratingB ? 1 : -1;
+        }
+        return prodB.rating ? 1 : -1;
+      });
+    },
+    rateProduct(product, stars) {
+      const updates = {};
+      updates[`/products/${product['.key']}/rating/${this.user.uid}`] = stars;
+      Firebase.dbRef.update(updates);
+    },
+    addToCart(product) {
+      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${product['.key']}`).set({
+        name: product.name,
+        price: product.price,
+        url: product.url,
+      });
+    },
+    checkInCart(product) {
+      if (product) {
+        return this.productsInCart[product['.key']] !== undefined;
+      }
+      return false;
+    },
+    cartAmount() {
+      return Object.values(this.productsInCart)
+        .reduce((sum, product) => sum + Number(product.price), 0);
+    },
+    removeFromCart(key) {
+      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${key}`).remove();
+      this.$delete(this.productsInCart, key);
+    },
+    getStars(product) {
+      return this.productsStars[product['.key']];
+    },
+    deepClone(obj) {
+      return JSON.parse(JSON.stringify(obj));
     },
   },
   watch: {
@@ -132,25 +187,24 @@ export default {
         this.filteredProducts = this.products;
         return;
       }
-      this.filteredProducts = this.products.filter(prod => prod.type
-        === newCategory);
+      this.filteredProducts = this.deepClone(this.products)
+        .filter(prod => prod.type === newCategory);
       this.activePage = 1;
     },
     selectedSort(newSort) {
       switch (newSort) {
         case 'popular':
-          this.filteredProducts = this.products.sort((prodA, prodB) => (
-            prodA.stars <= prodB.stars ? 1 : -1
-          ));
+          this.filteredProducts = this.sortByRating(this.products);
           break;
         case 'newest':
-          this.filteredProducts = this.products.sort((prodA, prodB) => (
-            Date.parse(prodA.date) <= Date.parse(prodB.date) ? 1 : -1
+          this.filteredProducts = this.deepClone(this.products).sort((prodA, prodB) => (
+            Date.parse(prodA.date) < Date.parse(prodB.date) ? 1 : -1
           ));
           break;
         default:
           this.filteredProducts = this.products;
       }
+      this.activePage = 1;
     },
   },
 };
@@ -243,7 +297,7 @@ select {
   overflow: hidden;
   position: relative;
   &:hover .product-actions {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   img {
     transition: all 1s ease;
@@ -254,35 +308,61 @@ select {
 }
 .product-actions {
   position: absolute;
-  top: calc(50% - 3rem);
+  overflow: hidden;
+  top: calc(50% - 2rem);
   right: 1rem;
-  width: 3rem;
-  background-color: $color-light;
+  width: 2rem;
   transform: translateX(200%);
   transition: 1s;
-  a {
-    display: block;
-    height: 3rem;
-    width: 100%;
-    &:hover {
-      background-color: $color-green;
-    }
-  }
-  .star-full {
-    &::before {
-      color: $color-dark;
-    }
+}
+.product-actions--active {
+  top: calc(50% - 6rem);
+}
+.star-box:hover .star-link {
+  transform: translateY(0);
+}
+.cart-link,
+.star-link {
+  &:hover {
+    background-color: $color-green;
   }
 }
 .cart-link {
-  background: url('../../assets/icons/cart.svg') no-repeat center center;
+  display: block;
+  height: 2rem;
+  width: 100%;
+  background: $color-light url('../../assets/icons/cart.svg') no-repeat center center;
   background-size: 40%;
 }
+.cart-link--active {
+  background-color: $color-green;
+  pointer-events: none;
+}
 .star-link {
+  display: block;
+  background-color: $color-light;
+  cursor: pointer;
   text-align: center;
-  line-height: 3rem;
+  line-height: 2rem;
   vertical-align: middle;
   font-size: 1rem;
+  transform: translateY(-12rem);
+  transition: 1s;
+  &:first-of-type {
+    transform: translateY(0);
+  }
+  &:hover {
+    &::before {
+      content: '\2605';
+      color: $color-dark;
+    }
+  }
+  &:hover ~ .star-link {
+    &::before {
+      content: '\2605';
+      color: $color-dark;
+    }
+  }
 }
 .product-title {
   font-size: 1.5vw;
@@ -364,90 +444,14 @@ select {
 }
 .option-img {
   flex-basis: 20%;
- &:hover {
-  opacity: 0.8;
- }
+  &:hover {
+    opacity: 0.8;
+  }
 }
 .widget-cart {
   flex-basis: 15rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-.cart-list {
-  padding: 0;
-  margin: 0;
-  flex: 5;
-  display: flex;
-  flex-direction: column;
-}
-.cart-product {
-  flex-basis: 10%;
-  display: flex;
-  flex-direction: row;
-  padding: 2rem;
-  border-bottom: $border;
-  .product-title {
-    font-size: 1vw;
-    margin-bottom: 0;
-  }
-}
-.cart-product:last-child {
-  border:0;
-}
-.product-thumbnail {
-  flex-basis: 7rem;
-  position: relative;
-}
-.product-description {
-  flex-basis: 60%;
-  margin-left: 2rem;
-}
-.product-price {
-  margin-top: 0.7rem;
-}
-.product-remove {
-  flex-basis: 2rem;
-  height: 2rem;
-  background-image: url('../../assets/close-btn.svg');
-  background-position: center center;
-  background-size: cover;
-  &:hover {
-    opacity: 0.7;
-  }
-}
-.cart-subtotal {
-  flex: 0.5;
-  border-bottom: 1px solid $color-grey;
-  color: $color-light;
-  text-transform: uppercase;
-}
-.amount {
-  float: right;
-}
-.cart-links {
-  flex-basis: 4rem;
-  margin-top: 2rem;
-  display: flex;
-  justify-content: space-between;
-}
-a.cart-view {
-  flex-basis: 8rem;
-  line-height: 4rem;
-  vertical-align: middle;
-  color: $color-grey;
-  &:hover {
-    color: $color-green;
-  }
-}
-.cart-checkout {
-  flex-basis: 10rem;
-  text-align: center;
-  line-height: 4rem;
-  vertical-align: middle;
-  background-color: $color-green;
-  &:hover {
-    background-color: darken($color-green, 10);
-  }
 }
 .pagination {
   display: flex;
@@ -513,6 +517,9 @@ a.cart-view {
   .gallery-product {
     flex-basis: calc(90% / 2);
   }
+  .top-product-info .product-title {
+    font-size: 2.5vw;
+  }
   .product-title {
     font-size: 2.5vw;
   }
@@ -524,7 +531,7 @@ a.cart-view {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
   h1 {
     font-size: 5vw;
   }
@@ -548,6 +555,21 @@ a.cart-view {
   }
   .product-price, .product-author {
     font-size: 3vw;
+  }
+  .product-actions {
+    top: calc(50% - 3rem);
+    width: 3rem;
+    &:hover {
+      top: calc(50% - 9rem);
+    }
+  }
+  .star-link {
+    transform: translateY(-18rem);
+    line-height: 3rem;
+    font-size: 1.5rem;
+  }
+  .cart-link {
+    height: 3rem;
   }
 }
 </style>
