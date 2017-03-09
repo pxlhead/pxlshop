@@ -75,8 +75,7 @@
           img(src='../../assets/icons/avatar.svg' alt='Author avatar')
         cite.comment-author Alex, Google
         blockquote.comment-text
-          | Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-          | sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          | Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 </template>
 
 <script>
@@ -136,7 +135,7 @@ export default {
       } else if (slide === 'team') {
         return require('../../assets/index/deer.jpg');
       }
-      return require('../../assets/index/plant.jpg');
+      return require('../../assets/index/bookblock.jpg');
     },
   },
 };
@@ -182,8 +181,6 @@ a {
   z-index: 1;
 }
 .slide-active {
-  // display: flex;
-  // animation: show 3s linear 1;
   opacity: 1;
   transform: scale(1);
   transition: 3s;
@@ -434,7 +431,7 @@ iframe {
   transition: 0.5s;
 }
 .comments {
-  background-color: lighten($color-grey, 20);
+  background-color: lighten($color-grey, 30);
   .aside-title {
     top: 30%;
   }
@@ -456,8 +453,6 @@ iframe {
   img {
     width: 80%;
   }
-}
-.comment-author {
 }
 .comment-text {
   color: $color-light;

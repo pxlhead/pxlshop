@@ -142,10 +142,14 @@ a {
   left: 0;
   width: 25rem;
   padding: 2rem;
-  background-color: $color-dark;
+  background-color: rgba(25, 25, 25, 0.9);
+  color: darken($color-light, 40);
   a {
     color: $color-light;
   }
+}
+.cart-product {
+  border-color: $color-grey;
 }
 .cart:hover .cart-submenu {
   display: flex;

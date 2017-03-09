@@ -33,7 +33,12 @@ export default {
   name: 'main-footer',
   data() {
     return {
-      pages: ['Home', 'Shop', 'About', 'Blog'],
+      pages: [
+        'Home',
+        'About',
+        'Shop',
+        'Contacts',
+      ],
       posts: {
         'lorem ipsum': '02 feb 2017',
         'lorem ips': '04 apr 2017',
