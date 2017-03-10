@@ -1,25 +1,26 @@
 <template lang="pug">
   .container
     main-header(v-bind='{user, productsInCart}')
-    cart(v-bind='{user, productsInCart}')
-    main-footer
+    router-view
+    main-footer(v-bind='{user, productsInCart}')
+    login(v-if='!user' v-bind:light='light' v-on:signInGoogle='getUserGoogle')
     profile(v-if='user' v-bind='{user, light}')
 </template>
 
 <script>
-import Firebase from '../../appconfig/firebase';
+import Firebase from '@/appconfig/firebase';
 
-import MainHeader from '../../components/MainHeader';
-import Cart from '../../components/pages/Cart';
-import MainFooter from '../../components/MainFooter';
-import Profile from '../../components/Profile';
+import MainHeader from '@/components/MainHeader';
+import MainFooter from '@/components/MainFooter';
+import Login from '@/components/Login';
+import Profile from '@/components/Profile';
 
 export default {
   name: 'app',
   components: {
     MainHeader,
-    Cart,
     MainFooter,
+    Login,
     Profile,
   },
   data() {
