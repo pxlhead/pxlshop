@@ -146,7 +146,7 @@ export default {
             this.changePhoto();
           });
           this.message = 'Upload is complete!';
-        }
+        },
       );
     },
     deletePhoto() {

@@ -117,14 +117,16 @@ export default {
   created() {
     this.filteredProducts = this.products;
     this.$firebaseRefs.products.on('value', (snapshot) => {
-      for (const [key, value] of Object.entries(snapshot.val())) {
-        if (value.rating) {
+      snapshot.forEach((productSnap) => {
+        const key = productSnap.key;
+        const value = productSnap.val();
+        if (productSnap.val().rating) {
           this.$set(this.productsStars, key, Object.values(value.rating)
             .reduce((sum, val) => sum + val, 0));
         } else {
           this.$set(this.productsStars, key, 0);
         }
-      }
+      });
     });
   },
   computed: {

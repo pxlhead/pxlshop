@@ -77,7 +77,7 @@ export default {
             default:
               this.message = error.code;
           }
-        }
+        },
       );
     },
     signIn() {
@@ -97,7 +97,7 @@ export default {
             default:
               this.message = error.code;
           }
-        }
+        },
       );
     },
     signInGoogle() {

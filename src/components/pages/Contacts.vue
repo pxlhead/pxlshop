@@ -36,7 +36,7 @@
 import Firebase from '../../appconfig/firebase';
 
 export default {
-  name: 'contact',
+  name: 'contacts',
   firebase: {
     products: Firebase.dbProductsRef,
   },
