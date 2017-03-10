@@ -29,11 +29,13 @@
         span
       transition(name='toggle-menu')
         nav.nav(v-if='showMenu')
-          a.nav-link(v-for='page in pages') {{ page }}
+          a.nav-link(v-for='page in pages'
+          @click='changePage(page)') {{ page }}
 </template>
 
 <script>
 /* eslint-disable no-undef */
+import router from '@/router';
 import Firebase from '../appconfig/firebase';
 
 export default {
@@ -56,6 +58,15 @@ export default {
     },
   },
   methods: {
+    changePage(page) {
+      router.push({
+        name: page,
+        params: {
+          user: this.user,
+          productsInCart: this.productsInCart,
+        },
+      });
+    },
     cartAmount() {
       return Object.values(this.productsInCart)
         .reduce((sum, product) => sum + Number(product.price), 0);

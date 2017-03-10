@@ -8,7 +8,7 @@
         h4 Menu
         ul.list(v-for='page in pages')
           li
-            a {{ page }}
+            a(@click='changePage(page)') {{ page }}
       .blog
         h4 Recent posts
         ul.list(v-for='(val, key) in posts')
@@ -29,8 +29,11 @@
 </template>
 
 <script>
+import router from '@/router';
+
 export default {
   name: 'main-footer',
+  props: ['user', 'productsInCart'],
   data() {
     return {
       pages: [
@@ -46,6 +49,17 @@ export default {
       },
       socials: ['twitter', 'facebook', 'youtube', 'instagram'],
     };
+  },
+  methods: {
+    changePage(page) {
+      router.push({
+        name: page,
+        params: {
+          user: this.user,
+          productsInCart: this.productsInCart,
+        },
+      });
+    },
   },
 };
 </script>
