@@ -1,7 +1,6 @@
 <template lang="pug">
   .profile
-    a.profile-name(v-bind:class='{"text-light": light}'
-    @click='showModal') {{ name }}
+    a.profile-name(@click='showModal') {{ name }}
     a.profile-img
       .img-box
         img(v-bind:src='photoUrl' alt='Avatar')
@@ -239,13 +238,6 @@ $color-light: #fff;
     border-color: $color-green;
   }
 }
-.text-light {
-  color: $color-light;
-  border-color: $color-green;
-  &:hover {
-    border-color: lighten($color-grey, 20);
-  }
-}
 .profile-img {
   display: block;
   width: 4rem;
@@ -347,9 +339,6 @@ $color-light: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    transform: scale(0.8);
-  }
 }
 .modal-upload {
   width: 0.1px;

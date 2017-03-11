@@ -1,10 +1,8 @@
 <template lang="pug">
   .auth
     .login-sign
-      a.sign-btn(@click='login = "in"'
-      v-bind:class='{"text-light": light}') Sign In
-      a.sign-btn(@click='login = "up"'
-      v-bind:class='{"text-light": light}') Sign Up
+      a.sign-btn(@click='login = "in"') Sign In
+      a.sign-btn(@click='login = "up"') Sign Up
     .modal-overlay(@click='login = false' v-if='login')
     a.close-btn(@click='login = false' v-if='login')
     form.modal(v-if='login')
@@ -135,13 +133,6 @@ $color-light: #fff;
   }
   &:first-child {
     margin-right: 3rem;
-  }
-}
-.text-light {
-  color: $color-light;
-  border-color: $color-green;
-  &:hover {
-    border-color: lighten($color-grey, 20);
   }
 }
 .modal {
