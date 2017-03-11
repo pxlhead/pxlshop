@@ -3,12 +3,12 @@
     h1 Hi there! We're an awesome group of creatives from a variety of different backgrounds with a variety of skills.
     section.team
       h2.aside-title TEAM
-      .team-person(v-for='(product, index) in products' v-if='index < 8')
+      .gallery-product(v-for='(product, index) in products' v-if='index < 8')
         h2.person-name Ipsum Lorem
         span.person-prof Ipsum Lorem
         p.person-description
           |Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        .person-img
+        .product-img
           img(v-bind:src='product.url' v-bind:alt='product.name')
     section.awards
       h2.aside-title AWARDS
@@ -16,8 +16,9 @@
         img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
     section.clients
       h2.aside-title CLIENTS
-      .clients-item(v-for='n in 8')
-        img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
+      .clients-row(v-for='n in 2')
+        .clients-item(v-for='n in 4')
+          img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
 </template>
 
 <script>
@@ -55,27 +56,27 @@ h1 {
 .aside-title {
   left: 3vw;
 }
-.team, .awards, .clients{
+.team, .awards, .clients {
   background-color: $color-green;
   position: relative;
   padding: $padding;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-around;
 }
 .team {
   background-color: transparent;
   justify-content: space-between;
   padding-bottom: calc(8vh - 10rem);
+  flex-wrap: wrap;
 }
-.team-person {
+.gallery-product {
   flex-basis: calc(90% / 4);
   padding-bottom: 10rem;
   display: flex;
   flex-direction: column;
   border-top: 2px solid $color-green;
 }
-.person-img {
+.product-img {
   overflow: hidden;
   position: relative;
   filter: grayscale(1);
@@ -87,7 +88,6 @@ h1 {
 }
 .person-name {
   font-size: 1.5vw;
-  flex: 1;
   margin-bottom: 0.3rem;
 }
 .person-description {
@@ -100,7 +100,7 @@ h1 {
   padding-bottom: 0.5rem;
 }
 .awards-item, .clients-item {
-  flex-basis: 18%;
+  flex-basis: calc(90% / 4);
   border: 1px dashed rgba(6, 0, 0, 0.3);
   border-left: 0;
   padding: 0 5rem;
@@ -113,15 +113,18 @@ h1 {
 }
 .clients {
   background-color: transparent;
+  flex-direction: column;
+}
+.clients-row {
+  display: flex;
 }
 
 @media screen and (max-width: 991px) {
-  .team-person {
+  .gallery-product {
     flex-basis: calc(90% / 2);
   }
   .person-name {
     font-size: 3.5vw;
-    flex: 1;
     margin-bottom: 0.3rem;
   }
   .person-description {
