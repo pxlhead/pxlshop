@@ -17,7 +17,7 @@
               option(v-for='sort in sorts'
               v-bind:value='sort') Sort by: {{ sort }}
             span.select-arrow
-        transition-group.gallery-column(name='gallery-anim' tag='div'
+        transition-group.gallery-row(name='gallery-anim' tag='div'
         mode="out-in")
             .gallery-product(v-for='(product, index) in filteredProducts'
             v-bind:key='index'
@@ -284,22 +284,19 @@ select {
 .gallery-anim-leave-to, .gallery-anim-enter-to {
   opacity: 0;
 }
-.gallery-column {
+.gallery-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 .gallery-product {
-  flex-basis: calc(90% / 3);
-  padding-bottom: 1rem;
-  display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 }
 .product-img {
-  overflow: hidden;
-  position: relative;
+  flex-basis: 50%;
   &:hover .product-actions {
-    transform: translateX(0);
+    transform: translateX(0) scale(2);
   }
   img {
     transition: all 1s ease;
@@ -310,18 +307,19 @@ select {
 }
 .product-actions {
   position: absolute;
-  overflow: hidden;
+  overflow: visible;
   top: calc(50% - 2rem);
-  right: 1rem;
+  right: 2rem;
   width: 2rem;
-  transform: translateX(200%);
+  transform: translateX(300%) scale(2);
   transition: 1s;
 }
-.product-actions--active {
-  top: calc(50% - 6rem);
-}
-.star-box:hover .star-link {
-  transform: translateY(0);
+
+@for $i from 1 through 4 {
+  .star-box:hover .star-link:nth-of-type(#{$i+1}) {
+    $length: -2rem*$i;
+    left: $length;
+  }
 }
 .cart-link,
 .star-link {
@@ -340,19 +338,24 @@ select {
   background-color: $color-green;
   pointer-events: none;
 }
+.star-box {
+  position: relative;
+  height: 2rem;
+}
 .star-link {
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2rem;
+  width: 2rem;
   background-color: $color-light;
   cursor: pointer;
   text-align: center;
   line-height: 2rem;
   vertical-align: middle;
   font-size: 1rem;
-  transform: translateY(-12rem);
   transition: 1s;
-  &:first-of-type {
-    transform: translateY(0);
-  }
   &:hover {
     &::before {
       content: '\2605';
@@ -367,7 +370,6 @@ select {
   }
 }
 .product-title {
-  font-size: 1.5vw;
   flex: 1;
   margin-bottom: 0.3rem;
 }
@@ -405,10 +407,6 @@ select {
   flex: 3;
   display: flex;
   flex-direction: column;
-  .product-title {
-    font-size: 1vw;
-    margin-bottom: 0;
-  }
   .product-stars, .product-price {
     flex: 1;
     padding-top: 1rem;
@@ -427,7 +425,7 @@ select {
   }
 }
 .top-product-img {
-  flex-basis: 5rem;
+  flex-basis: 10rem;
 }
 .widget-payment {
   flex-basis: 15rem;
@@ -436,7 +434,6 @@ select {
   margin-top: 2rem;
 }
 .payment-details {
-  font-size: 1vw;
   margin-top: 0;
   text-align: justify;
 }
@@ -519,12 +516,6 @@ select {
   .gallery-product {
     flex-basis: calc(90% / 2);
   }
-  .top-product-info .product-title {
-    font-size: 2.5vw;
-  }
-  .product-title {
-    font-size: 2.5vw;
-  }
   .product-price, .product-author {
     font-size: 1.5vw;
   }
@@ -551,9 +542,6 @@ select {
   }
   .gallery-product {
     flex-basis: 100%;
-  }
-  .product-title {
-    font-size: 4vw;
   }
   .product-price, .product-author {
     font-size: 3vw;

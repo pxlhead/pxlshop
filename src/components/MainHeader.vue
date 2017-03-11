@@ -115,11 +115,6 @@ a {
   &:hover {
     background-color: $color-grey;
   }
-  img {
-    position: absolute;
-    top: calc(50% - 1.5rem);
-    left: 0;
-  }
 }
 .cart {
   position: relative;
