@@ -24,7 +24,8 @@
             v-if='index >= productsOnPage * (activePage - 1)\
             && index < productsOnPage * activePage')
               .product-img
-                img(v-bind:src='product.url' v-bind:alt='product.name')
+                img(v-bind:src='product.url' v-bind:alt='product.name'
+                @click='showProductModal(product)')
                 .product-actions(v-bind:class='{"product-actions--active": starBoxHover}')
                   a.cart-link(@click='addToCart(product)'
                   v-bind:class='{"cart-link--active": checkInCart(product)}')
@@ -32,14 +33,14 @@
                   @mouseleave='starBoxHover = false')
                     span.star.star-link(v-for='star in 5'
                   @click='rateProduct(product, (6 - star))')
-              h2.product-title {{ product.name }}
+              h2.product-title(@click='showProductModal(product)') {{ product.name }}
               span.product-author {{ product.author }}
               span.product-price ${{ product.price + '.00' }}
       aside.sidebar
         .widget-top
           h3.widget-title Top Rated
           ul.top-list
-            li.top-product(v-for='product in sortByRating(products).slice(0, 3)')
+            li.top-product(v-for='product in topProducts')
               .top-product-info
                 a.product-title {{ product.name }}
                 .product-stars
@@ -63,8 +64,8 @@
             span Subtotal
             span $ {{ cartAmount() }}
           .cart-links
-            a.cart-view View Cart
-            a.cart-checkout Checkout
+            a.cart-view(@click='changePage("Cart")') View Cart
+            a.cart-checkout(@click='changePage("Checkout")') Checkout
         .widget-payment
           h3.widget-title Payment Options
           p.payment-details
@@ -79,20 +80,24 @@
               img(src='../../assets/icons/mastercard.svg')
     nav.pagination
       a.nav-prev(v-bind:class='{ "nav-disable": activePage == 1 }'
-      @click='changePage(activePage - 1)')
-        | Prev Page
+      @click='changePage(activePage - 1)') Prev Page
       .nav-pages
-        a.page-num(@click='changePage(n)'
+        a.page-num(@click='changeGalleryPage(n)'
         v-for='n in Math.ceil(filteredProducts.length / productsOnPage)'
         v-bind:class='{ "page-active": n == activePage }') {{ n }}
-      a.nav-next(@click='changePage(activePage + 1)'
+      a.nav-next(@click='changeGalleryPage(activePage + 1)'
       v-bind:class='{ "nav-disable": activePage ==\
-      Math.ceil(filteredProducts.length / productsOnPage) }')
-        | Next Page
+      Math.ceil(filteredProducts.length / productsOnPage) }') Next Page
+
+    product(v-on:close='closeProductModal' v-bind='{productModal, topProducts}'
+    v-if='productModal')
 </template>
 
 <script>
+import router from '@/router';
 import Firebase from '../../appconfig/firebase';
+
+import Product from './Product';
 
 export default {
   name: 'shop',
@@ -100,14 +105,17 @@ export default {
     products: Firebase.dbProductsRef,
   },
   props: ['user', 'productsInCart'],
+  components: {
+    Product,
+  },
   data() {
     return {
       selectedCategory: 'all',
       selectedSort: 'none',
       categories: ['all', 'illustrations', 'patterns', 'photos'],
       sorts: ['none', 'newest', 'popular'],
+      productModal: null,
       filteredProducts: {},
-      topProducts: [],
       productsOnPage: 12,
       activePage: 1,
       productsStars: {},
@@ -133,10 +141,28 @@ export default {
     cartShow() {
       return Object.keys(this.productsInCart).length > 0;
     },
+    topProducts() {
+      return this.sortByRating(this.products).slice(0, 3);
+    },
   },
   methods: {
     changePage(page) {
-      this.activePage = page;
+      router.push({
+        name: page,
+        params: {
+          user: this.user,
+          productsInCart: this.productsInCart,
+        },
+      });
+    },
+    changeGalleryPage(galleryPage) {
+      this.activePage = galleryPage;
+    },
+    showProductModal(product) {
+      this.productModal = product;
+    },
+    closeProductModal() {
+      this.productModal = null;
     },
     sortByRating(products) {
       return this.deepClone(products).sort((prodA, prodB) => {
@@ -370,6 +396,7 @@ select {
   font-size: 1.5vw;
   flex: 1;
   margin-bottom: 0.3rem;
+  cursor: pointer;
 }
 .product-price, .product-author {
   font-size: 1vw;
