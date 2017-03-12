@@ -364,7 +364,6 @@ $color-light: #fff;
   flex-direction: column;
   align-items: stretch;
   .modal-action {
-    width: 85%;
     align-self: center;
   }
 }

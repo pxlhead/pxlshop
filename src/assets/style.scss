@@ -32,9 +32,9 @@ a {
     color: $color-green;
   }
 }
-img {
-  max-width: 100%;
-  height: auto;
+img, video {
+  height: 100%;
+  width: 100%;
 }
 li {
   list-style-type: none;
@@ -131,7 +131,7 @@ li {
   font-weight: 500;
   font-size: 1.6rem;
   text-align: center;
-  padding: 0.5rem;
+  padding: 0.6rem 6rem;
   background-color: lighten($color-grey, 50);
   border-radius: 3px;
   cursor: pointer;
@@ -220,6 +220,17 @@ li {
     background-color: darken($color-green, 10);
     color: inherit;
   }
+}
+
+.gallery-product {
+  flex-basis: 30%;
+  display: flex;
+}
+.product-img {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
 }
 
 @keyframes scale {

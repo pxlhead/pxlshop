@@ -109,15 +109,11 @@ input:checked {
   margin-bottom: 10rem;
 }
 .cart-table {
-  display: flex;
-  flex-direction: column;
+  display: table;
   padding: 0 2vw;
 }
 .cart-header, .cart-product {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
+  display: table-row;
   border-bottom: 2px solid lighten($color-grey, 50);
 }
 .cart-header {
@@ -127,13 +123,10 @@ input:checked {
   padding: 2rem 0;
 }
 .cart-item {
-  flex-basis: 15%;
+  display: table-cell;
   text-align: center;
   font-size: 1.8rem;
   color: lighten($color-grey, 10)
-}
-.cart-item:first-child {
-  flex-basis: 16rem;
 }
 .input-line {
   flex: none;

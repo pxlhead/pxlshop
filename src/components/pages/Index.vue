@@ -62,8 +62,8 @@
         img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
     section.gallery(v-if='sortTopProducts')
       h2.aside-title GALLERY
-      .gallery-item(v-for='product in topProducts')
-        figure.gallery-img
+      .gallery-product(v-for='product in topProducts')
+        figure.product-img
           img(v-bind:src='product.url' alt='product.name')
           .img-overlay
             h2.overlay-title {{ product.name }}
@@ -385,23 +385,11 @@ iframe {
     top: 35%;
   }
 }
-.gallery-item {
-  flex-basis: 30%;
-}
-.gallery-img {
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-}
 .img-overlay {
   transform: translateY(-100%);
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
-  height: 99%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -426,7 +414,7 @@ iframe {
     color: $color-green;
   }
 }
-.gallery-img:hover .img-overlay {
+.gallery-product:hover .img-overlay {
   transform: translateY(0%);
   transition: 0.5s;
 }
