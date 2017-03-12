@@ -3,8 +3,8 @@
     main-header(v-bind='{user, productsInCart}')
     router-view
     main-footer(v-bind='{user, productsInCart}')
-    login(v-if='!user' v-bind:light='light' v-on:signInGoogle='getUserGoogle')
-    profile(v-if='user' v-bind='{user, light}')
+    login(v-if='!user' v-on:signInGoogle='getUserGoogle')
+    profile(v-if='user' v-bind='{user}')
 </template>
 
 <script>
@@ -27,7 +27,6 @@ export default {
     return {
       user: null,
       productsInCart: {},
-      light: false,
     };
   },
   created() {

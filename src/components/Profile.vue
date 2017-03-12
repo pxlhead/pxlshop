@@ -1,7 +1,6 @@
 <template lang="pug">
   .profile
-    a.profile-name(v-bind:class='{"text-light": light}'
-    @click='showModal') {{ name }}
+    a.profile-name(@click='showModal') {{ name }}
     a.profile-img
       .img-box
         img(v-bind:src='photoUrl' alt='Avatar')
@@ -237,13 +236,6 @@ $color-light: #fff;
   font-size: 1.8rem;
   &:hover {
     border-color: $color-green;
-  }
-}
-.text-light {
-  color: $color-light;
-  border-color: $color-green;
-  &:hover {
-    border-color: lighten($color-grey, 20);
   }
 }
 .profile-img {

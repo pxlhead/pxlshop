@@ -1,16 +1,16 @@
 <template lang="pug">
   .product-modal
-    .modal-overlay
-    a.close-btn
+    .modal-overlay(@click='close')
+    a.close-btn(@click='close')
     section.modal
       .details
         h2.aside-title Details
-        .details-img(v-for='(product, index) in products' v-if='index < 1')
-          img(v-bind:src='product.url')
+        .details-img
+          img(v-bind:src='productModal.url')
         .details-content
-          h2.product-name One of the best illustration ever
+          h2.product-name {{ productModal.name }}
           .product-info
-            span.product-price $55
+            span.product-price ${{ productModal.price }}
             .product-stars
               span.star(v-for='n in 5')
           .product-about
@@ -19,36 +19,36 @@
               |Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               |Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           .product-cart
-            input.input-line(type="text" name="quantity" value="1")
             a.input-btn Add to Card
           ul.product-social
             li.social-item(v-for='social in socials')
               a.social-link
-                img(:src='"../assets/icons/" + social + ".svg"')
+                img(:src='"../../assets/icons/" + social + ".svg"')
       .related
-        h2.aside-title Related
-        .gallery-product(v-for='(product, index) in products' v-if='index < 4')
+        h2.aside-title Top products
+        .gallery-product(v-for='product in topProducts')
           .product-img
             img(v-bind:src='product.url' v-bind:alt='product.name')
             .product-actions
               a.cart-link
               a.star.star-link
-          h2.product-title Ipsum Lorem
-          span.product-author Ipsum Lorem
+          h2.product-title {{ product.name }}
+          span.product-author {{ product.author }}
 </template>
 
 <script>
-import Firebase from '../appconfig/firebase';
-
 export default {
   name: 'product',
-  firebase: {
-    products: Firebase.dbProductsRef,
-  },
+  props: ['productModal', 'topProducts'],
   data() {
     return {
       socials: ['twitter', 'facebook', 'youtube', 'instagram'],
     };
+  },
+  methods: {
+    close() {
+      this.$emit('close');
+    },
   },
 };
 </script>
@@ -205,7 +205,7 @@ h1, h2, h3 {
   }
 }
 .cart-link {
-  background: url('../assets/icons/cart.svg') no-repeat center center;
+  background: url('../../assets/icons/cart.svg') no-repeat center center;
   background-size: 40%;
 }
 .star-link {

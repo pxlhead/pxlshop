@@ -20,8 +20,8 @@
           span Subtotal
           span $ {{ cartAmount() }}
         .cart-links
-          a.cart-view View Cart
-          a.cart-checkout Checkout
+          a.cart-view(@click='changePage("Cart")') View Cart
+          a.cart-checkout(@click='changePage("Checkout")') Checkout
     a.nav-toggle(@click='showMenu = !showMenu')
       .toggle-icon(:class='{open: showMenu}')
         span
