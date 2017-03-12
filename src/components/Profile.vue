@@ -347,9 +347,6 @@ $color-light: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    transform: scale(0.8);
-  }
 }
 .modal-upload {
   width: 0.1px;
@@ -375,7 +372,6 @@ $color-light: #fff;
   flex-direction: column;
   align-items: stretch;
   .modal-action {
-    width: 85%;
     align-self: center;
   }
 }

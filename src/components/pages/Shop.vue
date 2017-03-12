@@ -318,7 +318,7 @@ select {
 @for $i from 1 through 4 {
   .star-box:hover .star-link:nth-of-type(#{$i+1}) {
     $length: -2rem*$i;
-    left: $length;
+    transform: translateX($length);
   }
 }
 .cart-link,
@@ -370,7 +370,6 @@ select {
   }
 }
 .product-title {
-  flex: 1;
   margin-bottom: 0.3rem;
 }
 .product-price, .product-author {
@@ -543,20 +542,11 @@ select {
   .gallery-product {
     flex-basis: 100%;
   }
-  .product-price, .product-author {
+  .product-title {
     font-size: 3vw;
   }
-  .product-actions {
-    top: calc(50% - 3rem);
-    width: 3rem;
-    &:hover {
-      top: calc(50% - 9rem);
-    }
-  }
-  .star-link {
-    transform: translateY(-18rem);
-    line-height: 3rem;
-    font-size: 1.5rem;
+  .product-price, .product-author {
+    font-size: 3vw;
   }
   .cart-link {
     height: 3rem;
