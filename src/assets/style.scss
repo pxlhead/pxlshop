@@ -39,6 +39,10 @@ img, video {
 li {
   list-style-type: none;
 }
+figure {
+  margin: 0;
+  padding: 0;
+}
 
 .modal-overlay {
   position: fixed;
@@ -181,6 +185,7 @@ li {
 .product-remove {
   width: 2rem;
   height: 2rem;
+  display: block;
   background-image: url('close-btn.svg');
   background-position: center center;
   background-size: cover;

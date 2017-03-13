@@ -6,7 +6,7 @@
         h2.aside-title  You have 3 item
         .cart-table
           .cart-header
-            .cart-item
+            h3.cart-item PRODUCT
             h3.cart-item NAME
             h3.cart-item PRICE
           .cart-product(v-for='(product, key) in productsInCart')
@@ -14,11 +14,13 @@
               img(v-bind:src='product.url' alt='product.name')
             p.cart-item {{ product.name }}
             p.cart-item $ {{ product.price }}
-            a.product-remove(@click='removeFromCart(key)')
+            .cart-item
+              a.product-remove(@click='removeFromCart(key)')
           .cart-footer
             form.cart-coupon
               input.coupon-line(type='text' placeholder='Put you code here...')
               a.action-btn Apply
+            .cart-item
             a.action-btn Renew Cart
       .payment
         .payment-content
@@ -111,8 +113,9 @@ input:checked {
 .cart-table {
   display: table;
   padding: 0 2vw;
+  width: 90%;
 }
-.cart-header, .cart-product {
+.cart-header, .cart-product, .cart-footer {
   display: table-row;
   border-bottom: 2px solid lighten($color-grey, 50);
 }
@@ -124,8 +127,12 @@ input:checked {
 }
 .cart-item {
   display: table-cell;
+  vertical-align: middle;
+  padding: 1rem;
+  width: 20%;
   text-align: center;
   font-size: 1.8rem;
+  height: 7rem;
   color: lighten($color-grey, 10)
 }
 .input-line {
@@ -136,17 +143,20 @@ input:checked {
   border: 0;
 }
 .item-img {
-  width: 5rem;
+  width: 10rem;
+  height: 10rem;
+  padding: 1rem;
 }
 .cart-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5rem;
-  height: 4rem;
+  margin-top: 7rem;
 }
 .cart-coupon {
-  flex-basis: 20%;
   display: flex;
+}
+.action-btn {
+  display: table-cell;
+  text-align: center;
+  line-height: 3;
 }
 .coupon-line {
   flex: 2;
