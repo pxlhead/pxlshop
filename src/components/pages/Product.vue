@@ -3,26 +3,25 @@
     .modal-overlay(@click='close')
     a.close-btn(@click='close')
     section.modal
-      .details
-        .details-img
-          img(v-bind:src='productModal.url')
-        .details-content
-          h2.product-name {{ productModal.name }}
-          h4.product-author Author
-          .product-info
-            span.product-price ${{ productModal.price }}
-            .product-stars
-              span.star(v-for='n in 5')
-          .product-about
-            p.about-text
-              |Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              |Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          .product-cart
-            a.input-btn Add to Card
-            ul.product-social
-              li.social-item(v-for='social in socials')
-                a.social-link
-                  img(:src='"../../assets/icons/" + social + ".svg"')
+      .modal-img
+        img(:src='productModal.url')
+      .modal-content
+        h2.product-name {{ productModal.name }}
+        h4.product-author {{ productModal.author }}
+        .product-info
+          span.product-price ${{ productModal.price }}
+        .product-about
+          p.about-text
+            | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            | eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            | Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            | laboris nisi ut aliquip ex ea commodo consequat.
+        .product-cart
+          a.input-btn Add to Card
+          ul.product-social
+            li.social-item(v-for='social in socials')
+              a.social-link
+                img(:src='"../../assets/icons/" + social + ".svg"')
 </template>
 
 <script>
@@ -49,46 +48,34 @@ $color-grey: #666;
 $color-green: #7befb2;
 $color-light: #fff;
 
-h1, h2, h3, h4 {
-  color: $color-dark;
-}
 ul {
   padding: 0;
   margin: 0;
-}
-.modal {
-  top: calc(50% - 25% - 2rem);
-  left: calc(50% - 25% - 2rem);
-  width: 50%;
-  height: 50%;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
 }
 .close-btn {
   width: 4.5rem;
   height: 4.5rem;
 }
-.details {
-  flex-basis: 60%;
+.modal {
+  top: calc(50% - 20vh - 4rem);
+  left: calc(50% - 30vw - 4rem);
+  width: 60vw;
+  height: 40vh;
   padding: 4rem;
-  position: relative;
-  display: flex;
   flex-direction: row;
 }
-.details-img {
-  flex: 1;
-  padding: 1rem 3.5rem;
+.modal-img {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 60rem;
 }
-.details-content {
-  flex: 1;
+.modal-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem 5rem;
-}
-.product-name, .product-author, .product-info, .product-about, .product-cart, .product-social {
-  flex: 1;
 }
 .product-name {
   font-size: 3rem;
@@ -105,33 +92,18 @@ ul {
 .product-about {
   line-height: 2.5rem;
 }
-.product-stars, .product-price {
-  flex: 1;
-}
 .input-btn {
   flex-basis: 40%;
 }
 .product-social {
-  flex-basis: 40%;
+  align-self: center;
+  flex-basis: 30%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin-top: 1rem;
 }
 .social-item {
-  flex: 1;
-  padding: 1rem;
-}
-.social-link {
   flex-basis: 20%;
-  display: block;
-  &:hover {
-    opacity: 0.7;
-  }
-}
-.star {
-&::before {
-  content: '\2606';
-  color: $color-grey;
-  }
 }
 .product-index {
   display: flex;
@@ -160,10 +132,6 @@ ul {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .social-item {
-    flex: 1;
-    padding: 1.5rem;
-  }
   .product-cart {
     display: flex;
     flex-direction: column;
@@ -171,38 +139,24 @@ ul {
   }
 }
 @media screen and (max-width: 991px) {
-  .social-item {
-    flex: 1;
-    padding: 1rem;
+  .modal {
+    top: calc(50% - 25vh - 2rem);
+    left: calc(50% - 35vw - 2rem);
+    width: 70vw;
+    height: 50vh;
+    padding: 2rem;
+  }
+  .modal-img {
+    max-width: 40rem;
   }
 }
 @media screen and (max-width: 700px) {
   .modal {
-    top: calc(50% - 40% - 2rem);
-    left: calc(50% - 25% - 2rem);
-    width: 50%;
-    height: 80%;
-    padding: 2rem;
-    display: flex;
     flex-direction: column;
-  }
-  .social-item {
-    flex: 1;
-    padding: 1.5rem;
-  }
-  .details-img {
-    padding: 1rem 1rem;
-  }
-  .details-content {
-    padding: 1rem 2rem;
-  }
-  .details {
-    flex-direction: column;
-    padding: 0rem;
-  }
-  .details-img {
-    flex-basis: 30%;
-    padding: 2rem 3rem;
+    top: calc(50% - 40vh - 3rem);
+    left: calc(50% - 35vw - 3rem);
+    height: 80vh;
+    padding: 3rem;
   }
   .product-price {
     font-size: 3vw;

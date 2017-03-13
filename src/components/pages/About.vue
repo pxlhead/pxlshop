@@ -1,15 +1,18 @@
 <template lang="pug">
   .content
-    h1 Hi there! We're an awesome group of creatives from a variety of different backgrounds with a variety of skills.
+    h1
+      | Hi there! We're an awesome group of creatives from a variety of different
+      | backgrounds with a variety of skills.
     section.team
       h2.aside-title TEAM
       .gallery-product(v-for='(product, index) in products' v-if='index < 8')
         h2.person-name Ipsum Lorem
         span.person-prof Ipsum Lorem
         p.person-description
-          |Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          | eiusmod tempor incididunt ut labore et dolore magna aliqua.
         .product-img
-          img(v-bind:src='product.url' v-bind:alt='product.name')
+          img(:src='product.url' alt='product.name')
     section.awards
       h2.aside-title AWARDS
       .awards-item(v-for='n in 4')
@@ -38,19 +41,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$padding: 8vh 10vw;
-
-$color-dark: #252525;
-$color-grey: #666;
 $color-green: #7BEFB2;
-$color-pink: #D9879C;
-$color-light: #fff;
 
-h1, h2, h3 {
-  color: $color-dark;
-}
 h1 {
-  font-size: 3.8vw;
   padding: 12vh 10vw 0 10vw;
 }
 .aside-title {
@@ -59,7 +52,7 @@ h1 {
 .team, .awards, .clients {
   background-color: $color-green;
   position: relative;
-  padding: $padding;
+  padding: 8vh 10vw;
   display: flex;
   justify-content: space-around;
 }

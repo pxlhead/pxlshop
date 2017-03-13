@@ -125,13 +125,6 @@ export default {
   $color-green: #7befb2;
   $color-light: #fff;
 
-h1, h2, h3, h4 {
-  color: $color-dark;
-}
-h1 {
-  font-size: 3.8vw;
-  margin-bottom: 5rem;
-}
 .content {
   padding: 12vh 10vw 0 10vw;
 }

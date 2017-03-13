@@ -7,7 +7,7 @@
     a.close-btn(@click='login = false' v-if='login')
     form.modal(v-if='login')
       .modal-head
-        h4.social-title(v-text='login === "in" ? "Sign In" : "Sign Up"')
+        h4.social-title {{ login === 'in' ? 'Sign In' : 'Sign Up' }}
         .social-img
           a.social-link.social-google(@click='signInGoogle')
           a.social-link.social-twitter
@@ -22,12 +22,11 @@
           .input-icon.icon-lock
           input.input-line(name='password' type='password' placeholder='Password...'
           v-model='password')
-      a.modal-action(v-text='login === "in" ? "Enter" : "Get Started"'
-        @click='enter')
+      a.modal-action(@click='enter') {{ login === 'in' ? 'Enter' : 'Get Started' }}
 
     transition(name='note')
       notification(v-bind:message='message' v-if='message.length > 0'
-      v-on:click.native='message = ""')
+      @click.native='message = ""')
 </template>
 
 <script>
@@ -57,7 +56,6 @@ export default {
       }
     },
     signUp() {
-      // check real email
       Firebase.auth.createUserWithEmailAndPassword(
         this.email, this.password)
         .then(() => this.signIn())

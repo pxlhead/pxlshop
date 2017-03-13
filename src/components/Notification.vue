@@ -15,9 +15,6 @@ export default {
 
 <style lang="scss" scoped>
 
-$color-dark: #252525;
-$color-grey: #666;
-$color-green: #7BEFB2;
 $color-light: #fff;
 
 .note {

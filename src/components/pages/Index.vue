@@ -1,8 +1,8 @@
 <template lang="pug">
   .content
     .slider
-      .slide(v-for='(slide, index) in slides'
-      v-bind:class='{"slide-active" : index == activeSlide}')
+      .slide(:class='{"slide-active" : index == activeSlide}'
+        v-for='(slide, index) in slides')
         .slide-content
           h1.slide-title {{ slide.title }}
           h4.slide-text {{ slide.text }}
@@ -11,12 +11,11 @@
             a See works
         .slide-overlay
         figure.slide-img
-          img(v-bind:src='loadImage(slide.name)'
-          v-bind:class='`img-${slide.name}`'
+          img(v-bind='{ src: loadImage(slide.name), class: [`img-${slide.name}`] }'
           alt='Welcome picture')
       nav.slider-nav
-        a.nav-point(v-for='(slide, index) in slides'
-        v-bind:class='{"point-active": index == activeSlide}'
+        a.nav-point(:class='{"point-active": index == activeSlide}'
+        v-for='(slide, index) in slides'
         @click='changeSlide(index)')
       a.nav-arrow.arrow-prev(@click='changeSlide("prev")')
       a.nav-arrow.arrow-next(@click='changeSlide("next")')
@@ -31,7 +30,7 @@
           images, videos and music - as well as innovative tools that power the
           creative process.
       .about-video
-        iframe(width="100%" height="100%" src="https://goo.gl/aieVs4")
+        iframe(width='100%' height='100%' src='https://goo.gl/aieVs4')
     section.info
       h2.aside-title INFO
       .info-item
@@ -64,7 +63,7 @@
       h2.aside-title GALLERY
       .gallery-product(v-for='product in topProducts')
         figure.product-img
-          img(v-bind:src='product.url' alt='product.name')
+          img(:src='product.url' alt='product.name')
           .img-overlay
             h2.overlay-title {{ product.name }}
             p.overlay-author {{ product.author }}
@@ -148,9 +147,11 @@ $padding: 8vh 10vw;
 $color-dark: #252525;
 $color-grey: #666;
 $color-green: #7BEFB2;
-$color-pink: #D9879C;
 $color-light: #fff;
 
+h1, h2, h3, h4 {
+  color: $color-light;
+}
 p {
   font-size: 2.0rem;
   color: $color-grey;
@@ -487,9 +488,7 @@ iframe {
   .img-team {
     transform: translateX(-20%) scale(1.2);
   }
-  .info,
-  .gallery,
-  .comments {
+  .info {
     flex-direction: column;
     align-items: center;
   }
@@ -522,6 +521,15 @@ iframe {
       height: 100vh;
       width: auto;
     }
+  }
+  .gallery,
+  .comments {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .gallery-product {
+    padding: 4rem;
   }
   .img-main {
     transform: translateX(-20%);

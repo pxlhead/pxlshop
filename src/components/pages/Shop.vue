@@ -3,7 +3,6 @@
     h1
       | Welcome to our creative store - we sell uncommon design
       | illustrations that smack you right in the heart.
-    hr
     section.products
       .gallery
         .filter
@@ -18,24 +17,23 @@
               v-bind:value='sort') Sort by: {{ sort }}
             span.select-arrow
         transition-group.gallery-row(name='gallery-anim' tag='div'
-        mode="out-in")
+        mode='out-in')
             .gallery-product(v-for='(product, index) in filteredProducts'
-            v-bind:key='index'
-            v-if='index >= productsOnPage * (activePage - 1)\
+            v-bind:key='index' v-if='index >= productsOnPage * (activePage - 1)\
             && index < productsOnPage * activePage')
               .product-img
-                img(v-bind:src='product.url' v-bind:alt='product.name'
+                img(:src='product.url' alt='product.name'
                 @click='showProductModal(product)')
-                .product-actions(v-bind:class='{"product-actions--active": starBoxHover}')
-                  a.cart-link(@click='addToCart(product)'
-                  v-bind:class='{"cart-link--active": checkInCart(product)}')
+                .product-actions(:class='{"product-actions--active": starBoxHover}')
+                  a.cart-link(:class='{"cart-link--active": checkInCart(product)}'
+                    @click='addToCart(product)')
                   .star-box(@mouseenter='starBoxHover = true'
                   @mouseleave='starBoxHover = false')
                     span.star.star-link(v-for='star in 5'
                   @click='rateProduct(product, (6 - star))')
               h2.product-title(@click='showProductModal(product)') {{ product.name }}
               span.product-author {{ product.author }}
-              span.product-price ${{ product.price + '.00' }}
+              span.product-price ${{ product.price }}.00
       aside.sidebar
         .widget-top
           h3.widget-title Top Rated
@@ -46,16 +44,15 @@
                 .product-stars
                   span.star(v-for='n in 5'
                   v-bind:class='{ "star-full": n <= getStars(product) }')
-                span.product-price ${{ product.price + '.00' }}
+                span.product-price ${{ product.price }}.00
               .top-product-img
-                img.product-img(v-bind:src='product.url'
-                v-bind:alt='product.name')
+                img.product-img(:src='product.url' alt='product.name')
         .widget-cart(v-if='cartShow')
           h3.widget-title Cart Review
           ul.cart-list
             li.cart-product(v-for='(product, key) in productsInCart')
               a.product-thumbnail
-                img(v-bind:src='product.url' alt='product.name')
+                img(:src='product.url' alt='product.name')
               .product-description
                 a.product-title {{ product.name }}
                 span.product-price $ {{ product.price }}
@@ -79,7 +76,7 @@
             a.option-img
               img(src='../../assets/icons/mastercard.svg')
     nav.pagination
-      a.nav-prev(v-bind:class='{ "nav-disable": activePage == 1 }'
+      a.nav-prev(:class='{ "nav-disable": activePage == 1 }'
       @click='changePage(activePage - 1)') Prev Page
       .nav-pages
         a.page-num(@click='changeGalleryPage(n)'
@@ -247,22 +244,13 @@ $color-light: #fff;
 
 $border: 1px solid rgba(0, 0, 0, 0.2);
 
-h1, h2, h3 {
-  color: $color-dark;
-}
-h1 {
-  font-size: 3.8vw;
-}
-hr {
-  border: 0;
-  border-top: 2px solid rgba(0, 0, 0, 0.2);
-}
 .content {
   padding: 12vh 10vw 0 10vw;
 }
 .products {
   display: flex;
   padding-bottom: 3rem;
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
 }
 .filter {
   padding: 2rem 0;
@@ -407,7 +395,6 @@ select {
   padding-bottom: 0.5rem;
 }
 
-// sidebar section
 .sidebar {
   flex: 1;
   display: flex;

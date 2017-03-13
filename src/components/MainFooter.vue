@@ -13,7 +13,7 @@
         h4 Recent posts
         ul.list(v-for='(val, key) in posts')
           li.post
-            a(href='#') {{ key }}
+            a {{ key }}
             .post-data {{ val }}
       .contact
         h4 Contact us
@@ -72,6 +72,7 @@ $color-grey: #666;
 
 h4 {
   margin-bottom: 3rem;
+  color: $color-light;
 }
 .footer {
   display: flex;

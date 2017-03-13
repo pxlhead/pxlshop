@@ -18,7 +18,11 @@ body {
   color: $color-grey;
 }
 h1, h2, h3, h4 {
-  color: $color-light;
+  color: $color-dark;
+}
+h1 {
+  font-size: 3.8vw;
+  margin-bottom: 5rem;
 }
 h4 {
   font-weight: 400;
@@ -43,7 +47,6 @@ figure {
   margin: 0;
   padding: 0;
 }
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -226,13 +229,11 @@ figure {
     color: inherit;
   }
 }
-
 .widget-title {
   letter-spacing: 0.1rem;
   padding: 2rem 0;
   margin-bottom: 0;
 }
-
 .widget-payment {
   flex-basis: 15rem;
   padding: 0 2rem 2.5rem 2rem;
@@ -253,7 +254,6 @@ figure {
     opacity: 0.8;
   }
 }
-
 .gallery-product {
   flex-basis: 30%;
   display: flex;
@@ -264,7 +264,6 @@ figure {
   overflow: hidden;
   flex: 1;
 }
-
 .social-list {
   width: 60%;
   margin-top: 1rem;
@@ -279,7 +278,6 @@ figure {
     opacity: 0.7;
   }
 }
-
 .payment {
   flex: 1;
   position: relative;
@@ -308,18 +306,6 @@ figure {
     color: $color-dark;
   }
 }
-
-@media screen and (max-width: 991px) {
-  .social-list {
-    width: 80%;
-  }
-}
-
-@keyframes scale {
-	0% { opacity: 0; transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }
-	100% { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1); }
-}
-
 .action-btn {
   text-align: center;
   padding: 1rem;
@@ -329,7 +315,6 @@ figure {
     color: inherit;
   }
 }
-
 .aside-title {
   position: absolute;
   top: calc(50% - 6rem);
@@ -340,4 +325,15 @@ figure {
   color: $color-dark;
   margin: 0;
   letter-spacing: 0.2rem;
+}
+
+@keyframes scale {
+	0% { opacity: 0; transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }
+	100% { opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1); }
+}
+
+@media screen and (max-width: 991px) {
+  .social-list {
+    width: 80%;
+  }
 }

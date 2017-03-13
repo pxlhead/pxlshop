@@ -7,31 +7,26 @@
         .cart-table
           .table-cell(style='order: 1;')
             h3 PRODUCT
-          figure.table-cell(v-for='(product, key, index) in productsInCart'
-          v-bind:style='{ order: (index + 2) }')
-            img(v-bind:src='product.url' alt='product.name')
-
+          figure.table-cell(:style='{ order: (index + 2) }'
+          v-for='(product, key, index) in productsInCart')
+            img(:src='product.url' alt='product.name')
           .table-cell(style='order: 1;')
             h3 NAME
-          .table-cell(v-for='(product, key, index) in productsInCart'
-          v-bind:style='{ order: (index + 2) }') {{ product.name }}
-
+          .table-cell(:style='{ order: (index + 2) }'
+          v-for='(product, key, index) in productsInCart') {{ product.name }}
           .table-cell(style='order: 1;')
             h3 PRICE
-          .table-cell(v-for='(product, key, index) in productsInCart'
-          v-bind:style='{ order: (index + 2) }') $ {{ product.price }}
-
+          .table-cell(:style='{ order: (index + 2) }'
+          v-for='(product, key, index) in productsInCart') $ {{ product.price }}
           .table-cell(style='order: 1;')
             h3 REMOVE
-          .table-cell(v-for='(product, key, index) in productsInCart'
-          v-bind:style='{ order: (index + 2) }')
+          .table-cell(:style='{ order: (index + 2) }'
+          v-for='(product, key, index) in productsInCart')
             a.product-remove(@click='removeFromCart(key)')
-
         .cart-footer
           input.cart-coupon(type='text' placeholder='Put you code here...')
           a.action-btn Apply
           a.action-btn Renew Cart
-
       .payment
         .widget-payment
           h3.widget-title Payment Options
@@ -81,23 +76,14 @@ export default {
 
 <style lang="scss" scoped>
 
-$color-dark: #252525;
 $color-grey: #666;
 $color-green: #7befb2;
-$color-light: #fff;
 
-h1, h2, h3 {
-  color: $color-dark;
-}
-h1 {
-  font-size: 3.8vw;
-  margin-bottom: 10rem;
+.content {
+  padding: 12vh 10vw 0 10vw;
 }
 input:checked {
   appearance: none;
-}
-.content {
-  padding: 12vh 10vw 0 10vw;
 }
 .basket {
   display: flex;

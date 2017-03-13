@@ -3,7 +3,7 @@
     a.profile-name(@click='showModal') {{ name }}
     a.profile-img
       .img-box
-        img(v-bind:src='photoUrl' alt='Avatar')
+        img(:src='photoUrl' alt='Avatar')
       ul.profile-dropdown
         li.dropdown-item(v-for='option in options')
           a(@click='option.action') {{ option.name }}
@@ -18,7 +18,7 @@
       .modal-content
         .profile-photo
           .img-box
-            img(v-bind:src='photoUrl' alt='Avatar')
+            img(:src='photoUrl' alt='Avatar')
           input.modal-upload(name='photo' id='photo' type='file'
           @change='uploadPhoto')
           label.modal-action(for='photo') Choose
@@ -27,22 +27,22 @@
           .input-box
             .input-icon.icon-face
             input.input-line(name='name' type='text' v-model='name'
-            v-bind:placeholder='lockInfo ? name : "New name..."'
-            v-bind='{readonly: lockInfo}' @blur='lockInfo = true')
+            v-bind='{ placeholder: (lockInfo ? name : "New name..."),\
+            readonly: lockInfo }' @blur='lockInfo = true')
           .input-box
             .input-icon.icon-mail
             input.input-line(name='email' type='email' v-model='email'
-            v-bind:placeholder='lockInfo ? email : "New email..."'
-            v-bind='{readonly: lockInfo}' @blur='lockInfo = true')
+            v-bind='{ placeholder: (lockInfo ? email : "New email..."),\
+            readonly: lockInfo }' @blur='lockInfo = true')
           a.modal-action(v-bind:class='{"action-update": !lockInfo}'
             @click='changeInfo') {{ lockInfo ? 'Change...' : 'Update'}}
           .input-box
             .input-icon.icon-lock
             input.input-line(name='password' type='password' v-model='password'
-            v-bind:placeholder='lockPassword ? "Password" : "New password..."'
-            v-bind='{readonly: lockPassword}' @blur='lockPassword = true')
-          a.modal-action(v-bind:class='{"action-update": !lockPassword}'
-          @click='activatePassword') {{ lockPassword ? "Change..." : "Update"}}
+            v-bind='{ placeholder: (lockPassword ? "Password" : "New password..."),\
+            readonly: lockPassword }' @blur='lockPassword = true')
+          a.modal-action(v-bind:class='{ "action-update": !lockPassword }'
+          @click='activatePassword') {{ lockPassword ? 'Change...' : 'Update' }}
 
     .modal.modal-confirm(v-if='checkPassword')
       input.input-line(name='password' type='password' v-model='password'
@@ -325,7 +325,6 @@ $color-light: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   position: relative;
   .img-box {
     width: 8rem;
@@ -339,6 +338,9 @@ $color-light: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  img {
+    height: auto;
+  }
 }
 .modal-upload {
   width: 0.1px;

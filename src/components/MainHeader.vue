@@ -11,7 +11,7 @@
         ul.cart-list
           li.cart-product(v-for='(product, key) in productsInCart')
             a.product-thumbnail
-              img(v-bind:src='product.url' alt='product.name')
+              img(:src='product.url' alt='product.name')
             .product-description
               a.product-title {{ product.name }}
               span.product-price $ {{ product.price }}
