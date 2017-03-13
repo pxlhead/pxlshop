@@ -4,11 +4,11 @@
     a.close-btn(@click='close')
     section.modal
       .details
-        h2.aside-title Details
         .details-img
           img(v-bind:src='productModal.url')
         .details-content
           h2.product-name {{ productModal.name }}
+          h4.product-author Author
           .product-info
             span.product-price ${{ productModal.price }}
             .product-stars
@@ -17,23 +17,12 @@
             p.about-text
               |Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               |Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              |Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           .product-cart
             a.input-btn Add to Card
-          ul.product-social
-            li.social-item(v-for='social in socials')
-              a.social-link
-                img(:src='"../../assets/icons/" + social + ".svg"')
-      .related
-        h2.aside-title Top products
-        .gallery-product(v-for='product in topProducts')
-          .product-img
-            img(v-bind:src='product.url' v-bind:alt='product.name')
-            .product-actions
-              a.cart-link
-              a.star.star-link
-          h2.product-title {{ product.name }}
-          span.product-author {{ product.author }}
+            ul.product-social
+              li.social-item(v-for='social in socials')
+                a.social-link
+                  img(:src='"../../assets/icons/" + social + ".svg"')
 </template>
 
 <script>
@@ -60,15 +49,18 @@ $color-grey: #666;
 $color-green: #7befb2;
 $color-light: #fff;
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   color: $color-dark;
 }
-
+ul {
+  padding: 0;
+  margin: 0;
+}
 .modal {
-  top: calc(50% - 40% - 2rem);
-  left: calc(50% - 40% - 2rem);
-  width: 80%;
-  height: 80%;
+  top: calc(50% - 25% - 2rem);
+  left: calc(50% - 25% - 2rem);
+  width: 50%;
+  height: 50%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -77,12 +69,9 @@ h1, h2, h3 {
   width: 4.5rem;
   height: 4.5rem;
 }
-.aside-title {
-  left: 2rem;
-}
 .details {
   flex-basis: 60%;
-  padding: 4rem 9rem 0rem 9rem;
+  padding: 4rem;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -98,26 +87,38 @@ h1, h2, h3 {
   justify-content: space-between;
   padding: 1rem 5rem;
 }
-.product-name, .product-info, .product-about, .product-cart, .product-social {
-  flex-basis: calc(80% / 6);
+.product-name, .product-author, .product-info, .product-about, .product-cart, .product-social {
+  flex: 1;
+}
+.product-name {
+  font-size: 3rem;
+}
+.product-cart {
+  display: flex;
+  justify-content: space-between;
 }
 .product-info {
   display: flex;
-  width: 40%;
+  flex: 2;
+  margin-bottom: 1rem;
 }
 .product-about {
-  padding: 1rem;
   line-height: 2.5rem;
 }
 .product-stars, .product-price {
   flex: 1;
-  padding: 1rem;
+}
+.input-btn {
+  flex-basis: 40%;
 }
 .product-social {
-  width: 30%;
-  padding: 2rem 2rem 0rem 2rem;
+  flex-basis: 40%;
   display: flex;
   justify-content: space-between;
+}
+.social-item {
+  flex: 1;
+  padding: 1rem;
 }
 .social-link {
   flex-basis: 20%;
@@ -141,127 +142,64 @@ h1, h2, h3 {
 }
 .input-btn {
   background-color: $color-green;
-  padding: 1rem;
+  padding: 2rem;
+  text-align: center;
+  line-height: 0.2;
   &:hover {
     color: inherit;
     background-color: darken($color-green, 10);
   }
 }
-.related {
-  flex: 1;
-  padding: 4rem 4rem 0 4rem;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-.gallery-column {
-  flex:1;
-  display: flex;
-}
-.gallery-product {
-  flex-basis: calc(40% / 3);
-  padding-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-.product-name {
-  font-size: 2vw;
-  padding: 1rem;
-}
-.product-img {
-  overflow: hidden;
-  position: relative;
-  &:hover .product-actions {
-    transform: translateX(0%);
-  }
-  img {
-    transition: all 1s ease;
-    &:hover {
-      transform: scale(1.2);
-    }
-  }
-}
-.product-actions {
-  position: absolute;
-  top: calc(50% - 3rem);
-  right: 1rem;
-  width: 3rem;
-  background-color: $color-light;
-  transform: translateX(200%);
-  transition: 1s;
-  a {
-    display: block;
-    height: 3rem;
-    width: 100%;
-    &:hover {
-      background-color: $color-green;
-    }
-  }
-  .star-full {
-    &::before {
-      color: $color-dark;
-    }
-  }
-}
-.cart-link {
-  background: url('../../assets/icons/cart.svg') no-repeat center center;
-  background-size: 40%;
-}
-.star-link {
-  text-align: center;
-  line-height: 3rem;
-  vertical-align: middle;
-  font-size: 1rem;
-}
-.product-title {
-  font-size: 1.5vw;
-  flex: 1;
-  margin-bottom: 0.3rem;
-}
-.product-price, .product-author {
-  font-size: 1vw;
-}
-.product-author {
-  padding-bottom: 0.5rem;
-}
 
+@media screen and (max-width: 1400px) {
+  .details {
+    padding: 0rem;
+  }
+  .about-text {
+    height: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .social-item {
+    flex: 1;
+    padding: 1.5rem;
+  }
+  .product-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
 @media screen and (max-width: 991px) {
+  .social-item {
+    flex: 1;
+    padding: 1rem;
+  }
+}
+@media screen and (max-width: 700px) {
+  .modal {
+    top: calc(50% - 40% - 2rem);
+    left: calc(50% - 25% - 2rem);
+    width: 50%;
+    height: 80%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .social-item {
+    flex: 1;
+    padding: 1.5rem;
+  }
+  .details-img {
+    padding: 1rem 1rem;
+  }
+  .details-content {
+    padding: 1rem 2rem;
+  }
   .details {
     flex-direction: column;
-    flex-basis: 100%;
-    padding: 2rem;
+    padding: 0rem;
   }
-  .related {
-    display: none;
-  }
-
-  .details-img {
-    flex-basis: 30%;
-    padding: 2rem 6rem;
-  }
-
-  .details-content {
-    flex-basis: 60%;
-  }
-  .product-social {
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: auto;
-    height: 18%;
-    top: calc(50% - 12rem);
-  }
-  .product-price {
-    font-size: 1.5vw;
-  }
-  .product-name {
-    padding: 0rem 1rem;
-  }
-}
-
-@media screen and (max-width: 560px) {
   .details-img {
     flex-basis: 30%;
     padding: 2rem 3rem;
