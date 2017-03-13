@@ -15,7 +15,7 @@
           input.input-line(type='text' placeholder='Company...'
           name='company')
         .input-box
-          textarea.input-line.input-text(type='text' placeholder='Text...'
+          textarea.input-line(type='text' placeholder='Text...'
           name='text')
         a.action-btn Submit
       .contact
@@ -49,8 +49,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$padding: 8vh 10vw;
-
 $color-dark: #252525;
 $color-grey: #666;
 $color-green: #7BEFB2;
@@ -68,53 +66,33 @@ h1 {
   left: 3vw;
 }
 .email, .map {
-  background-color: $color-green;
   position: relative;
-  padding: $padding;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  padding: 6vh 10vw;
+}
+.map {
+  background-color: $color-green;
 }
 .email {
-  background-color: transparent;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding-bottom: calc(8vh - 10rem);
 }
-.contact, .email-form {
-  padding-bottom: 10rem;
+.contact,
+.email-form {
   display: flex;
   flex-direction: column;
+}
+.email-form {
+  flex-basis: 60%;
   border-top: 2px solid $color-green;
 }
 .contact {
   flex-basis: 20%;
-}
-.contact-address {
-  padding: 0.5rem;
-  font-size: 2rem;
+  text-align: right;
 }
 .social-list {
-  width: 50%;
-  padding: 2rem 0rem;
-  display: flex;
-  justify-content: space-between;
-}
-.social-link {
-  flex-basis: 20%;
-  display: block;
-  &:hover {
-    opacity: 0.7;
-  }
-}
-.email-form {
-  flex-basis: 60%;
-}
-.input-text {
-  padding: 4rem;
-  border: 2px solid lighten($color-grey, 50);
-  &:hover {
-    border: 2px solid $color-green;
-  }
+  width: 90%;
+  align-self: flex-end;
 }
 .action-btn {
   margin: 1rem;
@@ -124,24 +102,19 @@ h1 {
 @media screen and (max-width: 991px) {
   .email {
     flex-direction: column;
+  }
+  .email, .map {
     padding: 4vh 12vw;
-  }
-  .contact {
-    flex-basis: 30%;
-    padding-bottom: 4rem;
-  }
-  .input-box {
-    display: block;
-  }
-  .email-form {
-    width: 100%;
-    padding-bottom: 4rem;
   }
   h1 {
     font-size: 4.8vw;
   }
+  .contact {
+    text-align: left;
+  }
   .social-list {
-    width: 60%;
+    width: 30%;
+    align-self: flex-start;
   }
 }
 </style>

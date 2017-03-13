@@ -1,7 +1,7 @@
 <template lang="pug">
   header.header
     .logo
-      a.logo-link
+      a.logo-link(@click='changePage("Home")')
         img(src='../assets/logo.svg' alt='Logo')
     .cart
       a.cart-link

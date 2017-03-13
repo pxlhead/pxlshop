@@ -100,7 +100,6 @@ h1 {
   padding-bottom: 0.5rem;
 }
 .awards-item, .clients-item {
-  flex-basis: calc(90% / 4);
   border: 1px dashed rgba(6, 0, 0, 0.3);
   border-left: 0;
   padding: 0 5rem;
@@ -136,17 +135,15 @@ h1 {
     font-size: 2vw;
     padding-bottom: 0.5rem;
   }
-  .awards-item, .clients-item {
-    flex-basis: 34%;
-    &:nth-of-type(2n) {
-      border-right: 0;
-    }
+  .awards-item,
+  .clients-item {
+    padding: 0 2rem;
   }
 }
 @media screen and (max-width: 480px) {
-  .awards-item, .clients-item {
-    flex-basis: 34%;
-    border-right: 0;
+  .awards-item,
+  .clients-item {
+    padding: 0 1rem;
   }
 }
 </style>

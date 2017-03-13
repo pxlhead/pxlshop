@@ -91,6 +91,7 @@ h4 {
   flex-basis: 20%;
 }
 .logo {
+  height: 7rem;
   img {
     width: 60%;
     background-color: $color-grey;
@@ -110,25 +111,6 @@ h4 {
 }
 .copyright {
   flex: 1;
-}
-.social-list {
-  width: 60%;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-}
-.social-link {
-  flex-basis: 20%;
-  display: block;
-  &:hover {
-    opacity: 0.7;
-  }
-}
-
-@media screen and (max-width: 991px) {
-  .social-list {
-    width: 80%;
-  }
 }
 
 @media screen and (max-width: 480px) {

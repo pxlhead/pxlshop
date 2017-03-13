@@ -322,7 +322,7 @@ select {
 .product-img {
   flex-basis: 50%;
   &:hover .product-actions {
-    transform: translateX(0) scale(2);
+    transform: translateX(0);
   }
   img {
     transition: all 1s ease;
@@ -335,27 +335,28 @@ select {
   position: absolute;
   overflow: visible;
   top: calc(50% - 2rem);
-  right: 2rem;
-  width: 2rem;
-  transform: translateX(300%) scale(2);
+  right: 1rem;
+  width: 2.5rem;
+  transform: translateX(300%);
   transition: 1s;
 }
 
 @for $i from 1 through 4 {
   .star-box:hover .star-link:nth-of-type(#{$i+1}) {
-    $length: -2rem*$i;
+    $length: -2.5rem*$i;
     transform: translateX($length);
   }
 }
 .cart-link,
 .star-link {
+  -webkit-font-smoothing: antialiased;
   &:hover {
     background-color: $color-green;
   }
 }
 .cart-link {
   display: block;
-  height: 2rem;
+  height: 2.5rem;
   width: 100%;
   background: $color-light url('../../assets/icons/cart.svg') no-repeat center center;
   background-size: 40%;
@@ -366,21 +367,21 @@ select {
 }
 .star-box {
   position: relative;
-  height: 2rem;
+  height: 2.5rem;
 }
 .star-link {
   display: block;
   position: absolute;
   top: 0;
   left: 0;
-  height: 2rem;
-  width: 2rem;
+  height: 2.5rem;
+  width: 2.5rem;
   background-color: $color-light;
   cursor: pointer;
   text-align: center;
-  line-height: 2rem;
+  line-height: 2.5rem;
   vertical-align: middle;
-  font-size: 1rem;
+  font-size: 1.5rem;
   transition: 1s;
   &:hover {
     &::before {
@@ -412,11 +413,6 @@ select {
   display: flex;
   flex-direction: column;
   margin-left: 3vw;
-}
-.widget-title {
-  letter-spacing: 0.1rem;
-  padding: 2rem 0;
-  margin-bottom: 0;
 }
 .top-list {
   padding: 0;
@@ -452,26 +448,6 @@ select {
 }
 .top-product-img {
   flex-basis: 10rem;
-}
-.widget-payment {
-  flex-basis: 15rem;
-  padding: 0 2rem 2.5rem 2rem;
-  background-color: darken($color-light, 5);
-  margin-top: 2rem;
-}
-.payment-details {
-  margin-top: 0;
-  text-align: justify;
-}
-.payment-option {
-  display: flex;
-  justify-content: space-around;
-}
-.option-img {
-  flex-basis: 20%;
-  &:hover {
-    opacity: 0.8;
-  }
 }
 .widget-cart {
   flex-basis: 15rem;

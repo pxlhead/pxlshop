@@ -227,6 +227,33 @@ figure {
   }
 }
 
+.widget-title {
+  letter-spacing: 0.1rem;
+  padding: 2rem 0;
+  margin-bottom: 0;
+}
+
+.widget-payment {
+  flex-basis: 15rem;
+  padding: 0 2rem 2.5rem 2rem;
+  background-color: darken($color-light, 5);
+  margin-top: 2rem;
+}
+.payment-details {
+  margin-top: 0;
+  text-align: justify;
+}
+.payment-option {
+  display: flex;
+  justify-content: space-between;
+}
+.option-img {
+  flex-basis: 20%;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .gallery-product {
   flex-basis: 30%;
   display: flex;
@@ -236,6 +263,56 @@ figure {
   position: relative;
   overflow: hidden;
   flex: 1;
+}
+
+.social-list {
+  width: 60%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0;
+}
+.social-link {
+  flex-basis: 20%;
+  display: block;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.payment {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.payment-total {
+  display: flex;
+  flex-direction: column;
+  margin: 3rem 0;
+  padding: 2rem;
+  border: 1px solid lighten($color-grey, 50);
+  .action-btn {
+    margin-top: 2rem;
+  }
+}
+.subtotal-line, .total-line {
+  flex: 1;
+  display: flex;
+  border-bottom: 2px solid lighten($color-grey, 50);
+  justify-content: space-between;
+}
+.total-line {
+  .line-text, .line-price {
+    font-weight: 500;
+    color: $color-dark;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .social-list {
+    width: 80%;
+  }
 }
 
 @keyframes scale {

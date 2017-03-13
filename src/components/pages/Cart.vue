@@ -3,46 +3,56 @@
     h1 Review Your Cart
     section.basket
       .cart
-        h2.aside-title  You have 3 item
+        h2.aside-title Your cart
         .cart-table
-          .cart-header
-            h3.cart-item PRODUCT
-            h3.cart-item NAME
-            h3.cart-item PRICE
-          .cart-product(v-for='(product, key) in productsInCart')
-            figure.item-img
-              img(v-bind:src='product.url' alt='product.name')
-            p.cart-item {{ product.name }}
-            p.cart-item $ {{ product.price }}
-            .cart-item
-              a.product-remove(@click='removeFromCart(key)')
-          .cart-footer
-            form.cart-coupon
-              input.coupon-line(type='text' placeholder='Put you code here...')
-              a.action-btn Apply
-            .cart-item
-            a.action-btn Renew Cart
+          .table-cell(style='order: 1;')
+            h3 PRODUCT
+          figure.table-cell(v-for='(product, key, index) in productsInCart'
+          v-bind:style='{ order: (index + 2) }')
+            img(v-bind:src='product.url' alt='product.name')
+
+          .table-cell(style='order: 1;')
+            h3 NAME
+          .table-cell(v-for='(product, key, index) in productsInCart'
+          v-bind:style='{ order: (index + 2) }') {{ product.name }}
+
+          .table-cell(style='order: 1;')
+            h3 PRICE
+          .table-cell(v-for='(product, key, index) in productsInCart'
+          v-bind:style='{ order: (index + 2) }') $ {{ product.price }}
+
+          .table-cell(style='order: 1;')
+            h3 REMOVE
+          .table-cell(v-for='(product, key, index) in productsInCart'
+          v-bind:style='{ order: (index + 2) }')
+            a.product-remove(@click='removeFromCart(key)')
+
+        .cart-footer
+          input.cart-coupon(type='text' placeholder='Put you code here...')
+          a.action-btn Apply
+          a.action-btn Renew Cart
+
       .payment
-        .payment-content
-          h2.payment-title Payment Options
-          p.payment-text
-            | Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            | sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .widget-payment
+          h3.widget-title Payment Options
+          p.payment-details
+            | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+            | do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           .payment-option
-            figure.option-img.img-paypal
+            a.option-img
               img(src='../../assets/icons/paypal.svg')
-            figure.option-img.img-paypal
+            a.option-img
               img(src='../../assets/icons/visa.svg')
-            figure.option-img.img-paypal
+            a.option-img
               img(src='../../assets/icons/mastercard.svg')
         .payment-total
-          h2.total-title Cart Total
+          h2 Cart Total
           .subtotal-line
-            p.line-text Subtotal
-            p.line-price ${{ cartAmount() }}
+            p Subtotal
+            p ${{ cartAmount() }}
           .total-line
-            p.line-text Total
-            p.line-price ${{ cartAmount() }}
+            p Total
+            p ${{ cartAmount() }}
           a.action-btn Proceed to Checkout
 </template>
 
@@ -92,183 +102,63 @@ input:checked {
 .basket {
   display: flex;
 }
-.aside-title {
-  position: absolute;
-  top: calc(50% - 6rem);
-  left: -5vw;
-  font-size: 2rem;
-  transform: rotate(90deg);
-  transform-origin: left;
-  color: $color-dark;
-  margin: 0;
-  letter-spacing: 0.2rem;
-}
 .cart {
-  flex:3;
+  flex: 3;
   position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 10rem;
 }
 .cart-table {
-  display: table;
-  padding: 0 2vw;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
   width: 90%;
+  margin-bottom: 3rem;
 }
-.cart-header, .cart-product, .cart-footer {
-  display: table-row;
+.table-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 25%;
+  padding: 1rem;
+  overflow: hidden;
   border-bottom: 2px solid lighten($color-grey, 50);
-}
-.cart-header {
-  border-top: 2px solid lighten($color-grey, 50);
-}
-.cart-product{
-  padding: 2rem 0;
-}
-.cart-item {
-  display: table-cell;
-  vertical-align: middle;
-  padding: 1rem;
-  width: 20%;
-  text-align: center;
-  font-size: 1.8rem;
-  height: 7rem;
-  color: lighten($color-grey, 10)
-}
-.input-line {
-  flex: none;
-  flex-basis: 18%;
-  min-width: 3rem;
-  text-align: center;
-  border: 0;
-}
-.item-img {
-  width: 10rem;
-  height: 10rem;
-  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .cart-footer {
-  margin-top: 7rem;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  width: 50%;
+  justify-content: space-between;
 }
 .cart-coupon {
-  display: flex;
-}
-.action-btn {
-  display: table-cell;
-  text-align: center;
-  line-height: 3;
-}
-.coupon-line {
-  flex: 2;
   outline: none;
   border: 0;
   border-bottom: 2px solid lighten($color-grey, 50);
-  padding: 2rem;
+  padding: 1rem;
   &:hover {
     border-color: $color-green;
-  }
-}
-.payment {
-  flex:1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0 2vw;
-  margin-bottom: 20rem;
-}
-.payment-content {
-  flex-basis: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: lighten($color-grey, 56);
-  padding: 3rem;
-  margin-bottom: 3rem;
-}
-.payment-title, .payment-text {
-  flex-basis: 10%;
-}
-.payment-option {
-  flex-basis: 20%;
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem;
-}
-.option-img {
-  flex-basis: 18%;
-  margin: 0;
-}
-.payment-total {
-  flex-basis: 40%;
-  display: flex;
-  flex-direction: column;
-  padding: 3rem;
-  border: 1px solid lighten($color-grey, 50);
-  .action-btn {
-    margin-top: 2rem;
-  }
-}
-.total-title {
-  flex: 1;
-}
-.subtotal-line, .total-line {
-  flex: 1;
-  display: flex;
-  border-bottom: 2px solid lighten($color-grey, 50);
-  justify-content: space-between;
-}
-.line-text, .line-price {
-  flex-basis: 10%;
-}
-.total-line {
-  .line-text, .line-price {
-    font-weight: 500;
-    color: $color-dark;
   }
 }
 @media screen and (max-width: 991px) {
   .basket {
     flex-direction: column;
   }
-  .cart-item {
-    flex-basis: 13%;
-    font-size: 1.3rem;
+  .cart-footer {
+    width: 70%;
   }
-  .input-line {
-    width: 1.2rem;
-    flex-basis: 0;
-  }
-  .item-img {
-    margin: 0;
-    margin-top: 1rem;
-  }
-  .cart-item:nth-child(3) {
-    flex-basis: 25%;
-  }
-  .cart-item:first-child {
-    flex-basis: 13rem;
+  .payment-option {
+    width: 60%;
+    margin: 0 auto;
   }
 }
 @media screen and (max-width: 480px) {
-  .cart-item {
-    flex-basis: 10%;
-    font-size: 1rem;
-  }
-  .input-line {
-    width: 1rem;
-    flex-basis: 0;
-    // min-width: 0;
-  }
-  .item-img {
-    margin: 0;
-    margin-top: 1rem;
-  }
-  .cart-item:nth-child(3) {
-    flex-basis: 25%;
-  }
-  .cart-item:first-child {
-    flex-basis: 13rem;
+  .cart-footer {
+    width: 90%;
+    font-size: 1.2rem;
   }
 }
 </style>
