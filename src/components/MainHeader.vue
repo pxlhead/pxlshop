@@ -274,15 +274,53 @@ a {
 }
 @media screen and (max-width: 480px) {
   .header {
-    left: calc(15vw - 4rem);
+    height: 3rem;
+    top: 6vh;
+    left: calc(15vw - 3rem);
+    z-index: 1000;
+  }
+  .logo {
+    width: 3.5rem;
+    height: 3rem;
+  }
+  .cart,
+  .nav-toggle {
+    width: 3rem;
+    height: 3rem;
+  }
+  .logo-link {
+    background-image: url('../assets/logo-mini.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    img {
+      display: none;
+    }
+  }
+  .cart-submenu {
+    top: 3rem;
+    width: 20rem;
   }
   .nav {
-    height: 4rem;
+    height: 3rem;
     left: 3rem;
+    background-color: $color-light;
   }
   .nav-link {
-    line-height: 4rem;
-    padding: 0.6rem;
+    line-height: 3rem;
+    padding: 0.5rem;
+  }
+  .cart-link {
+    opacity: 1;
+  }
+  .cart-count {
+    top: calc(50% - 1.2rem);
+    right: calc(50% - 1.3rem);
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+  .toggle-icon {
+    width: 2rem;
+    left: calc(50% - 1rem);
   }
 }
 </style>

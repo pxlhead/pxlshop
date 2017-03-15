@@ -127,9 +127,11 @@ h4 {
   .contact {
     flex-basis: 30%;
   }
-
   .logo {
     order: 2;
+  }
+  .social-link {
+    padding: 0.1rem;
   }
 }
 </style>

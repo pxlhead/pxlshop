@@ -510,6 +510,25 @@ iframe {
   }
 }
 
+@media screen and (max-width: 740px) {
+  .img-main,
+  .img-shop {
+    transform: translateY(0) scale(4);
+  }
+  .img-team {
+    transform: translateY(20%) scale(2);
+  }
+  .comment {
+    flex-basis: 5rem;
+  }
+  .comments {
+    padding: 2rem 0;
+    .aside-title {
+      display: none;
+    }
+  }
+}
+
 @media screen and (max-width: 480px) {
   .slide-content {
     transform: scale(0.8);

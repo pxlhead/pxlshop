@@ -419,7 +419,7 @@ $color-light: #fff;
     }
   }
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
   .profile {
     right: calc(10vw - 2rem);
   }
@@ -427,17 +427,46 @@ $color-light: #fff;
     margin-left: 1rem;
   }
   .modal {
-    left: calc(50% - 15rem - 2rem);
-    width: 30rem;
+    left: calc(50% - 12rem - 1rem);
+    width: 24rem;
+    padding: 4rem 1rem 1rem 1rem;
   }
   .modal-head {
-    width: 14rem;
+    width: 10rem;
+    top: -2rem;
+    height: 4rem;
+  }
+  .modal-subhead {
+    height: 2rem;
+  }
+  .modal-title {
+    font-size: 1.6rem;
   }
   .profile-info {
     flex: 4;
   }
   .input-line {
     width: 50%;
+  }
+  .modal-action {
+    margin-top: 0.5rem;
+    font-weight: 500;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+  }
+  .profile-photo {
+    flex: 2;
+    .img-box {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+  .input-icon {
+    margin: 0;
+  }
+  .delete-action {
+    padding-left: 3rem;
+    margin-top: 10rem;
   }
 }
 </style>

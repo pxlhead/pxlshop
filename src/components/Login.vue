@@ -197,9 +197,33 @@ $color-light: #fff;
     }
   }
 }
+@media screen and (max-width: 740px) {
+  .modal {
+    top: calc(50% - 8rem);
+    height: 18rem;
+    left: calc(50% - 12rem - 1rem);
+    width: 24rem;
+    padding: 3rem 1rem 1rem 1rem;
+  }
+  .modal-head {
+    top: -6rem;
+    width: 18rem;
+    height: 5rem;
+    padding: 2rem;
+  }
+  .modal-title {
+    margin-bottom: 0.5rem;
+  }
+  .social-title {
+    margin-bottom: 0.5rem;
+  }
+}
 @media screen and (max-width: 480px) {
   .login-sign {
     right: calc(10vw - 2rem);
+  }
+  .modal {
+    top: calc(50% - 11rem);
   }
 }
 </style>
