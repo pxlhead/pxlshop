@@ -461,9 +461,6 @@ $color-light: #fff;
       height: 4rem;
     }
   }
-  .input-icon {
-    margin: 0;
-  }
   .delete-action {
     padding-left: 3rem;
     margin-top: 10rem;
