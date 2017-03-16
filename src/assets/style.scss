@@ -254,10 +254,6 @@ figure {
     opacity: 0.8;
   }
 }
-.gallery-product {
-  flex-basis: 30%;
-  display: flex;
-}
 .product-img {
   padding: 0;
   position: relative;
@@ -335,5 +331,15 @@ figure {
 @media screen and (max-width: 991px) {
   .social-list {
     width: 80%;
+  }
+}
+@media screen and (max-width: 800px) {
+  h1 {
+    font-size: 5vw;
+  }
+}
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 7vw;
   }
 }

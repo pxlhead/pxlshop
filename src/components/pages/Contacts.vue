@@ -103,14 +103,14 @@ h1 {
 }
 
 @media screen and (max-width: 991px) {
-  .email {
+  .input-box {
     flex-direction: column;
+  }
+  .email {
+    display: block;
   }
   .email, .map {
     padding: 4vh 12vw;
-  }
-  h1 {
-    font-size: 4.8vw;
   }
   .contact {
     text-align: left;

@@ -162,4 +162,14 @@ ul {
     font-size: 3vw;
   }
 }
+@media screen and (max-width: 480px) {
+  .modal {
+    top: calc(50% - 33vh - 3rem);
+    height: 66vh;
+    padding: 3rem;
+  }
+  .about-text {
+    display: none;
+  }
+}
 </style>

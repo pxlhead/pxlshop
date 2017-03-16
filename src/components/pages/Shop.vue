@@ -113,7 +113,7 @@ export default {
       sorts: ['none', 'newest', 'popular'],
       productModal: null,
       filteredProducts: {},
-      productsOnPage: 12,
+      productsOnPage: 0,
       activePage: 1,
       productsStars: {},
       starBoxHover: false,
@@ -133,6 +133,7 @@ export default {
         }
       });
     });
+    this.productsOnPage = document.documentElement.clientWidth < 480 ? 8 : 12;
   },
   computed: {
     cartShow() {
@@ -154,6 +155,7 @@ export default {
     },
     changeGalleryPage(galleryPage) {
       this.activePage = galleryPage;
+      window.scrollTo(0, 0);
     },
     showProductModal(product) {
       this.productModal = product;
@@ -306,9 +308,10 @@ select {
 .gallery-product {
   flex-direction: column;
   margin-bottom: 1rem;
+  flex-basis: 30%;
+  display: flex;
 }
 .product-img {
-  flex-basis: 50%;
   &:hover .product-actions {
     transform: translateX(0);
   }
@@ -486,11 +489,11 @@ select {
   pointer-events: none;
 }
 .nav-pages {
-  flex-basis: 10%;
   display: flex;
   justify-content: space-around;
 }
 .page-num {
+  width: 2rem;
   color: $color-dark;
   &:hover {
     color: $color-green;
@@ -514,9 +517,6 @@ select {
 }
 
 @media screen and (max-width: 800px) {
-  h1 {
-    font-size: 5vw;
-  }
   .filter {
     flex-direction: column;
   }
@@ -526,8 +526,11 @@ select {
   .products {
     flex-direction: column;
   }
-  .gallery, .sidebar {
+  .gallery {
     flex: 1;
+  }
+  .sidebar {
+    display: none;
   }
   .gallery-product {
     flex-basis: 100%;

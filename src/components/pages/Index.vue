@@ -418,6 +418,7 @@ iframe {
 .gallery-product:hover .img-overlay {
   transform: translateY(0%);
   transition: 0.5s;
+  flex-basis: 30%;
 }
 .comments {
   background-color: lighten($color-grey, 30);
@@ -548,7 +549,8 @@ iframe {
     justify-content: space-between;
   }
   .gallery-product {
-    padding: 4rem;
+    padding: 1rem 2rem;
+    flex-basis: auto;
   }
   .img-main {
     transform: translateX(-20%);

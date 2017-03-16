@@ -274,19 +274,16 @@ a {
 }
 @media screen and (max-width: 480px) {
   .header {
-    height: 3rem;
+    height: 3.5rem;
     top: 6vh;
-    left: calc(15vw - 3rem);
-    z-index: 1000;
+    left: calc(15vw - 3.5rem);
+    z-index: 1001;
   }
-  .logo {
-    width: 3.5rem;
-    height: 3rem;
-  }
+  .logo,
   .cart,
   .nav-toggle {
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
   .logo-link {
     background-image: url('../assets/logo-mini.svg');
@@ -297,17 +294,20 @@ a {
     }
   }
   .cart-submenu {
-    top: 3rem;
+    top: 3.5rem;
     width: 20rem;
   }
   .nav {
-    height: 3rem;
-    left: 3rem;
+    height: 3.5rem;
+    left: 3.5rem;
     background-color: $color-light;
   }
   .nav-link {
-    line-height: 3rem;
+    line-height: 3.5rem;
     padding: 0.5rem;
+    &:first-of-type {
+      display: none;
+    }
   }
   .cart-link {
     opacity: 1;
