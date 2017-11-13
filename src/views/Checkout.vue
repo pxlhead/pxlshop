@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
   .content
     h1 Finalize Your Order
     section.checkout
@@ -7,67 +7,67 @@
           h2.aside-title  Billing
           .input-box
             input.input-line(type='text' placeholder='First Name...'
-            v-model='billing.firstName' name='firstName')
+              v-model='billing.firstName')
             input.input-line(type='text', placeholder='Second Name...'
-            v-model='billing.secondName' name='secondName')
+              v-model='billing.secondName')
           .input-box
             input.input-line(type='email' placeholder='Email...'
-            v-model='email' name='email')
+              v-model='email')
             input.input-line(type='text' placeholder='Phone...'
-            v-model.number='phone' name='phone')
+              v-model.number='phone')
           .input-box
             input.input-line(type='text' placeholder='Country...'
-            v-model='billing.country' name='country')
+              v-model='billing.country')
           .input-box
             input.input-line(type='text' placeholder='Billing Address'
-            v-model='billing.address' name='address')
+              v-model='billing.address')
           .input-box
             input.input-line(type='text' placeholder='City...'
-            v-model='billing.city' name='city')
+              v-model='billing.city')
             input.input-line(type='text' placeholder='Zip...'
-            v-model.number='billing.zip' name='zip')
+              v-model.number='billing.zip')
           .input-box
             .input-checkbox
               input.input-check(type='checkbox' id='address'
-              @click='remAddress')
+                @click='remAddress')
               label.input-label(for='address') Remember address?
             .input-checkbox
               input.input-check(type='checkbox' id='shipping'
-              @click='completeShipping')
+                @click='completeShipping')
               label.input-label(for='shipping') Same shipping address?
         form.order-form
           h2.aside-title  Shipping
           .input-box
             input.input-line(type='text' placeholder='First Name...'
-            v-model='shipping.firstName' name='firstName')
+              v-model='shipping.firstName')
             input.input-line(type='text', placeholder='Second Name...'
-            v-model='shipping.secondName' name='secondName')
+              v-model='shipping.secondName')
           .input-box
             input.input-line(type='text' placeholder='Country...'
-            v-model='shipping.country' name='country')
+              v-model='shipping.country')
           .input-box
             input.input-line(type='text' placeholder='Shipping Address'
-            v-model='shipping.address' name='address')
+              v-model='shipping.address')
           .input-box
             input.input-line(type='text' placeholder='City...'
-            v-model='shipping.city' name='city')
+              v-model='shipping.city')
             input.input-line(type='text' placeholder='Zip...'
-            v-model.number='shipping.zip' name='zip')
+              v-model.number='shipping.zip')
       .payment
         .widget-payment
           h2.widget-title Payment Options
           .payment-option
             a.option-img
-              img(src='../../assets/icons/paypal.svg')
+              img(src='~@/assets/icons/paypal.svg')
             a.option-img
-              img(src='../../assets/icons/visa.svg')
+              img(src='~@/assets/icons/visa.svg')
             a.option-img
-              img(src='../../assets/icons/mastercard.svg')
+              img(src='~@/assets/icons/mastercard.svg')
           form.payment-data
             input.input-line(type='text' placeholder='Owner Name...')
-            input.input-line(type='text', placeholder='Account Number...')
+            input.input-line(type='text' placeholder='Account Number...')
             input.input-line(type='text' placeholder='Date...')
-            input.input-line(type='text', placeholder='CVV Code...')
+            input.input-line(type='text' placeholder='CVV Code...')
         .payment-total
           h2 Cart Total
           .subtotal-line
@@ -80,11 +80,8 @@
 </template>
 
 <script>
-import Firebase from '../../appconfig/firebase';
-
 export default {
   name: 'checkout',
-  props: ['user'],
   data() {
     return {
       billing: {
@@ -93,7 +90,7 @@ export default {
         country: '',
         address: '',
         city: '',
-        zip: '',
+        zip: ''
       },
       shipping: {
         firstName: '',
@@ -101,24 +98,21 @@ export default {
         country: '',
         address: '',
         city: '',
-        zip: '',
+        zip: ''
       },
       email: '',
-      phone: '',
+      phone: ''
     };
   },
   methods: {
-    remAddress() {
-      Firebase.dbUsersRef.child(`${this.user.uid}/address`).set(this.billing);
-    },
     completeShipping() {
       this.shipping = this.billing;
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
   $color-dark: #252525;
   $color-grey: #666;

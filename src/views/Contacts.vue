@@ -25,10 +25,7 @@
         p.contact-address 2426 Sing Street,
         p.contact-address Quesnel BC,
         p.contact-address V2J 4P7, Canada.
-        ul.social-list
-          li.social-item(v-for='social in socials')
-            a.social-link
-              img(:src='"../../assets/icons/" + social + ".svg"')
+        social-list
     section.map
       h2.aside-title FIND US
       iframe(src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2403.\
@@ -40,18 +37,13 @@
 </template>
 
 <script>
-import Firebase from '../../appconfig/firebase';
+import SocialList from '@/components/SocialList';
 
 export default {
   name: 'contacts',
-  firebase: {
-    products: Firebase.dbProductsRef,
-  },
-  data() {
-    return {
-      socials: ['twitter', 'facebook', 'youtube', 'instagram'],
-    };
-  },
+  components: {
+    SocialList
+  }
 };
 </script>
 

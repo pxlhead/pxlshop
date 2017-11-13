@@ -1,85 +1,64 @@
-<template lang="pug">
+<template lang='pug'>
   header.header
     .logo
-      a.logo-link(@click='changePage("Home")')
-        img(src='../assets/logo.svg' alt='Logo')
+      router-link.logo-link(to='/')
+        img(src='~@/assets/icons/logo.svg' alt='Logo')
     .cart
       a.cart-link
-        img(src='../assets/icons/cart.svg' alt='Cart')
-        span.cart-count(v-if='cartShow')
+        img(src='~@/assets/icons/cart.svg' alt='Cart')
+        span.cart-count(v-if='')
       .cart-submenu
         ul.cart-list
-          li.cart-product(v-for='(product, key) in productsInCart')
+          li.cart-product(v-for='product in cartProducts')
             a.product-thumbnail
-              img(:src='product.url' alt='product.name')
+              img(:src='product.img' alt='product.title')
             .product-description
-              a.product-title {{ product.name }}
+              a.product-title {{ product.title }}
               span.product-price $ {{ product.price }}
-            a.product-remove(@click='removeFromCart(key)')
+            a.product-remove(@click='')
         .cart-subtotal
           span Subtotal
-          span $ {{ cartAmount() }}
+          span $ {{ cartAmount }}
         .cart-links
-          a.cart-view(@click='changePage("Cart")') View Cart
-          a.cart-checkout(@click='changePage("Checkout")') Checkout
+          router-link.cart-view(to='/cart') View Cart
+          router-link.cart-checkout(to='/checkout') Checkout
     a.nav-toggle(@click='showMenu = !showMenu')
-      .toggle-icon(:class='{open: showMenu}')
+      .toggle-icon(:class='{ open: showMenu }')
         span
         span
         span
       transition(name='toggle-menu')
         nav.nav(v-if='showMenu')
-          a.nav-link(v-for='page in pages'
-          @click='changePage(page)') {{ page }}
+          router-link.nav-link(v-for='page in pages'
+          :to='page'  :key='page') {{ page }}
 </template>
 
 <script>
-/* eslint-disable no-undef */
-import router from '@/router';
-import Firebase from '../appconfig/firebase';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'main-header',
-  props: ['user', 'productsInCart'],
   data() {
     return {
       pages: [
-        'Home',
-        'About',
-        'Shop',
-        'Contacts',
+        'home',
+        'about',
+        'shop',
+        'contacts'
       ],
-      showMenu: false,
+      showMenu: false
     };
   },
   computed: {
-    cartShow() {
-      return Object.keys(this.productsInCart).length > 0;
-    },
-  },
-  methods: {
-    changePage(page) {
-      router.push({
-        name: page,
-        params: {
-          user: this.user,
-          productsInCart: this.productsInCart,
-        },
-      });
-    },
-    cartAmount() {
-      return Object.values(this.productsInCart)
-        .reduce((sum, product) => sum + Number(product.price), 0);
-    },
-    removeFromCart(key) {
-      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${key}`).remove();
-      this.$delete(this.productsInCart, key);
-    },
-  },
+    ...mapGetters([
+      'cartProducts',
+      'cartAmount'
+    ])
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 $color-dark: #252525;
 $color-grey: #666;
@@ -286,7 +265,7 @@ a {
     height: 3.5rem;
   }
   .logo-link {
-    background-image: url('../assets/logo-mini.svg');
+    background-image: url('~@/assets/icons/logo-mini.svg');
     background-repeat: no-repeat;
     background-position: center;
     img {

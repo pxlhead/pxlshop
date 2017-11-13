@@ -1,4 +1,4 @@
- <template lang="pug">
+ <template lang='pug'>
   .content
     h1 Review Your Cart
     section.basket
@@ -8,23 +8,23 @@
           .table-cell(style='order: 1;')
             h3 PRODUCT
           figure.table-cell(:style='{ order: (index + 2) }'
-          v-for='(product, key, index) in productsInCart')
-            img(:src='product.url' alt='product.name')
+            v-for='(product, key, index) in cartProducts')
+            img(:src='product.img' alt='product.title')
           .table-cell(style='order: 1;')
             h3 NAME
           .table-cell(:style='{ order: (index + 2) }'
-          v-for='(product, key, index) in productsInCart') {{ product.name }}
+            v-for='(product, key, index) in cartProducts') {{ product.title }}
           .table-cell(style='order: 1;')
             h3 PRICE
           .table-cell(:style='{ order: (index + 2) }'
-          v-for='(product, key, index) in productsInCart') $ {{ product.price }}
+            v-for='(product, key, index) in cartProducts') $ {{ product.price }}
           .table-cell(style='order: 1;')
             h3 REMOVE
           .table-cell(:style='{ order: (index + 2) }'
-          v-for='(product, key, index) in productsInCart')
-            a.product-remove(@click='removeFromCart(key)')
+            v-for='(product, key, index) in cartProducts')
+            a.product-remove(@click='')
         .cart-footer
-          input.cart-coupon(type='text' placeholder='Put you code here...')
+          input.cart-coupon(type='text' placeholder='Put your code here...')
           a.action-btn Apply
           a.action-btn Renew Cart
       .payment
@@ -35,46 +35,37 @@
             | do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           .payment-option
             a.option-img
-              img(src='../../assets/icons/paypal.svg')
+              img(src='~@/assets/icons/paypal.svg')
             a.option-img
-              img(src='../../assets/icons/visa.svg')
+              img(src='~@/assets/icons/visa.svg')
             a.option-img
-              img(src='../../assets/icons/mastercard.svg')
+              img(src='~@/assets/icons/mastercard.svg')
         .payment-total
           h2 Cart Total
           .subtotal-line
             p Subtotal
-            p ${{ cartAmount() }}
+            p ${{ cartAmount }}
           .total-line
             p Total
-            p ${{ cartAmount() }}
+            p ${{ cartAmount }}
           a.action-btn Proceed to Checkout
 </template>
 
 <script>
-import Firebase from '../../appconfig/firebase';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'cart',
-  props: ['user', 'productsInCart'],
-  data() {
-    return {
-    };
-  },
-  methods: {
-    cartAmount() {
-      return Object.values(this.productsInCart)
-        .reduce((sum, product) => sum + Number(product.price), 0);
-    },
-    removeFromCart(key) {
-      Firebase.dbUsersRef.child(`${this.user.uid}/cart/${key}`).remove();
-      this.$delete(this.productsInCart, key);
-    },
-  },
+  computed: {
+    ...mapGetters([
+      'cartProducts',
+      'cartAmount'
+    ])
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 $color-grey: #666;
 $color-green: #7befb2;

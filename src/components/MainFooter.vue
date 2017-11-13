@@ -1,14 +1,14 @@
-<template lang="pug">
+<template lang='pug'>
   footer.footer
     .content
       .logo
         a.logo-img
-          img(src='../assets/logo.svg')
+          img(src='~@/assets/icons/logo.svg')
       .nav
         h4 Menu
         ul.list(v-for='page in pages')
           li
-            a(@click='changePage(page)') {{ page }}
+            router-link(:to='page') {{ page }}
       .blog
         h4 Recent posts
         ul.list(v-for='(val, key) in posts')
@@ -20,51 +20,38 @@
         p 2426 Sing Street,
         p Quesnel BC,
         p V2J 4P7, Canada.
-        ul.list.social-list
-          li.social-item(v-for='social in socials')
-            a.social-link
-              img(:src='"../assets/icons/" + social + ".svg"')
+        social-list
     .copyright
       p Developed by pxlhead. All rights reserved. &reg;
 </template>
 
 <script>
-import router from '@/router';
+import SocialList from '@/components/SocialList';
 
 export default {
   name: 'main-footer',
-  props: ['user', 'productsInCart'],
+  components: {
+    SocialList
+  },
   data() {
     return {
       pages: [
-        'Home',
-        'About',
-        'Shop',
-        'Contacts',
+        'home',
+        'about',
+        'shop',
+        'contacts'
       ],
       posts: {
-        'lorem ipsum': '02 feb 2017',
-        'lorem ips': '04 apr 2017',
-        'lorem i': '12 jun 2017',
-      },
-      socials: ['twitter', 'facebook', 'youtube', 'instagram'],
+        'lorem foo': '02 feb 2017',
+        'lorem bar': '04 apr 2017',
+        'lorem baz': '12 jun 2017'
+      }
     };
-  },
-  methods: {
-    changePage(page) {
-      router.push({
-        name: page,
-        params: {
-          user: this.user,
-          productsInCart: this.productsInCart,
-        },
-      });
-    },
-  },
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 $color-dark: #252525;
 $color-light: #fff;

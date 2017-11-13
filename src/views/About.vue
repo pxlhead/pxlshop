@@ -1,46 +1,48 @@
-<template lang="pug">
+<template lang='pug'>
   .content
     h1
       | Hi there! We're an awesome group of creatives from a variety of different
       | backgrounds with a variety of skills.
     section.team
       h2.aside-title TEAM
-      .gallery-product(v-for='(product, index) in products' v-if='index < 8')
+      .gallery-product(v-for='product in products')
         h2.person-name Ipsum Lorem
         span.person-prof Ipsum Lorem
         p.person-description
           | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           | eiusmod tempor incididunt ut labore et dolore magna aliqua.
         .product-img
-          img(:src='product.url' alt='product.name')
+          img(:src='product.img' alt='product.title')
     section.awards
       h2.aside-title AWARDS
       .awards-item(v-for='n in 4')
-        img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
+        img(src='~@/assets/icons/award-logo.svg' alt='Awwwwards')
     section.clients
       h2.aside-title CLIENTS
       .clients-row(v-for='n in 2')
         .clients-item(v-for='n in 4')
-          img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
+          img(src='~@/assets/icons/award-logo.svg' alt='Awwwwards')
 </template>
 
 <script>
-import Firebase from '../../appconfig/firebase';
+import { mapState } from 'vuex';
 
 export default {
   name: 'about',
-  firebase: {
-    products: Firebase.dbProductsRef,
-  },
-  data() {
-    return {
-      socials: ['twitter', 'facebook', 'youtube', 'instagram'],
-    };
-  },
+  computed: {
+    ...mapState('products', [
+      'activeSort',
+      'ids',
+      'all'
+    ]),
+    products() {
+      return this.ids[this.activeSort].slice(0, 8).map(id => this.all[id]);
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 $color-green: #7BEFB2;
 
 h1 {

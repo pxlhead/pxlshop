@@ -1,110 +1,61 @@
-<template lang="pug">
-  .auth
+<template lang='pug'>
+  .auth(v-if='!$store.state.activeUser')
     .login-sign
-      a.sign-btn(@click='login = "in"') Sign In
-      a.sign-btn(@click='login = "up"') Sign Up
-    .modal-overlay(@click='login = false' v-if='login')
-    a.close-btn(@click='login = false' v-if='login')
-    form.modal(v-if='login')
+      a.sign-btn(@click='method = "sign in"') Sign In
+      a.sign-btn(@click='method = "sign up"') Sign Up
+    .modal-overlay(@click='method = ""' v-if='method')
+      a.close-btn
+    form.modal(v-if='method')
       .modal-head
-        h4.social-title {{ login === 'in' ? 'Sign In' : 'Sign Up' }}
+        h4.social-title {{ method }}
         .social-img
-          a.social-link.social-google(@click='signInGoogle')
-          a.social-link.social-twitter
-          a.social-link.social-facebook
+          a.social-link.social-google(@click='signInUserRedirect("Google")')
+          a.social-link.social-twitter(@click='signInUserRedirect("Twitter")')
+          a.social-link.social-facebook(@click='signInUserRedirect("Facebook")')
       p.modal-title or Be Classical
-      .modal-content
+      form.modal-content(@submit.prevent='submit')
         .input-box
           .input-icon.icon-mail
           input.input-line(name='email' type='email' placeholder='Email...'
-          v-model='email')
+            v-model='email' required)
         .input-box
           .input-icon.icon-lock
           input.input-line(name='password' type='password' placeholder='Password...'
-          v-model='password')
-      a.modal-action(@click='enter') {{ login === 'in' ? 'Enter' : 'Get Started' }}
-
-    transition(name='note')
-      notification(v-bind:message='message' v-if='message.length > 0'
-      @click.native='message = ""')
+            v-model='password' required)
+      input.modal-action(type='submit' value='Submit')
 </template>
 
 <script>
-import Firebase from '../appconfig/firebase';
-import Notification from './Notification';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'login',
-  props: ['light'],
-  components: {
-    Notification,
-  },
   data() {
     return {
-      login: false,
+      method: '',
       email: '',
-      password: '',
-      message: '',
+      password: ''
     };
   },
   methods: {
-    enter() {
-      if (this.login === 'up') {
-        this.signUp();
+    ...mapActions([
+      'signUpUser',
+      'signInUser',
+      'signInUserRedirect'
+    ]),
+    submit() {
+      const userData = { email: this.email, password: this.password };
+      if (this.method.contains('in')) {
+        this.signInUser(userData);
       } else {
-        this.signIn();
+        this.signUpUser(userData);
       }
-    },
-    signUp() {
-      Firebase.auth.createUserWithEmailAndPassword(
-        this.email, this.password)
-        .then(() => this.signIn())
-        .catch((error) => {
-          switch (error.code) {
-            case 'auth/weak-password':
-              this.message = 'The password should be at least six symbols.';
-              break;
-            case 'auth/email-already-in-use':
-              this.message = 'There already exists an account with the given email address.';
-              break;
-            case 'auth/invalid-email':
-              this.message = 'The email address is not valid.';
-              break;
-            default:
-              this.message = error.code;
-          }
-        },
-      );
-    },
-    signIn() {
-      Firebase.auth.signInWithEmailAndPassword(
-        this.email, this.password)
-        .catch((error) => {
-          switch (error.code) {
-            case 'auth/user-not-found':
-              this.message = 'There is no user corresponding to the given email.';
-              break;
-            case 'auth/wrong-password':
-              this.message = 'The password is invalid for the given email';
-              break;
-            case 'auth/invalid-email':
-              this.message = 'The email address is not valid.';
-              break;
-            default:
-              this.message = error.code;
-          }
-        },
-      );
-    },
-    signInGoogle() {
-      const provider = Firebase.googleAuth;
-      Firebase.auth.signInWithRedirect(provider);
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 $color-grey: #666;
 $color-green: #7befb2;
@@ -155,32 +106,6 @@ $color-light: #fff;
 }
 .modal-action {
   flex: 2;
-}
-.social-title {
-  flex: 1;
-  align-self: center;
-  font-size: 2rem;
-  font-weight: 500;
-  text-transform: capitalize;
-}
-.social-img {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-}
-.social-link {
-  flex-basis: 10%;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-.social-facebook {
-  background-image: url('../assets/icons/facebook.svg');
-}
-.social-twitter {
-  background-image: url('../assets/icons/twitter.svg');
-}
-.social-google {
-  background-image: url('../assets/icons/google.svg');
 }
 
 @media screen and (max-width: 991px) {

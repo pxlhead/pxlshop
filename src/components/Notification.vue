@@ -1,19 +1,16 @@
-<template lang="pug">
+<template lang='pug'>
   .note
-    p.note-message {{ message }}
+    p.note-message
     a.close-btn
 </template>
 
 <script>
-/* eslint-disable no-console */
-
 export default {
-  name: 'notification',
-  props: ['message'],
+  name: 'notification'
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 $color-light: #fff;
 

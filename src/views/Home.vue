@@ -11,14 +11,14 @@
             a See works
         .slide-overlay
         figure.slide-img
-          img(v-bind='{ src: loadImage(slide.name), class: [`img-${slide.name}`] }'
+          img(src='~@/assets/img/mainslide.jpg'  :class='[`img-${slide.name}`]'
           alt='Welcome picture')
       nav.slider-nav
         a.nav-point(:class='{"point-active": index == activeSlide}'
-        v-for='(slide, index) in slides'
-        @click='changeSlide(index)')
-      a.nav-arrow.arrow-prev(@click='changeSlide("prev")')
-      a.nav-arrow.arrow-next(@click='changeSlide("next")')
+          v-for='(slide, index) in slides'
+          @click='activeSlide = index')
+      a.nav-arrow.arrow-prev(@click='activeSlide > 0 ? activeSlide -= 1 : activeSlide = 2')
+      a.nav-arrow.arrow-next(@click='activeSlide < 2 ? activeSlide += 1 : activeSlide = 0')
     section.about
       .about-item
         h2.about-title
@@ -58,35 +58,32 @@
     section.awards
       h2.aside-title AWARDS
       .awards-item(v-for='n in 4')
-        img(src='../../assets/index/award-logo.svg' alt='Awwwwards')
-    section.gallery(v-if='sortTopProducts')
+        img(src='~@/assets/icons/award-logo.svg' alt='Awwwwards')
+    section.gallery
       h2.aside-title GALLERY
       .gallery-product(v-for='product in topProducts')
         figure.product-img
-          img(:src='product.url' alt='product.name')
+          img(:src='product.img' alt='product.title')
           .img-overlay
-            h2.overlay-title {{ product.name }}
-            p.overlay-author {{ product.author }}
+            h2.overlay-title {{ product.title }}
+            p.overlay-author {{ product.by }}
     section.comments
       h2.aside-title COMMENTS
       .comment(v-for='n in 4')
         figure.comment-img
-          img(src='../../assets/icons/avatar.svg' alt='Author avatar')
+          img(src='~@/assets/icons/avatar.svg' alt='Author avatar')
         cite.comment-author Alex, Google
         blockquote.comment-text
           | Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 </template>
 
 <script>
-/* eslint-disable no-multi-str */
-/* eslint-disable global-require */
-/* eslint-disable no-unused-expressions */
-import Firebase from '../../appconfig/firebase';
+import store from '@/store';
 
 export default {
-  name: 'index',
-  firebase: {
-    products: Firebase.dbProductsRef,
+  name: 'home',
+  beforeCreate() {
+    store.dispatch('fetchProducts', { sort: 'top' });
   },
   data() {
     return {
@@ -94,49 +91,23 @@ export default {
       slides: [{
         name: 'main',
         title: 'Welcome to our media market place!',
-        text: 'Stock on photos, illustrations and videos from best creatives\
-        around the world',
+        text: 'Stock on photos, illustrations and videos from best creatives.'
       }, {
         name: 'team',
         title: 'Join our creative team!',
-        text: 'Stock on photos, illustrations and videos from best creatives\
-        around the world',
+        text: 'Stock on photos, illustrations and videos from best creatives.'
       }, {
         name: 'shop',
         title: 'Welcome to our media market place!',
-        text: 'Stock on photos, illustrations and videos from best creatives\
-        around the world',
-      }],
-      topProducts: {},
+        text: 'Stock on photos, illustrations and videos from best creatives.'
+      }]
     };
   },
   computed: {
-    sortTopProducts() {
-      this.topProducts = this.products.sort((prodA, prodB) => (
-        prodA.stars <= prodB.stars ? 1 : -1
-      )).slice(0, 3);
-      return this.topProducts.length >= 1;
-    },
-  },
-  methods: {
-    changeSlide(n) {
-      if (n === 'prev') {
-        this.activeSlide !== 0 ? this.activeSlide -= 1 : this.activeSlide = 2;
-      } else if (n === 'next') {
-        this.activeSlide !== 2 ? this.activeSlide += 1 : this.activeSlide = 0;
-      } else {
-        this.activeSlide = n;
-      }
-    },
-    loadImage(slide) {
-      if (slide === 'main') {
-        return require('../../assets/index/yellow-sofa.jpg');
-      } else if (slide === 'team') {
-        return require('../../assets/index/deer.jpg');
-      }
-      return require('../../assets/index/bookblock.jpg');
-    },
-  },
+    topProducts() {
+      return this.$store.getters.topProducts;
+    }
+  }
 };
 
 </script>
@@ -277,7 +248,7 @@ a {
     left: calc(50% - 0.5rem);
     width: 1rem;
     height: 1rem;
-    background: url('../../assets/arrow.svg') no-repeat center;
+    background: url('~@/assets/icons/arrow.svg') no-repeat center;
     transform: rotate(90deg) scale(2);
   }
 }
@@ -291,7 +262,7 @@ a {
     right: calc(50% - 0.5rem);
     width: 1rem;
     height: 1rem;
-    background: url('../../assets/arrow.svg') no-repeat center;
+    background: url('~@/assets/icons/arrow.svg') no-repeat center;
     transform: rotate(-90deg) scale(2);
   }
 }
