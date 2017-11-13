@@ -60,7 +60,7 @@ figure {
 .close-btn {
   width: 3rem;
   height: 3rem;
-  background: url('../assets/close-btn.svg') no-repeat center;
+  background: url('~@/assets/icons/close-btn.svg') no-repeat center;
   background-size: cover;
   &:hover {
     opacity: 0.7;
@@ -110,13 +110,13 @@ figure {
   background-repeat: no-repeat;
 }
 .icon-face{
-  background-image: url('../assets/icons/name.svg');
+  background-image: url('~@/assets/icons/name.svg');
 }
 .icon-mail{
-  background-image: url('../assets/icons/mail.svg');
+  background-image: url('~@/assets/icons/mail.svg');
 }
 .icon-lock{
-  background-image: url('../assets/icons/lock.svg');
+  background-image: url('~@/assets/icons/lock.svg');
 }
 .input-line {
   flex: 6;
@@ -188,7 +188,7 @@ figure {
   width: 2rem;
   height: 2rem;
   display: block;
-  background-image: url('close-btn.svg');
+  background-image: url('~@/assets/icons/close-btn.svg');
   background-position: center center;
   background-size: cover;
   &:hover {
@@ -258,20 +258,6 @@ figure {
   position: relative;
   overflow: hidden;
   flex: 1;
-}
-.social-list {
-  width: 60%;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-  padding-left: 0;
-}
-.social-link {
-  flex-basis: 20%;
-  display: block;
-  &:hover {
-    opacity: 0.7;
-  }
 }
 .payment {
   flex: 1;
