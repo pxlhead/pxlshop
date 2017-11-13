@@ -1,16 +1,20 @@
-<template lang="pug">
-  .profile
-    a.profile-name(@click='showModal') {{ name }}
+<template lang='pug'>
+  .profile(v-if='user')
+    a.profile-name(@click='showModal') {{ user.displayName }}
     a.profile-img
       .img-box
-        img(:src='photoUrl' alt='Avatar')
+        img(:src='user.photoURL' alt='User photo')
       ul.profile-dropdown
-        li.dropdown-item(v-for='option in options')
-          a(@click='option.action') {{ option.name }}
+        li.dropdown-item
+          a(@click='showModal = true') My Profile
+        li.dropdown-item
+          a(@click='showModal = true') Settings
+        li.dropdown-item
+          a(@click='signOutUser') Log out
 
-    .modal-overlay(@click='closeModal' v-if='modal')
-    a.close-btn(@click='closeModal' v-if='modal')
-    form.modal(v-if='modal && !checkPassword')
+    .modal-overlay(@click='showModal = false' v-if='showModal')
+      a.close-btn
+    form.modal(v-if='showModal && !checkPassword')
       .modal-head
         a.modal-title Profile
       .modal-head.modal-subhead
@@ -18,195 +22,62 @@
       .modal-content
         .profile-photo
           .img-box
-            img(:src='photoUrl' alt='Avatar')
-          input.modal-upload(name='photo' id='photo' type='file'
-          @change='uploadPhoto')
-          label.modal-action(for='photo') Choose
+            img(:src='user.photoURL' alt='User photo')
+          label.modal-action Choose
+            input.modal-upload(type='file' accept='.jpg, .jpeg, .png'
+              @change='submitPhoto')
           a.delete-action(@click='deleteUser') Delete account
         .profile-info
           .input-box
             .input-icon.icon-face
-            input.input-line(name='name' type='text' v-model='name'
-            v-bind='{ placeholder: (lockInfo ? name : "New name..."),\
-            readonly: lockInfo }' @blur='lockInfo = true')
+            input.input-line(type='text' v-model='username'
+              placeholder='')
           .input-box
             .input-icon.icon-mail
             input.input-line(name='email' type='email' v-model='email'
-            v-bind='{ placeholder: (lockInfo ? email : "New email..."),\
-            readonly: lockInfo }' @blur='lockInfo = true')
-          a.modal-action(v-bind:class='{"action-update": !lockInfo}'
-            @click='changeInfo') {{ lockInfo ? 'Change...' : 'Update'}}
+              placeholder='')
+          input.modal-action(type='submit' value='Submit')
           .input-box
             .input-icon.icon-lock
-            input.input-line(name='password' type='password' v-model='password'
-            v-bind='{ placeholder: (lockPassword ? "Password" : "New password..."),\
-            readonly: lockPassword }' @blur='lockPassword = true')
-          a.modal-action(v-bind:class='{ "action-update": !lockPassword }'
-          @click='activatePassword') {{ lockPassword ? 'Change...' : 'Update' }}
+            input.input-line(type='password' v-model='password'
+              placeholder='')
+          input.modal-action(type='submit' value='Submit')
 
     .modal.modal-confirm(v-if='checkPassword')
-      input.input-line(name='password' type='password' v-model='password'
-      placeholder='Password')
-      a.modal-action.action-update(@click='reAuth') Confirm
-
-    transition(name='note')
-      notification(v-bind:message='message' v-if='message.length > 0'
-      v-on:click.native='message = ""')
+      input.input-line(type='password' v-model='password'
+        placeholder='')
+      input.modal-action(type='submit' value='Submit')
 </template>
 
 <script>
-/* eslint-disable no-console */
-/* eslint-disable global-require */
-import Firebase from '../appconfig/firebase';
-import Notification from './Notification';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'profile',
-  props: ['user', 'light'],
-  components: {
-    Notification,
-  },
   data() {
     return {
-      options: [{
-        name: 'My Profile',
-        action: this.showModal,
-      }, {
-        name: 'Settings',
-        action: this.showModal,
-      }, {
-        name: 'Log out',
-        action: this.logOut,
-      }],
-      modal: false,
-      name: '',
-      uid: '',
-      email: '',
-      password: '',
-      photoUrl: '',
-      avatar: '',
-      lockInfo: true,
-      lockPassword: true,
+      showModal: false,
       checkPassword: false,
-      reAuthAction: null,
-      message: '',
+      username: '',
+      email: '',
+      password: ''
     };
   },
-  created() {
-    this.name = this.user.displayName || this.user.email.split('@')[0];
-    this.email = this.user.email;
-    this.uid = this.user.uid;
-    this.photoUrl = this.user.photoURL || require('../assets/icons/avatar.svg');
+  computed: {
+    user() {
+      return this.$store.state.activeUser;
+    }
   },
   methods: {
-    logOut() {
-      Firebase.auth.signOut();
-    },
-    showModal() {
-      this.modal = true;
-    },
-    closeModal() {
-      this.modal = false;
-      this.lockInfo = true;
-      this.lockPassword = true;
-      this.checkPassword = false;
-      this.reAuthAction = null;
-      this.message = '';
-    },
-    uploadPhoto(event) {
-      const file = event.target.files[0];
-      if (file.size / 1024 > 2048) {
-        this.message = 'Your image is too big. Maximal file size is 2MB.';
-        return;
-      }
-      this.avatar = this.uid;
-      const storageFileRef = Firebase.storageAvatarsRef.child(this.avatar);
-      const task = storageFileRef.put(file);
-      task.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          this.message = `Upload is ${Math.round(progress)}% done`;
-        },
-        (error) => {
-          switch (error.code) {
-            case 'storage/unauthorized':
-              this.message = 'Sorry, but you don\'t have permission to upload files';
-              break;
-            case 'storage/canceled':
-              this.message = 'You canceled the upload';
-              break;
-            default:
-              this.message = error.code;
-          }
-        },
-        () => {
-          storageFileRef.getDownloadURL().then((url) => {
-            this.photoUrl = url;
-            this.changePhoto();
-          });
-          this.message = 'Upload is complete!';
-        },
-      );
-    },
-    deletePhoto() {
-      if (this.avatar) {
-        Firebase.storageAvatarsRef.child(`avatars/${this.avatar}`).delete();
-      }
-    },
-    changePhoto() {
-      this.user.updateProfile({
-        photoURL: this.photoUrl,
-      });
-    },
-    changeInfo() {
-      if (this.lockInfo) {
-        this.lockInfo = false;
-        return;
-      }
-      this.user.updateProfile({
-        displayName: this.name,
-      });
-      this.user.updateEmail(this.email);
-      this.lockInfo = true;
-    },
-    activatePassword() {
-      if (this.lockPassword) {
-        this.changePassword();
-        return;
-      }
-      this.updatePassword();
-    },
-    changePassword() {
-      this.reAuthAction = 'change';
-      this.checkPassword = true;
-      this.message = 'Please confirm your password';
-    },
-    updatePassword() {
-      this.user.updatePassword(this.password).then(() => {
-        this.message = 'Your password was updated!';
-      });
-    },
-    deleteUser() {
-      this.reAuthAction = 'delete';
-      this.checkPassword = true;
-      this.message = 'Please confirm your password';
-    },
-    reAuth() {
-      const credential = Firebase.emailAuth.credential(this.user.email, this.password);
-      this.user.reauthenticate(credential).then(() => {
-        if (this.reAuthAction === 'delete') {
-          this.user.delete().then(() => {
-            this.message = 'You have just been erased';
-            this.deletePhoto();
-          });
-        } else if (this.reAuthAction === 'change') {
-          this.lockPassword = false;
-          this.checkPassword = false;
-          this.message = 'Please enter new password';
-        }
-      });
-    },
-  },
+    ...mapActions([
+      'signOutUser',
+      'uploadUserPhoto',
+      'updateUserProfile',
+      'updateUserEmail',
+      'updateUserPassword',
+      'deleteUser'
+    ])
+  }
 };
 </script>
 
@@ -353,7 +224,7 @@ $color-light: #fff;
   margin-top: 8rem;
   display: block;
   font-size: 1.2rem;
-  background: url('../assets/icons/delete.svg') no-repeat 0 center;
+  background: url('~@/assets/icons/delete.svg') no-repeat 0 center;
   background-size: contain;
   padding-left: 1.5rem;
   &:hover {
